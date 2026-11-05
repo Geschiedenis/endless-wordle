@@ -63,7 +63,9 @@ export function openGameState(
 
     const { state, exp } = JSON.parse(plaintext) as { state: GameState; exp: number };
     if (typeof exp !== "number" || exp <= now) return null;
-    return isUsableState(state) ? state : null;
+    if (!isUsableState(state)) return null;
+    // Guest cookies from before V2 don't have this field.
+    return { ...state, totalGuesses: state.totalGuesses ?? state.guesses.length };
   } catch {
     return null;
   }

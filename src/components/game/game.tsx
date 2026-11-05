@@ -2,6 +2,7 @@
 
 import { useEffect, useEffectEvent } from "react";
 import Link from "next/link";
+import { AuthMenu } from "@/components/auth-menu";
 import { GameOver } from "@/components/game/game-over";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
@@ -22,6 +23,7 @@ export function Game() {
     shaking,
     toast,
     announcement,
+    scoreSaved,
     addLetter,
     removeLetter,
     submit,
@@ -31,6 +33,8 @@ export function Game() {
 
   const onKeyDown = useEffectEvent((event: KeyboardEvent) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
+    // The account menu has its own keyboard handling.
+    if ((event.target as Element | null)?.closest?.('[role="menu"]')) return;
 
     // Enter or Space on a focused control should activate that control only.
     const onControl = (event.target as Element | null)?.closest?.("a, button");
@@ -62,12 +66,15 @@ export function Game() {
   return (
     <main className="flex h-dvh flex-col gap-2 overflow-hidden px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4">
       <header className="mx-auto flex w-full max-w-lg items-center justify-between">
-        <h1 className="text-lg font-bold tracking-tight">
+        <h1 className="text-base font-bold tracking-tight whitespace-nowrap sm:text-lg">
           <Link href="/" className="rounded-sm" aria-label="Endless Wordle, back to home">
             Endless Wordle
           </Link>
         </h1>
-        <PreferenceToggles />
+        <div className="flex items-center gap-1">
+          <AuthMenu />
+          <PreferenceToggles />
+        </div>
       </header>
 
       <StatsBar
@@ -97,6 +104,7 @@ export function Game() {
         <GameOver
           answer={game.answer}
           wordsSolved={game.wordsSolved}
+          scoreSaved={scoreSaved}
           onPlayAgain={() => void startNewGame()}
         />
       ) : (

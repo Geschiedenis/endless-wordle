@@ -43,6 +43,13 @@ describe("game token", () => {
     expect(openGameState(token, SECRET, now + 60_000)).toBeNull();
   });
 
+  it("still opens a guest cookie from before totalGuesses existed", () => {
+    const { totalGuesses, ...v1State } = { ...state, guesses: ["pride", "stone"] };
+    void totalGuesses;
+    const token = sealGameState(v1State as typeof state, SECRET, 60);
+    expect(openGameState(token, SECRET)?.totalGuesses).toBe(2);
+  });
+
   it("rejects state that no longer fits the rules", () => {
     const stale = { ...state, bonusGuesses: 99 };
     expect(openGameState(sealGameState(stale, SECRET, 60), SECRET)).toBeNull();

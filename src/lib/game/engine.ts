@@ -4,7 +4,15 @@ import type { GameState, GameView, GuessResponse } from "./types";
 
 /** Starts a session. The caller supplies randomness, keeping this pure. */
 export function createGame(seed: string, answer: string): GameState {
-  return { seed, answer, status: "playing", wordsSolved: 0, bonusGuesses: 0, guesses: [] };
+  return {
+    seed,
+    answer,
+    status: "playing",
+    wordsSolved: 0,
+    bonusGuesses: 0,
+    guesses: [],
+    totalGuesses: 0,
+  };
 }
 
 export interface GuessOutcome {
@@ -28,6 +36,7 @@ export function applyGuess(
 
   const feedback = computeFeedback(guess, state.answer);
   const guesses = [...state.guesses, guess];
+  const totalGuesses = state.totalGuesses + 1;
 
   if (isSolved(feedback)) {
     const wordsSolved = state.wordsSolved + 1;
@@ -39,6 +48,7 @@ export function applyGuess(
         wordsSolved,
         bonusGuesses: bonusEarned,
         guesses: [],
+        totalGuesses,
       },
       result: { word: guess, feedback, solved: true, bonusEarned },
     };
@@ -46,7 +56,7 @@ export function applyGuess(
 
   const outOfGuesses = guesses.length >= guessesAllowed(state.bonusGuesses);
   return {
-    state: { ...state, guesses, status: outOfGuesses ? "lost" : "playing" },
+    state: { ...state, guesses, totalGuesses, status: outOfGuesses ? "lost" : "playing" },
     result: { word: guess, feedback, solved: false },
   };
 }

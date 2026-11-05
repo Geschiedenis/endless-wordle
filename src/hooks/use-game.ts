@@ -35,6 +35,8 @@ export function useGame() {
   const [shaking, setShaking] = useState(false);
   const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  /** Whether the finished game's score was stored. Undefined for guests or after a reload. */
+  const [scoreSaved, setScoreSaved] = useState<boolean | undefined>(undefined);
 
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const loadStarted = useRef(false);
@@ -54,6 +56,7 @@ export function useGame() {
     setPhase("loading");
     setPending(null);
     setCurrent("");
+    setScoreSaved(undefined);
     const response = await gameApi.newGame();
     if (response.ok) {
       setGame(response.data.game);
@@ -99,8 +102,9 @@ export function useGame() {
   }, [acceptingInput]);
 
   const finishReveal = useCallback(
-    ({ result, game: next }: GuessResponse) => {
+    ({ result, game: next, scoreSaved: saved }: GuessResponse) => {
       setAnnouncement(describeGuess(result, next));
+      setScoreSaved(saved);
 
       if (!result.solved) {
         setGame(next);
@@ -156,6 +160,8 @@ export function useGame() {
         await startNewGame();
         break;
       case "game_over":
+      case "game_conflict":
+        setCurrent("");
         await load();
         break;
       case "rate_limited":
@@ -190,6 +196,7 @@ export function useGame() {
     shaking,
     toast,
     announcement,
+    scoreSaved,
     addLetter,
     removeLetter,
     submit,

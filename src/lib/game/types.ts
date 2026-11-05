@@ -19,6 +19,8 @@ export interface GameState {
   bonusGuesses: number;
   /** Guesses made on the current word, lowercase. */
   guesses: string[];
+  /** Guesses made across every word in this game. */
+  totalGuesses: number;
 }
 
 export interface ScoredGuess {
@@ -50,6 +52,8 @@ export interface GuessResponse extends GameResponse {
     /** Bonus guesses carried into the next word. Only set when solved. */
     bonusEarned?: number;
   };
+  /** Only set when a logged-in player's game ends: whether the score was stored. */
+  scoreSaved?: boolean;
 }
 
 export type ApiErrorCode =
@@ -57,7 +61,15 @@ export type ApiErrorCode =
   | "not_in_word_list"
   | "no_game"
   | "game_over"
+  | "game_conflict"
   | "rate_limited"
+  | "forbidden"
+  | "unauthorized"
+  | "invalid_credentials"
+  | "email_not_confirmed"
+  | "weak_password"
+  | "username_unavailable"
+  | "accounts_unavailable"
   | "server_error";
 
 export interface ApiErrorResponse {

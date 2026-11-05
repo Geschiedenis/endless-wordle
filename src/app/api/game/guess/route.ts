@@ -23,7 +23,8 @@ export const POST = guardedRoute(rateLimiters.guess, async (request) => {
   const guess = parseGuess(await readGuess(request));
   if (!guess) return errorResponse("invalid_request");
 
-  const store = getGameStore();
+  const user = await getCurrentUser();
+  const store = getGameStore(user);
   const state = await store.load();
   if (!state) return errorResponse("no_game");
   if (state.status !== "playing") return errorResponse("game_over");
@@ -32,17 +33,16 @@ export const POST = guardedRoute(rateLimiters.guess, async (request) => {
   if (!isValidGuess(guess)) return errorResponse("not_in_word_list");
 
   const outcome = applyGuess(state, guess, (wordsSolved) => wordAt(state.seed, wordsSolved));
-  await store.save(outcome.state);
 
-  if (outcome.state.status === "lost") {
-    await recordFinalScore({
-      user: await getCurrentUser(),
-      wordsSolved: outcome.state.wordsSolved,
-    });
-  }
+  // Save first: this request's feedback is only revealed if its guess counted.
+  if (!(await store.save(outcome.state))) return errorResponse("game_conflict");
+
+  const scoreSaved =
+    user && outcome.state.status === "lost" ? await recordFinalScore(user, outcome.state) : undefined;
 
   return jsonResponse<GuessResponse>({
     result: outcome.result,
     game: toGameView(outcome.state),
+    ...(scoreSaved === undefined ? {} : { scoreSaved }),
   });
 });

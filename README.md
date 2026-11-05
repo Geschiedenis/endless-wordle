@@ -2,7 +2,9 @@
 
 A Wordle that never stops. Solve a word and the next one starts straight away, with your unused guesses rolling over as a bonus. The game ends the first time you fail to solve a word.
 
-Built with Next.js (App Router, TypeScript), Tailwind CSS and shadcn/ui. V1 is play-only, with no accounts and no database.
+Play as a guest, or create an account to save your scores and compete on the leaderboard.
+
+Built with Next.js (App Router, TypeScript), Tailwind CSS, shadcn/ui and Supabase (Auth and Postgres).
 
 ## Setup
 
@@ -13,11 +15,11 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:3000. `npm run dev` works without any configuration, using a temporary secret. To keep games across dev server restarts, set a real one:
+Then open http://localhost:3000. **Guest play works with no configuration**, using a temporary game secret. Logging in needs a Supabase project: see [Supabase setup](#supabase-setup), then:
 
 ```bash
 cp .env.example .env.local
-# then set GAME_SECRET in .env.local, using: openssl rand -base64 32
+# then fill in .env.local
 ```
 
 ## Scripts
@@ -34,17 +36,55 @@ cp .env.example .env.local
 
 ## Environment variables
 
-| Variable | Required | Description |
+| Variable | Where to find it | Used by |
 | --- | --- | --- |
-| `GAME_SECRET` | In production | Encrypts the game cookie. At least 32 characters. |
+| `GAME_SECRET` | Generate with `openssl rand -base64 32`. At least 32 characters. | Server only. Encrypts game state. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase: Project Settings > API. Just `https://<project-ref>.supabase.co`, with no `/rest/v1/`. | Server code |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page: the `anon`/`public` key (`publishable` on newer projects) | Server code |
+| `SUPABASE_SERVICE_ROLE_KEY` | Same page: the `service_role` key (`secret` on newer projects) | Server only. **Bypasses all Row Level Security. Never expose it.** |
 
-### Deploying to Vercel
+**Locally:** put them in `.env.local`, which git ignores. Restart `npm run dev` afterwards. All are optional for guest play.
 
-1. Import this GitHub repo in Vercel. The framework preset and build settings work as detected.
-2. Under **Settings > Environment Variables**, add `GAME_SECRET`, with a value from `openssl rand -base64 32`. Enable it for **Production** and **Preview**. Preview deployments run in production mode, so the game API returns errors there without it.
-3. Deploy, or redeploy if the first build ran before the variable existed.
+**In production:** all four are required. `npm run build` stops with a message naming whatever is missing, and on Vercel a failed build leaves the previous deployment running.
 
-Changing `GAME_SECRET` later is safe. Games in progress become unreadable and players simply get a new game.
+Changing `GAME_SECRET` later ends games in progress, for guests and logged-in players, and they start a new one. Saved scores aren't affected.
+
+## Supabase setup
+
+Do these in order, **before deploying V2**.
+
+### 1. Create a project and run the migration
+
+1. Create a project at [supabase.com](https://supabase.com).
+2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There is currently one file, and each file only needs to run once.
+
+To check it worked, **Table Editor** should list `profiles`, `games` and `active_games`, each marked as protected by RLS.
+
+### 2. Set the sign-in URLs
+
+In **Authentication > URL Configuration**:
+
+- **Site URL:** your production URL, such as `https://your-domain.com`.
+- **Redirect URLs:** add each of these:
+  - `http://localhost:3000/auth/callback**`
+  - `https://your-domain.com/auth/callback**`
+  - `https://*-your-vercel-team.vercel.app/auth/callback**` if you want login on Vercel previews
+
+### 3. Set up email
+
+Email confirmation is on by default, so new users get a confirmation link. Supabase's built-in email service is limited to a few messages per hour and is meant for testing. **For real users, add your own SMTP provider** under **Project Settings > Authentication > SMTP Settings**.
+
+### 4. Configure Google sign-in
+
+1. In the [Google Cloud console](https://console.cloud.google.com/), go to **APIs & Services > Credentials** and create an **OAuth client ID** of type **Web application**. You may need to fill in the consent screen first.
+2. Under **Authorized redirect URIs**, add `https://<your-project-ref>.supabase.co/auth/v1/callback`. Supabase shows this exact URL on its Google provider page.
+3. In Supabase, go to **Authentication > Providers > Google**, turn it on, and paste in the client ID and secret.
+
+### 5. Add the variables to Vercel
+
+Under **Settings > Environment Variables**, add all four variables for **Production** and **Preview**. Mark `SUPABASE_SERVICE_ROLE_KEY` as sensitive. `NEXT_PUBLIC_` values are read at build time, so redeploy after changing them.
+
+Then deploy. If a variable is missing, the build fails with its name and your live site keeps running.
 
 ## Swapping in the real logo
 
@@ -61,41 +101,63 @@ The numbers are in [`src/lib/game/constants.ts`](src/lib/game/constants.ts). `MA
 ## Project structure
 
 ```
-data/                  Word lists (server only)
-scripts/               Regenerates the word lists
-src/lib/game/          Pure game logic and shared types, with unit tests
-src/lib/server/        Server-only code: tokens, rate limiting, words, extension points
-src/app/api/game/      Route handlers: new, guess, state
-src/hooks/use-game.ts  Client game state and timing
-src/components/game/   Grid, keyboard, stats, game over
+data/                   Word lists (server only)
+scripts/                Regenerates the word lists
+supabase/migrations/    Database schema, Row Level Security and leaderboard functions
+src/proxy.ts            Refreshes sessions and redirects guests from account pages
+src/lib/game/           Pure game logic and shared types, with unit tests
+src/lib/server/         Server-only code: Supabase clients, game stores, scores, rate limiting
+src/lib/*.ts            Username rules, input schemas and leaderboard logic, shared with the browser
+src/app/api/            Route handlers: game, auth, profile, leaderboard
+src/app/auth/callback/  Where Google sign-in and email links land
+src/hooks/              Client state for the game and session
+src/components/         Game, account and shared UI
 ```
 
-## How the answer stays private
+## How it stays private and fair
 
-The browser never receives the answer until the game is lost.
+**The answer.** The browser never receives it until the game is lost. It's encrypted with AES-256-GCM wherever it's stored, and `toGameView` in `src/lib/game/engine.ts` is the only path from game state to an API response. The word lists are imported only from `server-only` code, so the build fails if client code tries to use them.
 
-- The server picks the word and keeps it in an httpOnly cookie, encrypted with AES-256-GCM. Signing alone wouldn't be enough, because a signed cookie can still be read in the browser's developer tools. GCM also detects tampering, so a modified cookie simply counts as "no game".
-- `toGameView` in `src/lib/game/engine.ts` is the only path from game state to an API response. It includes the answer only after a loss.
-- The word lists are imported only from `server-only` code, so they can't end up in the browser bundle. The build fails if client code tries.
-- All input is validated on the server, and errors use fixed, generic messages. Internal errors are logged on the server only.
+**Scores.** `calculateFinalScore` in `src/lib/game/score.ts` works only from game state held on the server, and the score is saved by the guess route when the game ends. No route accepts a score from the browser.
+
+**Replay.** Guests keep their game in an encrypted cookie. Logged-in players' games live in the `active_games` table instead, because their scores are public. The browser holds nothing it could restore, and a revision check means that when parallel requests race, only one guess counts and the others get no feedback. Game state is never in `profiles` or `games`, and only the service role can read `active_games`.
+
+**Database access.** Every table has Row Level Security. Users can read and update only their own profile (only the username column) and read only their own games. Only the server, using the service role, can insert games. The leaderboard is public only through `get_leaderboard`, which returns rank, username and score, and never goes past the top 50. The database enforces the username rules itself, since users can update their own row directly.
+
+**Sessions.** Sessions are in httpOnly cookies, and the browser has no Supabase client: every call goes through a route handler. That's why the Content Security Policy allows no outside connections.
+
+**Requests.** All input is validated with Zod. State-changing requests must come from the site's own origin (CSRF protection). Errors use fixed, generic messages. Logs contain only an error's name, code and message, never emails, tokens or request data.
 
 ### Known limitations
 
-**Cookie replay.** Because V1 keeps state in a cookie and has no server storage, a determined player could save the cookie before a guess and restore it afterwards, which gives them extra attempts on a word. They still never see the answer. This doesn't matter for a game with no shared scores, but **it must be fixed before public highscores**, by moving game state to the database (see below).
+**Rate limiting is per server instance.** Limits are held in memory, so on Vercel each instance counts separately and resets when recycled. They slow abuse rather than enforce a hard global limit. Supabase applies its own limits to sign-in attempts as well. For strict limits, implement the `RateLimiter` interface in `src/lib/server/rate-limit.ts` on a shared store such as Upstash Redis.
 
-**Rate limiting is per server instance.** The limits (per minute, per IP: 60 guesses, 30 new games, 60 state reads) are held in memory. On Vercel, each instance counts separately and resets when recycled, so they slow abuse rather than enforce a hard global limit. For strict limits, implement the `RateLimiter` interface in `src/lib/server/rate-limit.ts` on a shared store such as Upstash Redis.
+**The Content Security Policy allows inline scripts.** Pages are prerendered and Next.js adds inline scripts to them. The stricter nonce approach requires rendering every page per request, which removes the static pages. All other directives are strict.
 
-## Adding accounts and highscores (V2)
+**Guest games can't be claimed after logging in.** Guest cookies can be replayed, so accepting them would let players put inflated scores on the leaderboard. Only games played while logged in count, and the game-over prompt says so.
 
-The routes depend on small interfaces, so these can be filled in without a rewrite:
+**A score can occasionally fail to save.** The game state and the score are written separately. If the second write fails, the game-over screen says the score couldn't be saved.
 
-| Where | What to do |
+**Time ranges use UTC.** "Today" and "This week" reset at midnight UTC, and weeks start on Monday.
+
+## Troubleshooting
+
+| What you see | Likely cause and fix |
 | --- | --- |
-| `src/lib/server/game-store.ts` | Implement `GameStore` on the database (Supabase or Vercel Postgres) and return it from `getGameStore()`. This also closes the replay gap above. |
-| `src/lib/server/auth.ts` | Make `getCurrentUser()` return the signed-in user. |
-| `src/lib/server/scores.ts` | Write to the highscores table in `recordFinalScore()`. It's already called once at the end of each game, from `src/app/api/game/guess/route.ts`. |
-| `src/app/login/page.tsx` | Replace the "Coming soon" page with the sign-in flow. |
-| `src/lib/server/rate-limit.ts` | Implement `RateLimiter` on a shared store if needed. |
+| Build fails with "Missing required environment variables" | Add the named variables. On Vercel, check they're enabled for that environment (Production or Preview). |
+| "Accounts aren't available right now" | Locally, the Supabase variables aren't set in `.env.local`, or the dev server hasn't been restarted since. |
+| "Accounts aren't available right now", or a build error about the URL | `NEXT_PUBLIC_SUPABASE_URL` must be just `https://<project-ref>.supabase.co`, without `/rest/v1/`. |
+| Login gives "Something went wrong", with `relation does not exist` or `function does not exist` in the server logs | The migration hasn't been run. See step 1 of the setup. |
+| "That link didn't work" after clicking an email link | The link must be opened in the same browser that requested it, and it can only be used once. An email confirmation may still have worked, so try logging in. Otherwise, request a new link. |
+| Email links or Google sign-in go to the wrong site, or to localhost | Check the Site URL and Redirect URLs in step 2. |
+| Google shows `redirect_uri_mismatch` | The redirect URI in Google Cloud must be the Supabase callback URL from step 4, exactly. |
+| Confirmation or reset emails don't arrive | Check spam. The built-in email service allows only a few per hour, so add SMTP (step 3). |
+| A player isn't on the leaderboard | They need a username and at least one finished game with one or more words solved, played while logged in. |
+| An outside script, font or image is blocked after you add one | Add its origin to the Content Security Policy in `next.config.ts`. |
+
+## Testing
+
+`npm test` includes tests that run the real migrations on [PGlite](https://pglite.dev/), an in-process Postgres, with Supabase's roles stubbed in. They cover Row Level Security, the leaderboard functions, the username rules and account deletion, with no Supabase project needed.
 
 ## Word lists
 
