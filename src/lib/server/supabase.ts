@@ -39,14 +39,6 @@ export async function createSessionClient() {
   });
 }
 
-/** Acts as nobody in particular: what a guest may read. */
-export function createAnonClient() {
-  const { url, anonKey } = getSupabaseConfig();
-  return createClient(url, anonKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-}
-
 /**
  * Bypasses Row Level Security. Server only: the "server-only" import above makes
  * the build fail if client code ever pulls this in.

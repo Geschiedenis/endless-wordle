@@ -6,6 +6,7 @@ import { AuthMenu } from "@/components/auth-menu";
 import { GameOver } from "@/components/game/game-over";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
+import { Logo } from "@/components/logo";
 import { StatsBar } from "@/components/game/stats-bar";
 import { PreferenceToggles } from "@/components/preference-toggles";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ export function Game() {
   const {
     phase,
     game,
+    solvedWords,
     guesses,
     current,
     pending,
@@ -67,7 +69,8 @@ export function Game() {
     <main className="flex h-dvh flex-col gap-2 overflow-hidden px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4">
       <header className="mx-auto flex w-full max-w-lg items-center justify-between">
         <h1 className="text-base font-bold tracking-tight whitespace-nowrap sm:text-lg">
-          <Link href="/" className="rounded-sm" aria-label="Endless Wordle, back to home">
+          <Link href="/" className="flex items-center gap-2 rounded-sm" aria-label="Endless Wordle, back to home">
+            <Logo size={24} />
             Endless Wordle
           </Link>
         </h1>
@@ -91,6 +94,8 @@ export function Game() {
         </div>
       ) : (
         <Grid
+          solvedWords={solvedWords}
+          wordNumber={game?.wordNumber ?? 1}
           rows={game?.guessesAllowed ?? BASE_GUESSES}
           guesses={guesses}
           current={current}

@@ -14,8 +14,7 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>With an account:</strong> your email address, your username, and for each finished game the
-          words solved, guesses used and date. If you use Google sign-in, Google shares your email address with
-          us.
+          words solved, guesses used and date.
         </li>
         <li>
           <strong>Without an account:</strong> no personal data. Your game is kept in a cookie in your browser.
@@ -27,7 +26,7 @@ export default function PrivacyPage() {
       </ul>
 
       <h2>What others can see</h2>
-      <p>Your username and best scores can appear on the public leaderboard. Your email address never does.</p>
+      <p>Other players can&apos;t see your username, scores or email address.</p>
 
       <h2>Cookies and local storage</h2>
       <ul>
@@ -39,8 +38,7 @@ export default function PrivacyPage() {
 
       <h2>Who processes your data</h2>
       <p>
-        Supabase stores account and score data and sends account emails. Vercel hosts the site. Google is involved
-        only if you choose Google sign-in.
+        Supabase stores account and score data and sends account emails. Vercel hosts the site.
       </p>
 
       <h2>How long we keep it, and your choices</h2>

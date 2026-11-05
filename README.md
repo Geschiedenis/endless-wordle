@@ -2,7 +2,7 @@
 
 A Wordle that never stops. Solve a word and the next one starts straight away, with your unused guesses rolling over as a bonus. The game ends the first time you fail to solve a word.
 
-Play as a guest, or create an account to save your scores and compete on the leaderboard.
+Play as a guest, or create an account to save your scores.
 
 Built with Next.js (App Router, TypeScript), Tailwind CSS, shadcn/ui and Supabase (Auth and Postgres).
 
@@ -56,7 +56,7 @@ Do these in order, **before deploying V2**.
 ### 1. Create a project and run the migration
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There is currently one file, and each file only needs to run once.
+2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently two files, and each file only needs to run once.
 
 To check it worked, **Table Editor** should list `profiles`, `games` and `active_games`, each marked as protected by RLS.
 
@@ -74,21 +74,17 @@ In **Authentication > URL Configuration**:
 
 Email confirmation is on by default, so new users get a confirmation link. Supabase's built-in email service is limited to a few messages per hour and is meant for testing. **For real users, add your own SMTP provider** under **Project Settings > Authentication > SMTP Settings**.
 
-### 4. Configure Google sign-in
+The branded email templates are in [`supabase/email-templates`](supabase/email-templates), with instructions for adding them.
 
-1. In the [Google Cloud console](https://console.cloud.google.com/), go to **APIs & Services > Credentials** and create an **OAuth client ID** of type **Web application**. You may need to fill in the consent screen first.
-2. Under **Authorized redirect URIs**, add `https://<your-project-ref>.supabase.co/auth/v1/callback`. Supabase shows this exact URL on its Google provider page.
-3. In Supabase, go to **Authentication > Providers > Google**, turn it on, and paste in the client ID and secret.
-
-### 5. Add the variables to Vercel
+### 4. Add the variables to Vercel
 
 Under **Settings > Environment Variables**, add all four variables for **Production** and **Preview**. Mark `SUPABASE_SERVICE_ROLE_KEY` as sensitive. `NEXT_PUBLIC_` values are read at build time, so redeploy after changing them.
 
 Then deploy. If a variable is missing, the build fails with its name and your live site keeps running.
 
-## Swapping in the real logo
+## Logo
 
-Put the file at `public/logo.svg` and redeploy. The landing page uses it automatically and the placeholder disappears. No code changes are needed. It displays at 112 x 112 pixels, which you can change in `src/components/logo.tsx`.
+The originals are in `logos/`. To change the logo, replace these copies and redeploy: `public/logo.svg` (landing page and headers), `public/logo.png` (emails), `src/app/icon.svg` (browser tab) and `src/app/apple-icon.png` (iPhone home screen, 180 x 180 with no transparency).
 
 ## Game rules
 
@@ -103,13 +99,13 @@ The numbers are in [`src/lib/game/constants.ts`](src/lib/game/constants.ts). `MA
 ```
 data/                   Word lists (server only)
 scripts/                Regenerates the word lists
-supabase/migrations/    Database schema, Row Level Security and leaderboard functions
+supabase/migrations/    Database schema and Row Level Security
 src/proxy.ts            Refreshes sessions and redirects guests from account pages
 src/lib/game/           Pure game logic and shared types, with unit tests
 src/lib/server/         Server-only code: Supabase clients, game stores, scores, rate limiting
-src/lib/*.ts            Username rules, input schemas and leaderboard logic, shared with the browser
-src/app/api/            Route handlers: game, auth, profile, leaderboard
-src/app/auth/callback/  Where Google sign-in and email links land
+src/lib/*.ts            Username rules and input schemas, shared with the browser
+src/app/api/            Route handlers: game, auth, profile
+src/app/auth/callback/  Where email links land
 src/hooks/              Client state for the game and session
 src/components/         Game, account and shared UI
 ```
@@ -122,7 +118,7 @@ src/components/         Game, account and shared UI
 
 **Replay.** Guests keep their game in an encrypted cookie. Logged-in players' games live in the `active_games` table instead, because their scores are public. The browser holds nothing it could restore, and a revision check means that when parallel requests race, only one guess counts and the others get no feedback. Game state is never in `profiles` or `games`, and only the service role can read `active_games`.
 
-**Database access.** Every table has Row Level Security. Users can read and update only their own profile (only the username column) and read only their own games. Only the server, using the service role, can insert games. The leaderboard is public only through `get_leaderboard`, which returns rank, username and score, and never goes past the top 50. The database enforces the username rules itself, since users can update their own row directly.
+**Database access.** Every table has Row Level Security. Users can read and update only their own profile (only the username column) and read only their own games. Only the server, using the service role, can insert games. The database enforces the username rules itself, since users can update their own row directly.
 
 **Sessions.** Sessions are in httpOnly cookies, and the browser has no Supabase client: every call goes through a route handler. That's why the Content Security Policy allows no outside connections.
 
@@ -134,7 +130,7 @@ src/components/         Game, account and shared UI
 
 **The Content Security Policy allows inline scripts.** Pages are prerendered and Next.js adds inline scripts to them. The stricter nonce approach requires rendering every page per request, which removes the static pages. All other directives are strict.
 
-**Guest games can't be claimed after logging in.** Guest cookies can be replayed, so accepting them would let players put inflated scores on the leaderboard. Only games played while logged in count, and the game-over prompt says so.
+**Guest games can't be claimed after logging in.** Guest cookies can be replayed, so accepting them would let players save inflated scores. Only games played while logged in count, and the game-over prompt says so.
 
 **A score can occasionally fail to save.** The game state and the score are written separately. If the second write fails, the game-over screen says the score couldn't be saved.
 
@@ -149,15 +145,13 @@ src/components/         Game, account and shared UI
 | "Accounts aren't available right now", or a build error about the URL | `NEXT_PUBLIC_SUPABASE_URL` must be just `https://<project-ref>.supabase.co`, without `/rest/v1/`. |
 | Login gives "Something went wrong", with `relation does not exist` or `function does not exist` in the server logs | The migration hasn't been run. See step 1 of the setup. |
 | "That link didn't work" after clicking an email link | The link must be opened in the same browser that requested it, and it can only be used once. An email confirmation may still have worked, so try logging in. Otherwise, request a new link. |
-| Email links or Google sign-in go to the wrong site, or to localhost | Check the Site URL and Redirect URLs in step 2. |
-| Google shows `redirect_uri_mismatch` | The redirect URI in Google Cloud must be the Supabase callback URL from step 4, exactly. |
+| Email links go to the wrong site, or to localhost | Check the Site URL and Redirect URLs in step 2. |
 | Confirmation or reset emails don't arrive | Check spam. The built-in email service allows only a few per hour, so add SMTP (step 3). |
-| A player isn't on the leaderboard | They need a username and at least one finished game with one or more words solved, played while logged in. |
 | An outside script, font or image is blocked after you add one | Add its origin to the Content Security Policy in `next.config.ts`. |
 
 ## Testing
 
-`npm test` includes tests that run the real migrations on [PGlite](https://pglite.dev/), an in-process Postgres, with Supabase's roles stubbed in. They cover Row Level Security, the leaderboard functions, the username rules and account deletion, with no Supabase project needed.
+`npm test` includes tests that run the real migrations on [PGlite](https://pglite.dev/), an in-process Postgres, with Supabase's roles stubbed in. They cover Row Level Security, the username rules and account deletion, with no Supabase project needed.
 
 ## Word lists
 

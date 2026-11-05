@@ -26,7 +26,7 @@ const TTL_SECONDS = 60 * 60 * 24 * 30;
 /**
  * Guests: state lives in an encrypted cookie, with no database involved. A player
  * could restore an old cookie for extra attempts, which is harmless because guest
- * games never reach the leaderboard.
+ * scores are never stored.
  */
 const cookieGameStore: GameStore = {
   async load() {

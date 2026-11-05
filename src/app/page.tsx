@@ -23,9 +23,6 @@ export default function LandingPage() {
           <Button asChild className="h-12 text-base font-semibold">
             <Link href="/play">Play</Link>
           </Button>
-          <Button asChild variant="outline" className="h-11 text-base">
-            <Link href="/leaderboard">Leaderboard</Link>
-          </Button>
         </div>
       </main>
       <SiteFooter />

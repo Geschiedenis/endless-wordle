@@ -51,5 +51,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/((?!api|auth/callback|_next/static|_next/image|icon.svg).*)",
+  matcher: "/((?!api|auth/callback|_next/static|_next/image|icon.svg|apple-icon.png|logo.svg|logo.png).*)",
 };

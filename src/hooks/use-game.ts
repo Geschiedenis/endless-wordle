@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gameApi } from "@/lib/game/api-client";
 import { WORD_LENGTH } from "@/lib/game/constants";
 import { keyStatuses } from "@/lib/game/keyboard";
-import type { GameView, GuessResponse, ScoredGuess } from "@/lib/game/types";
+import type { GameView, GuessResponse, ScoredGuess, SolvedWord } from "@/lib/game/types";
 
 /** Tile timing. The values reach the CSS animations through custom properties. */
 export const FLIP_MS = 500;
@@ -29,6 +29,8 @@ const prefersReducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)"
 export function useGame() {
   const [phase, setPhase] = useState<Phase>("loading");
   const [game, setGame] = useState<GameView | null>(null);
+  /** Words solved since this page loaded. The server only keeps the current word's guesses. */
+  const [solvedWords, setSolvedWords] = useState<SolvedWord[]>([]);
   const [current, setCurrent] = useState("");
   /** The guess being revealed. game only catches up once the flip has finished. */
   const [pending, setPending] = useState<GuessResponse["result"] | null>(null);
@@ -55,6 +57,7 @@ export function useGame() {
   const startNewGame = useCallback(async () => {
     setPhase("loading");
     setPending(null);
+    setSolvedWords([]);
     setCurrent("");
     setScoreSaved(undefined);
     const response = await gameApi.newGame();
@@ -71,7 +74,10 @@ export function useGame() {
     setPhase("loading");
     const response = await gameApi.state();
     if (response.ok) {
-      setGame(response.data.game);
+      const loaded = response.data.game;
+      // Another tab may have moved the game on or restarted it.
+      setSolvedWords((words) => words.filter((word) => word.wordNumber < loaded.wordNumber));
+      setGame(loaded);
       setPhase("ready");
     } else if (response.error === "no_game") {
       await startNewGame();
@@ -102,7 +108,7 @@ export function useGame() {
   }, [acceptingInput]);
 
   const finishReveal = useCallback(
-    ({ result, game: next, scoreSaved: saved }: GuessResponse) => {
+    ({ result, game: next, scoreSaved: saved }: GuessResponse, earlierGuesses: ScoredGuess[]) => {
       setAnnouncement(describeGuess(result, next));
       setScoreSaved(saved);
 
@@ -118,6 +124,10 @@ export function useGame() {
       setPhase("solved");
       setTimeout(
         () => {
+          setSolvedWords((words) => [
+            ...words,
+            { wordNumber: next.wordNumber - 1, guesses: [...earlierGuesses, result] },
+          ]);
           setGame(next);
           setPending(null);
           setPhase("ready");
@@ -145,7 +155,8 @@ export function useGame() {
       setPending(response.data.result);
       setCurrent("");
       setPhase("revealing");
-      setTimeout(() => finishReveal(response.data), prefersReducedMotion() ? 0 : REVEAL_MS);
+      const earlierGuesses = game?.guesses ?? [];
+      setTimeout(() => finishReveal(response.data, earlierGuesses), prefersReducedMotion() ? 0 : REVEAL_MS);
       return;
     }
 
@@ -172,7 +183,7 @@ export function useGame() {
         showToast("Something went wrong. Try again.");
         setPhase("ready");
     }
-  }, [acceptingInput, current, finishReveal, load, shake, showToast, startNewGame]);
+  }, [acceptingInput, current, finishReveal, game, load, shake, showToast, startNewGame]);
 
   /** Guesses on the grid, including the one being revealed. */
   const guesses: ScoredGuess[] = useMemo(() => {
@@ -189,6 +200,7 @@ export function useGame() {
   return {
     phase,
     game,
+    solvedWords,
     guesses,
     current,
     pending,

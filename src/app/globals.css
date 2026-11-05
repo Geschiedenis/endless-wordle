@@ -115,11 +115,17 @@
 
 /*
  * Grid. Tiles size themselves so six rows always fit the available space.
- * Bonus rows beyond six scroll inside the grid, and the page itself never does.
+ * Bonus rows and earlier words scroll inside the grid, and the page itself never does.
  */
 .game-grid {
   container-type: size;
   scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .game-grid {
+    scroll-behavior: smooth;
+  }
 }
 
 .game-rows {
@@ -137,6 +143,37 @@
 
 .game-row {
   gap: var(--gap);
+}
+
+.game-word {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.word-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.word-divider::before,
+.word-divider::after {
+  flex: 1;
+  height: 1px;
+  background-color: var(--tile-border);
+  content: "";
+}
+
+/* Unfolds downwards. Nothing here moves the layout, so the scroll lands in the right place. */
+.word-enter {
+  transform-origin: top;
+  animation: word-enter 450ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .tile {
@@ -234,6 +271,19 @@
   animation: toast-in 120ms ease-out;
 }
 
+@keyframes word-enter {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 -1rem 0);
+    transform: scale(1);
+  }
+}
+
 @keyframes tile-pop {
   50% {
     transform: scale(1.08);
@@ -315,6 +365,7 @@
   .tile,
   .tile::after,
   .row-shake,
+  .word-enter,
   .toast {
     animation: none !important;
   }

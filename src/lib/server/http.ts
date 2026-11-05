@@ -56,7 +56,6 @@ export const rateLimiters = {
   username: createMemoryRateLimiter({ limit: 20, windowMs: 60_000 }),
   profile: createMemoryRateLimiter({ limit: 60, windowMs: 60_000 }),
   deleteAccount: createMemoryRateLimiter({ limit: 5, windowMs: 60_000 }),
-  leaderboard: createMemoryRateLimiter({ limit: 60, windowMs: 60_000 }),
 };
 
 /** Vercel sets x-real-ip itself and overwrites what the client sends. */

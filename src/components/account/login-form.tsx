@@ -65,15 +65,6 @@ export function LoginForm() {
     setBusy(false);
   }
 
-  async function continueWithGoogle() {
-    setBusy(true);
-    setError(null);
-    const response = await apiSend<{ url: string }>("/api/auth/google", "POST", { next });
-    if (response.ok) return fullPageLoad(response.data.url);
-    setError(response.message);
-    setBusy(false);
-  }
-
   return (
     <div className="mx-auto w-full max-w-sm">
       <h1 className="text-center text-3xl font-bold tracking-tight">{COPY[mode].title}</h1>
@@ -119,18 +110,6 @@ export function LoginForm() {
           {COPY[mode].submit}
         </Button>
       </form>
-
-      {mode !== "forgot" && (
-        <Button
-          type="button"
-          variant="outline"
-          disabled={busy}
-          onClick={() => void continueWithGoogle()}
-          className="mt-3 h-11 w-full text-base"
-        >
-          Continue with Google
-        </Button>
-      )}
 
       <div className="mt-6 flex flex-col items-center gap-2 text-sm">
         {mode === "login" && (

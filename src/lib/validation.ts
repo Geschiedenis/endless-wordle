@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { LEADERBOARD_RANGES } from "@/lib/leaderboard";
 import { findUsernameProblem } from "@/lib/username";
 
 /** bcrypt, which Supabase uses, only reads the first 72 bytes. */
@@ -27,7 +26,3 @@ export const usernameSchema = z.strictObject({
 
 export const deleteAccountSchema = z.strictObject({ confirm: z.string().min(1).max(32) });
 
-export const leaderboardQuerySchema = z.object({
-  range: z.enum(LEADERBOARD_RANGES).default("all"),
-  offset: z.coerce.number().int().min(0).max(50).default(0),
-});

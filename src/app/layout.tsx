@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // The script below sets theme attributes on <html> before React hydrates.
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} dark h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Applied before first paint, so a saved dark theme never flashes light. */}
         <script dangerouslySetInnerHTML={{ __html: PREFERENCES_SCRIPT }} />

@@ -3,8 +3,8 @@
 const THEME_KEY = "ew-theme";
 const CONTRAST_KEY = "ew-contrast";
 
-/** Runs in <head> before paint. With no saved choice, the theme follows the OS. */
-export const PREFERENCES_SCRIPT = `(function(){var d=document.documentElement,t=null,c=null;try{t=localStorage.getItem("${THEME_KEY}");c=localStorage.getItem("${CONTRAST_KEY}")}catch(e){}if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches))d.classList.add("dark");if(c==="high")d.dataset.contrast="high"})()`;
+/** Runs in <head> before paint. <html> starts out dark, so only a saved light theme changes it. */
+export const PREFERENCES_SCRIPT = `(function(){var d=document.documentElement,t=null,c=null;try{t=localStorage.getItem("${THEME_KEY}");c=localStorage.getItem("${CONTRAST_KEY}")}catch(e){}if(t==="light")d.classList.remove("dark");if(c==="high")d.dataset.contrast="high"})()`;
 
 const listeners = new Set<() => void>();
 

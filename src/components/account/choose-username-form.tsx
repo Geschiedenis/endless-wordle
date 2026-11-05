@@ -31,7 +31,7 @@ export function ChooseUsernameForm() {
   return (
     <div className="mx-auto w-full max-w-sm">
       <h1 className="text-center text-3xl font-bold tracking-tight">Choose a username</h1>
-      <p className="mt-2 text-center text-muted-foreground">This is the name shown on the leaderboard.</p>
+      <p className="mt-2 text-center text-muted-foreground">This is the name on your account.</p>
       <form onSubmit={(event) => void submit(event)} className="mt-6 flex flex-col gap-4">
         <UsernameField value={username} onChange={setUsername} />
         <FormMessage error={error} />

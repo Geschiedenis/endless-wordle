@@ -12,12 +12,14 @@ import {
 } from "@/lib/preferences";
 
 const onServer = () => false;
+/** Pages are prerendered in the default theme, which is dark. */
+const darkOnServer = () => true;
 
 /** Keeps focus off the toggle after a click, so Enter still submits a guess. */
 const keepFocus = (event: React.MouseEvent) => event.preventDefault();
 
 export function PreferenceToggles() {
-  const dark = useSyncExternalStore(subscribeToPreferences, isDarkTheme, onServer);
+  const dark = useSyncExternalStore(subscribeToPreferences, isDarkTheme, darkOnServer);
   const highContrast = useSyncExternalStore(subscribeToPreferences, isHighContrast, onServer);
 
   return (

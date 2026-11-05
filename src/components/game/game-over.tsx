@@ -36,7 +36,7 @@ export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain }: GameO
         </strong>
       </p>
 
-      <p className="text-sm">
+      <p className="text-sm empty:hidden">
         {session.status === "guest" && session.accountsEnabled && (
           <>
             <Link href="/login?next=/play" className="font-medium underline underline-offset-2">
@@ -46,10 +46,7 @@ export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain }: GameO
           </>
         )}
         {session.status === "user" && scoreSaved === true && "Score saved."}
-        {session.status === "user" && scoreSaved === false && "Your score couldn't be saved."}{" "}
-        <Link href="/leaderboard" className="underline underline-offset-2">
-          Leaderboard
-        </Link>
+        {session.status === "user" && scoreSaved === false && "Your score couldn't be saved."}
       </p>
 
       <Button ref={playAgain} onClick={onPlayAgain} className="h-12 w-full text-base font-semibold">

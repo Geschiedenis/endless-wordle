@@ -28,6 +28,12 @@ export interface ScoredGuess {
   feedback: LetterFeedback[];
 }
 
+/** A finished word that stays on the board above the one being played. */
+export interface SolvedWord {
+  wordNumber: number;
+  guesses: ScoredGuess[];
+}
+
 /** What the browser is allowed to know about a game. */
 export interface GameView {
   status: GameStatus;

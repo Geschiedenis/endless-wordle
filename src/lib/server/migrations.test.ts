@@ -143,9 +143,11 @@ describe("row level security", () => {
     expect(rows).toHaveLength(1);
   });
 
-  it("keeps the internal leaderboard functions private", async () => {
-    await expect(as("anon", null, "select * from public.leaderboard_ranked('all')")).rejects.toThrow(/permission denied/);
-    await expect(as("authenticated", ALICE, "select * from public.leaderboard_ranked('all')")).rejects.toThrow(/permission denied/);
+  it("leaves no function that lists usernames or scores", async () => {
+    const { rows } = await db.query(
+      "select proname from pg_proc where proname like '%leaderboard%' or proname = 'get_my_rank'",
+    );
+    expect(rows).toEqual([]);
   });
 });
 
@@ -182,141 +184,6 @@ describe("username rules in the database", () => {
     await setName("Alice_99");
     const { rows } = await db.query("select 1 from public.profiles where username = 'Alice_99'");
     expect(rows).toHaveLength(1);
-  });
-});
-
-describe("get_leaderboard", () => {
-  type Row = { rank: string | number; username: string; words_solved: number };
-  const board = (range: string, limit = 25, offset = 0) =>
-    as<Row>("anon", null, "select * from public.get_leaderboard($1, $2, $3)", [range, limit, offset]);
-  const names = (rows: Row[]) => rows.map((row) => row.username);
-
-  it("is readable by guests and exposes only rank, username and score", async () => {
-    await addGame(ALICE, 5, 20);
-    const rows = await board("all");
-    expect(Object.keys(rows[0]).sort()).toEqual(["rank", "username", "words_solved"]);
-  });
-
-  it("counts only each user's best game", async () => {
-    await addGame(ALICE, 3, 10);
-    await addGame(ALICE, 8, 30);
-    await addGame(ALICE, 5, 20);
-    await addGame(BOB, 6, 25);
-    const rows = await board("all");
-    expect(rows.map((row) => [row.username, row.words_solved])).toEqual([
-      ["alice", 8],
-      ["bob", 6],
-    ]);
-  });
-
-  it("gives ties the same rank and lists fewer guesses first", async () => {
-    await addGame(ALICE, 5, 30);
-    await addGame(BOB, 5, 20);
-    await addGame(CAROL, 2, 5);
-    const rows = await board("all");
-    expect(names(rows)).toEqual(["bob", "alice", "carol"]);
-    expect(rows.map((row) => Number(row.rank))).toEqual([1, 1, 3]);
-  });
-
-  it("leaves out games with no words solved", async () => {
-    await addGame(ALICE, 0, 6);
-    expect(await board("all")).toEqual([]);
-  });
-
-  it("leaves out users who haven't chosen a username", async () => {
-    await db.query("delete from public.profiles where id = $1", [ALICE]);
-    await addGame(ALICE, 5, 20);
-    expect(await board("all")).toEqual([]);
-  });
-
-  it("filters by time range", async () => {
-    await addGame(ALICE, 9, 30, "60 days");
-    await addGame(BOB, 3, 10, "1 minute");
-    await db.exec(`
-      insert into public.games (user_id, words_solved, total_guesses, created_at)
-      values ('${CAROL}', 7, 20, public.leaderboard_range_start('today') - interval '1 second'),
-             ('${DAVE}', 6, 20, public.leaderboard_range_start('week') - interval '1 second');
-    `);
-    expect(names(await board("all"))).toEqual(["alice", "carol", "dave", "bob"]);
-    expect(names(await board("today"))).toEqual(["bob"]);
-    // Carol's game was just before today, which only counts this week if today isn't Monday.
-    const { rows } = await db.query<{ monday: boolean }>(
-      "select public.leaderboard_range_start('week') = public.leaderboard_range_start('today') as monday",
-    );
-    expect(names(await board("week"))).toEqual(rows[0].monday ? ["bob"] : ["carol", "bob"]);
-  });
-
-  it("uses the best game inside the range, not the all-time best", async () => {
-    await addGame(ALICE, 9, 30, "60 days");
-    await addGame(ALICE, 2, 8, "1 minute");
-    expect((await board("today"))[0].words_solved).toBe(2);
-  });
-
-  it("rejects an unknown range", async () => {
-    await expect(board("forever")).rejects.toThrow(/invalid range/);
-  });
-
-  describe("paging", () => {
-    beforeEach(async () => {
-      await db.exec(`
-        insert into auth.users (id)
-          select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid from generate_series(1, 60) n;
-        insert into public.profiles (id, username)
-          select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid, 'player' || n from generate_series(1, 60) n;
-        insert into public.games (user_id, words_solved, total_guesses)
-          select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid, 100 + n, 10 from generate_series(1, 60) n;
-      `);
-    });
-
-    it("pages through without gaps or overlaps", async () => {
-      const first = await board("all", 25, 0);
-      const second = await board("all", 25, 25);
-      expect(first).toHaveLength(25);
-      expect(second).toHaveLength(25);
-      expect(new Set(names([...first, ...second])).size).toBe(50);
-      expect(Number(second[0].rank)).toBe(26);
-    });
-
-    it("never returns anyone past the top 50, however it's asked", async () => {
-      expect(await board("all", 1000, 0)).toHaveLength(50);
-      expect(await board("all", 25, 40)).toHaveLength(10);
-      expect(await board("all", 25, 50)).toEqual([]);
-      expect(await board("all", 25, 5000)).toEqual([]);
-    });
-
-    it("treats a negative offset or limit as harmless", async () => {
-      expect(await board("all", 5, -10)).toHaveLength(5);
-      expect(await board("all", -5, 0)).toEqual([]);
-    });
-  });
-});
-
-describe("get_my_rank", () => {
-  it("returns the caller's own rank, even outside the top 50", async () => {
-    await db.exec(`
-      insert into auth.users (id)
-        select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid from generate_series(1, 60) n;
-      insert into public.profiles (id, username)
-        select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid, 'player' || n from generate_series(1, 60) n;
-      insert into public.games (user_id, words_solved, total_guesses)
-        select ('00000000-0000-4000-9000-' || lpad(n::text, 12, '0'))::uuid, 100 + n, 10 from generate_series(1, 60) n;
-    `);
-    await addGame(ALICE, 1, 6);
-    const rows = await as<{ rank: string | number; words_solved: number }>(
-      "authenticated",
-      ALICE,
-      "select * from public.get_my_rank('all')",
-    );
-    expect(Number(rows[0].rank)).toBe(61);
-    expect(rows[0].words_solved).toBe(1);
-  });
-
-  it("returns nothing for a user with no ranked game", async () => {
-    expect(await as("authenticated", ALICE, "select * from public.get_my_rank('all')")).toEqual([]);
-  });
-
-  it("is not available to guests", async () => {
-    await expect(as("anon", null, "select * from public.get_my_rank('all')")).rejects.toThrow(/permission denied/);
   });
 });
 

@@ -4,7 +4,7 @@ import { guardedRoute, logServerError, rateLimiters } from "@/lib/server/http";
 import { getUsername } from "@/lib/server/profiles";
 import { createSessionClient } from "@/lib/server/supabase";
 
-/** Where Google sign-in and the email links land. Turns the code into a session. */
+/** Where the email links land. Turns the code into a session. */
 export const GET = guardedRoute(rateLimiters.oauth, async (request) => {
   const url = new URL(request.url);
   const redirectTo = (path: string) => NextResponse.redirect(new URL(path, request.url));

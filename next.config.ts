@@ -28,7 +28,7 @@ function assertProductionEnv() {
  * script-src needs 'unsafe-inline' because these pages are prerendered and Next.js
  * adds inline scripts to them. The stricter nonce approach requires rendering every
  * page per request. No page calls another origin: Supabase is only reached from the
- * server, and Google sign-in is a full navigation, which connect-src doesn't cover.
+ * server.
  */
 function contentSecurityPolicy(isDev: boolean): string {
   return [
