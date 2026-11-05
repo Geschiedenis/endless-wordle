@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useEffectEvent } from "react";
-import Link from "next/link";
-import { AuthMenu } from "@/components/auth-menu";
 import { GameOver } from "@/components/game/game-over";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
-import { Logo } from "@/components/logo";
 import { StatsBar } from "@/components/game/stats-bar";
-import { PreferenceToggles } from "@/components/preference-toggles";
+import { TopBar } from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
+import { localePath, type Locale } from "@/i18n/config";
+import { format } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
+import { rememberLocale } from "@/i18n/remember";
 import { BASE_GUESSES } from "@/lib/game/constants";
+import { normalizeLetter } from "@/lib/game/languages";
 import { useGame } from "@/hooks/use-game";
 
 export function Game() {
+  const { locale, dict } = useI18n();
   const {
     phase,
     game,
@@ -35,8 +38,8 @@ export function Game() {
 
   const onKeyDown = useEffectEvent((event: KeyboardEvent) => {
     if (event.ctrlKey || event.metaKey || event.altKey) return;
-    // The account menu has its own keyboard handling.
-    if ((event.target as Element | null)?.closest?.('[role="menu"]')) return;
+    // Menus and dialogs have their own keyboard handling.
+    if ((event.target as Element | null)?.closest?.('[role="menu"], [role="dialog"]')) return;
 
     // Enter or Space on a focused control should activate that control only.
     const onControl = (event.target as Element | null)?.closest?.("a, button");
@@ -48,7 +51,7 @@ export function Game() {
     } else if (event.key === "Backspace") {
       event.preventDefault();
       removeLetter();
-    } else if (/^[a-zA-Z]$/.test(event.key)) {
+    } else if (normalizeLetter(locale, event.key)) {
       // Typing means the player is back in the game, so Enter should submit next.
       if (onControl instanceof HTMLElement) onControl.blur();
       addLetter(event.key);
@@ -62,36 +65,30 @@ export function Game() {
   }, []);
 
   const lost = game?.status === "lost" && !pending;
+  const mismatch = phase === "mismatch";
   // The stats shouldn't lag behind a guess that is already on the grid.
   const guessesLeft = game && game.guessesRemaining - (pending ? 1 : 0);
 
   return (
-    <main className="flex h-dvh flex-col gap-2 overflow-hidden px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4">
-      <header className="mx-auto flex w-full max-w-lg items-center justify-between">
-        <h1 className="text-base font-bold tracking-tight whitespace-nowrap sm:text-lg">
-          <Link href="/" className="flex items-center gap-2 rounded-sm" aria-label="Endless Wordle, back to home">
-            <Logo size={24} />
-            Endless Wordle
-          </Link>
-        </h1>
-        <div className="flex items-center gap-1">
-          <AuthMenu />
-          <PreferenceToggles />
-        </div>
-      </header>
+    <main className="flex h-dvh flex-col gap-2 overflow-hidden px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4">
+      <h1 className="sr-only">Endless Wordle</h1>
+      {/* The game's own gutter is 8px on phones, so this tops it up to the usual 16px. */}
+      <TopBar className="px-2 sm:px-0" />
 
       <StatsBar
-        wordNumber={game?.wordNumber}
-        streak={game?.wordsSolved}
-        guessesLeft={guessesLeft ?? undefined}
-        bonus={game?.bonusGuesses}
+        wordNumber={mismatch ? undefined : game?.wordNumber}
+        streak={mismatch ? undefined : game?.wordsSolved}
+        guessesLeft={mismatch ? undefined : (guessesLeft ?? undefined)}
+        bonus={mismatch ? undefined : game?.bonusGuesses}
       />
 
       {phase === "error" ? (
         <div role="alert" className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
-          <p>The game couldn&apos;t load.</p>
-          <Button onClick={() => void retryLoad()}>Try again</Button>
+          <p>{dict.game.loadError}</p>
+          <Button onClick={() => void retryLoad()}>{dict.game.tryAgain}</Button>
         </div>
+      ) : mismatch && game ? (
+        <LanguageMismatch gameLanguage={game.language} onStartNew={() => void startNewGame()} />
       ) : (
         <Grid
           solvedWords={solvedWords}
@@ -105,12 +102,22 @@ export function Game() {
         />
       )}
 
-      {lost && game?.answer ? (
+      {mismatch ? null : lost && game?.answer ? (
         <GameOver
           answer={game.answer}
           wordsSolved={game.wordsSolved}
           scoreSaved={scoreSaved}
           onPlayAgain={() => void startNewGame()}
+          sharedWords={
+            // Only the words solved since the page loaded are known. If the page was
+            // reloaded mid-game, the share sticks to the score.
+            solvedWords.length === game.wordsSolved
+              ? [
+                  ...solvedWords.map((word) => ({ guesses: word.guesses.length, solved: true })),
+                  { guesses: game.guesses.length, solved: false },
+                ]
+              : []
+          }
         />
       ) : (
         <Keyboard
@@ -136,5 +143,30 @@ export function Game() {
         {announcement}
       </div>
     </main>
+  );
+}
+
+/**
+ * Shown when a game in another language is under way. Starting one in this page's
+ * language would end it, so the player chooses.
+ */
+function LanguageMismatch({ gameLanguage, onStartNew }: { gameLanguage: Locale; onStartNew: () => void }) {
+  const { locale, dict } = useI18n();
+  const current = dict.languages[gameLanguage];
+  return (
+    <div role="alert" className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center gap-3 text-center">
+      <p className="text-lg font-semibold text-balance">{format(dict.game.mismatchTitle, { language: current })}</p>
+      <p className="text-muted-foreground text-balance">
+        {format(dict.game.mismatchBody, { newLanguage: dict.languages[locale] })}
+      </p>
+      <Button onClick={onStartNew} className="mt-2 h-12 w-full text-base font-semibold">
+        {format(dict.game.mismatchStartNew, { language: dict.languages[locale] })}
+      </Button>
+      <Button asChild variant="outline" className="h-11 w-full text-base">
+        <a href={localePath(gameLanguage, "/play")} onClick={() => rememberLocale(gameLanguage)}>
+          {format(dict.game.mismatchContinue, { language: current })}
+        </a>
+      </Button>
+    </div>
   );
 }

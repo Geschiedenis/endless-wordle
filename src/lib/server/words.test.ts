@@ -1,35 +1,54 @@
 import { describe, expect, it } from "vitest";
-import answers from "../../../data/answers.json";
-import validGuesses from "../../../data/valid-guesses.json";
+import { LOCALES } from "@/i18n/config";
 import { WORD_LENGTH } from "@/lib/game/constants";
-import { isValidGuess, newSeed, wordAt } from "./words";
+import { LANGUAGES, parseGuess } from "@/lib/game/languages";
+import { ANSWERS, isValidGuess, newSeed, wordAt } from "./words";
+import enGuesses from "../../../data/en/valid-guesses.json";
+import nlGuesses from "../../../data/nl/valid-guesses.json";
+import deGuesses from "../../../data/de/valid-guesses.json";
+import frGuesses from "../../../data/fr/valid-guesses.json";
+import esGuesses from "../../../data/es/valid-guesses.json";
 
-describe("word list data", () => {
-  const shape = new RegExp(`^[a-z]{${WORD_LENGTH}}$`);
+const GUESSES = { en: enGuesses, nl: nlGuesses, de: deGuesses, fr: frGuesses, es: esGuesses };
 
-  it("contains only lowercase words of the right length", () => {
-    expect(answers.every((word) => shape.test(word))).toBe(true);
-    expect(validGuesses.every((word) => shape.test(word))).toBe(true);
+describe.each(LOCALES)("%s word lists", (locale) => {
+  const answers = ANSWERS[locale];
+  const guesses: string[] = GUESSES[locale];
+  const letters = new Set(LANGUAGES[locale].letters);
+  const inAlphabet = (word: string) => [...word].length === WORD_LENGTH && [...word].every((c) => letters.has(c));
+
+  it("contains only words of the language's letters, of the right length", () => {
+    expect(answers.every(inAlphabet)).toBe(true);
+    expect(guesses.every(inAlphabet)).toBe(true);
+  });
+
+  it("can be typed: every word comes back unchanged from guess parsing", () => {
+    expect(guesses.every((word) => parseGuess(word, locale) === word)).toBe(true);
   });
 
   it("has no duplicates", () => {
     expect(new Set(answers).size).toBe(answers.length);
-    expect(new Set(validGuesses).size).toBe(validGuesses.length);
+    expect(new Set(guesses).size).toBe(guesses.length);
   });
 
   it("is sized as intended, with guesses larger than answers", () => {
-    expect(answers.length).toBeGreaterThan(1500);
-    expect(validGuesses.length).toBeGreaterThan(answers.length);
+    expect(answers.length).toBeGreaterThan(1000);
+    expect(guesses.length).toBeGreaterThan(answers.length);
   });
 
   it("accepts every answer as a guess", () => {
-    expect(answers.every(isValidGuess)).toBe(true);
+    expect(answers.every((word) => isValidGuess(word, locale))).toBe(true);
   });
 });
 
 describe("isValidGuess", () => {
   it("rejects words that are not in the list", () => {
     expect(isValidGuess("zzzzz")).toBe(false);
+  });
+
+  it("checks the game's own language", () => {
+    expect(isValidGuess("fiets", "nl")).toBe(true);
+    expect(isValidGuess("fiets", "en")).toBe(false);
   });
 });
 

@@ -10,6 +10,7 @@ import {
   setHighContrast,
   subscribeToPreferences,
 } from "@/lib/preferences";
+import { useI18n } from "@/i18n/provider";
 
 const onServer = () => false;
 /** Pages are prerendered in the default theme, which is dark. */
@@ -19,6 +20,7 @@ const darkOnServer = () => true;
 const keepFocus = (event: React.MouseEvent) => event.preventDefault();
 
 export function PreferenceToggles() {
+  const { dict } = useI18n();
   const dark = useSyncExternalStore(subscribeToPreferences, isDarkTheme, darkOnServer);
   const highContrast = useSyncExternalStore(subscribeToPreferences, isHighContrast, onServer);
 
@@ -28,9 +30,9 @@ export function PreferenceToggles() {
         variant={dark ? "secondary" : "ghost"}
         size="icon"
         className="size-9"
-        aria-label="Dark mode"
+        aria-label={dict.header.darkMode}
         aria-pressed={dark}
-        title="Dark mode"
+        title={dict.header.darkMode}
         onMouseDown={keepFocus}
         onClick={() => setDarkTheme(!dark)}
       >
@@ -40,9 +42,9 @@ export function PreferenceToggles() {
         variant={highContrast ? "secondary" : "ghost"}
         size="icon"
         className="size-9"
-        aria-label="High contrast, colour-blind friendly mode"
+        aria-label={dict.header.highContrast}
         aria-pressed={highContrast}
-        title="High contrast / colour-blind mode"
+        title={dict.header.highContrastTitle}
         onMouseDown={keepFocus}
         onClick={() => setHighContrast(!highContrast)}
       >

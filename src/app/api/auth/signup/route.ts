@@ -8,9 +8,15 @@ export const POST = guardedRoute(rateLimiters.signup, async (request) => {
   if (!body) return errorResponse("invalid_request");
 
   const supabase = await createSessionClient();
+  const { email, password, locale } = body;
   const { data, error } = await supabase.auth.signUp({
-    ...body,
-    options: { emailRedirectTo: `${new URL(request.url).origin}/auth/callback?next=/choose-username` },
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${new URL(request.url).origin}/auth/callback?next=/choose-username`,
+      // Readable in the email templates as {{ .Data.locale }}.
+      data: { locale },
+    },
   });
 
   if (error) {

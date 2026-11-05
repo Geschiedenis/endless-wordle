@@ -81,8 +81,13 @@ export function findUsernameProblem(username: string): UsernameProblem | null {
   return reserved || offensive ? "not_allowed" : null;
 }
 
-export const USERNAME_HELP = `${USERNAME_MIN_LENGTH} to ${USERNAME_MAX_LENGTH} characters: letters, numbers and underscores.`;
-
-export function usernameProblemMessage(problem: UsernameProblem): string {
-  return problem === "format" ? USERNAME_HELP : "That username isn't available.";
+/** The message for a username problem, in the page's language. */
+export function usernameProblemMessage(
+  problem: UsernameProblem,
+  dict: { username: { help: string; unavailable: string } },
+): string {
+  if (problem === "not_allowed") return dict.username.unavailable;
+  return dict.username.help
+    .replace("{min}", String(USERNAME_MIN_LENGTH))
+    .replace("{max}", String(USERNAME_MAX_LENGTH));
 }

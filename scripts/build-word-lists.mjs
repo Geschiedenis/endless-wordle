@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Regenerates data/answers.json and data/valid-guesses.json. The generated
+ * Regenerates the English lists, data/en/answers.json and data/en/valid-guesses.json. The generated
  * files are committed, so this only needs to run if you want to change the
  * lists. See "Word lists" in the README for where to get the two inputs.
  *
@@ -84,7 +84,7 @@ const guesses = [
 
 const write = (name, list) =>
   writeFileSync(
-    new URL(`../data/${name}`, import.meta.url),
+    new URL(`../data/en/${name}`, import.meta.url),
     `[\n${list.map((word) => `"${word}"`).join(",\n")}\n]\n`,
   );
 

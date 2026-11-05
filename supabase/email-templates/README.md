@@ -11,6 +11,8 @@ Paste each file into its template in Supabase under **Authentication > Emails**,
 | Change email address | `change-email.html` | Confirm your new email for Endless Wordle | No |
 | Reauthentication | `reauthentication.html` | Your Endless Wordle verification code | No |
 
-Colours match the dark theme in `src/app/globals.css`. If those change, update the templates by hand: email clients don't support CSS variables, so every style is written inline.
+Each file holds all five languages. Supabase has one template per email type, so the template picks a language from the one stored on the account at sign-up (`{{ .Data.locale }}`). Accounts created before languages existed get English. The subjects above are English only.
 
-The logo loads from `{{ .SiteURL }}/logo.png`, so Supabase's Site URL must be your live site, with that file deployed. It won't show in emails while the Site URL is localhost.
+The files are generated, so don't edit them by hand. Change the text or colours in [`scripts/build-email-templates.mjs`](../../scripts/build-email-templates.mjs) and run `node scripts/build-email-templates.mjs`. Colours match the dark theme in `src/app/globals.css`.
+
+The logo loads from `{{ .SiteURL }}/logo.png`, so Supabase's Site URL must be your live site, with that file deployed, and without a trailing slash. It won't show in emails while the Site URL is localhost.

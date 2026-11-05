@@ -18,8 +18,8 @@ describe("calculateFinalScore", () => {
   });
 
   it("counts every guess across every word, including bonus guesses", () => {
-    // Solve "crane" on guess 2 (+4 bonus), then spend all 10 guesses on "pride".
-    const state = play(["stone", "crane", ...Array(10).fill("stone")]);
+    // Solve "crane" on guess 3 (+3 bonus), then spend all 9 guesses on "pride".
+    const state = play(["stone", "stone", "crane", ...Array(9).fill("stone")]);
     expect(state.status).toBe("lost");
     expect(calculateFinalScore(state)).toEqual({ wordsSolved: 1, totalGuesses: 12 });
   });

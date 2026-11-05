@@ -1,19 +1,24 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { USERNAME_HELP, USERNAME_MAX_LENGTH } from "@/lib/username";
+import { format } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
+import { USERNAME_MAX_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/username";
 
 export function UsernameField({
   value,
   onChange,
-  label = "Username",
+  label,
 }: {
   value: string;
   onChange: (value: string) => void;
   label?: string;
 }) {
+  const { dict } = useI18n();
   return (
     <div className="flex flex-col gap-1.5">
-      <Label htmlFor="username">{label}</Label>
+      <Label htmlFor="username">{label ?? dict.username.label}</Label>
       <Input
         id="username"
         required
@@ -27,7 +32,7 @@ export function UsernameField({
         className="h-11"
       />
       <p id="username-help" className="text-xs text-muted-foreground">
-        {USERNAME_HELP}
+        {format(dict.username.help, { min: USERNAME_MIN_LENGTH, max: USERNAME_MAX_LENGTH })}
       </p>
     </div>
   );

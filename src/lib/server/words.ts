@@ -1,13 +1,37 @@
 import "server-only";
 
 import { createHash, randomBytes } from "node:crypto";
-import answers from "../../../data/answers.json";
-import validGuesses from "../../../data/valid-guesses.json";
+import type { Locale } from "@/i18n/config";
+import deAnswers from "../../../data/de/answers.json";
+import deGuesses from "../../../data/de/valid-guesses.json";
+import enAnswers from "../../../data/en/answers.json";
+import enGuesses from "../../../data/en/valid-guesses.json";
+import esAnswers from "../../../data/es/answers.json";
+import esGuesses from "../../../data/es/valid-guesses.json";
+import frAnswers from "../../../data/fr/answers.json";
+import frGuesses from "../../../data/fr/valid-guesses.json";
+import nlAnswers from "../../../data/nl/answers.json";
+import nlGuesses from "../../../data/nl/valid-guesses.json";
 
-const validGuessSet = new Set<string>(validGuesses);
+/** Answers per language. Server only, so the browser never sees them. */
+export const ANSWERS: Record<Locale, readonly string[]> = {
+  en: enAnswers,
+  nl: nlAnswers,
+  de: deAnswers,
+  fr: frAnswers,
+  es: esAnswers,
+};
 
-export function isValidGuess(word: string): boolean {
-  return validGuessSet.has(word);
+const VALID_GUESSES: Record<Locale, ReadonlySet<string>> = {
+  en: new Set(enGuesses),
+  nl: new Set(nlGuesses),
+  de: new Set(deGuesses),
+  fr: new Set(frGuesses),
+  es: new Set(esGuesses),
+};
+
+export function isValidGuess(word: string, language: Locale = "en"): boolean {
+  return VALID_GUESSES[language].has(word);
 }
 
 export function newSeed(): string {
@@ -23,7 +47,7 @@ export function newSeed(): string {
 export function wordAt(
   seed: string,
   position: number,
-  list: readonly string[] = answers,
+  list: readonly string[] = ANSWERS.en,
 ): string {
   const cycle = Math.floor(position / list.length);
   const shuffled = list

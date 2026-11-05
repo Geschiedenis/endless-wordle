@@ -3,6 +3,8 @@
  * GameView.answer, which only toGameView fills in, and only after a loss.
  */
 
+import type { Locale } from "@/i18n/config";
+
 export type LetterFeedback = "correct" | "present" | "absent";
 
 export type GameStatus = "playing" | "lost";
@@ -11,6 +13,8 @@ export type GameStatus = "playing" | "lost";
 export interface GameState {
   /** Random per-session value that decides the order of the words. */
   seed: string;
+  /** Which word lists the game uses. Fixed for the whole game. */
+  language: Locale;
   answer: string;
   status: GameStatus;
   /** Words solved so far, which is also the score and the current streak. */
@@ -37,6 +41,7 @@ export interface SolvedWord {
 /** What the browser is allowed to know about a game. */
 export interface GameView {
   status: GameStatus;
+  language: Locale;
   wordNumber: number;
   wordsSolved: number;
   bonusGuesses: number;

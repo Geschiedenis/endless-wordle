@@ -8,4 +8,4 @@ export const BASE_GUESSES = 6;
  * The most bonus guesses a player can carry into a word.
  * Change this one value to rebalance the game.
  */
-export const MAX_BONUS_GUESSES = 6;
+export const MAX_BONUS_GUESSES = 3;

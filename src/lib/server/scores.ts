@@ -15,11 +15,12 @@ import { createAdminClient } from "./supabase";
 export async function recordFinalScore(user: User, state: GameState): Promise<boolean> {
   try {
     const { wordsSolved, totalGuesses } = calculateFinalScore(state);
-    const { error } = await createAdminClient().from("games").insert({
-      user_id: user.id,
-      words_solved: wordsSolved,
-      total_guesses: totalGuesses,
-    });
+    const row = { user_id: user.id, words_solved: wordsSolved, total_guesses: totalGuesses };
+    const games = createAdminClient().from("games");
+    let { error } = await games.insert({ ...row, language: state.language });
+    // Until the language migration has run, the column doesn't exist yet. The score
+    // still counts, so it's saved without one rather than lost.
+    if (error?.code === "PGRST204") ({ error } = await games.insert(row));
     if (error) throw error;
     return true;
   } catch (error) {

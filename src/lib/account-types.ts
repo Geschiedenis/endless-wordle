@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 /** Account data the API sends to the browser. Never includes email or user ids. */
 
 export type SessionResponse =
@@ -14,6 +16,7 @@ export interface SignupResponse {
 }
 
 export interface RecentGame {
+  language: Locale;
   wordsSolved: number;
   totalGuesses: number;
   playedAt: string;

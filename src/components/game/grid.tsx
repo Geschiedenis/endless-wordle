@@ -3,6 +3,8 @@
 import { useEffect, useRef, type CSSProperties } from "react";
 import { BASE_GUESSES, WORD_LENGTH } from "@/lib/game/constants";
 import type { LetterFeedback, ScoredGuess, SolvedWord } from "@/lib/game/types";
+import { format } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 import { BOUNCE_STAGGER_MS, FLIP_MS, FLIP_STAGGER_MS } from "@/hooks/use-game";
 
@@ -35,6 +37,7 @@ export function Grid({
   shaking,
 }: GridProps) {
   const activeRowIndex = Math.min(guesses.length, rows - 1);
+  const { dict } = useI18n();
   const activeRow = useRef<HTMLDivElement>(null);
   const scrolledWord = useRef(wordNumber);
 
@@ -48,9 +51,9 @@ export function Grid({
 
   return (
     <div className="game-grid min-h-0 flex-1 overflow-y-auto">
-      <div role="group" aria-label="Game board" className="game-rows mx-auto flex w-fit flex-col">
+      <div role="group" aria-label={dict.game.boardLabel} className="game-rows mx-auto flex w-fit flex-col">
         {solvedWords.map((solved) => (
-          <section key={solved.wordNumber} aria-label={`Word ${solved.wordNumber}, solved`} className="game-word">
+          <section key={solved.wordNumber} aria-label={format(dict.game.wordSolvedLabel, { number: solved.wordNumber })} className="game-word">
             <WordDivider wordNumber={solved.wordNumber} />
             {solved.guesses.map((scored, row) => (
               <div key={row} className="game-row flex">
@@ -74,7 +77,7 @@ export function Grid({
         {/* Same key as its solved entry later on, so a finished word keeps its tiles and doesn't animate again. */}
         <section
           key={wordNumber}
-          aria-label={`Word ${wordNumber}, ${rows} rows`}
+          aria-label={format(dict.game.wordRowsLabel, { number: wordNumber, rows })}
           className={cn("game-word", solvedWords.length > 0 && "word-enter")}
         >
           {solvedWords.length > 0 && <WordDivider wordNumber={wordNumber} />}
@@ -87,7 +90,7 @@ export function Grid({
                 key={row}
                 ref={row === activeRowIndex ? activeRow : undefined}
                 role="group"
-                aria-label={`Row ${row + 1}${row >= BASE_GUESSES ? ", bonus guess" : ""}`}
+                aria-label={format(row >= BASE_GUESSES ? dict.game.bonusRowLabel : dict.game.rowLabel, { number: row + 1 })}
                 className={cn("game-row flex", isCurrent && shaking && "row-shake")}
               >
                 {LETTER_POSITIONS.map((position) => (
@@ -112,7 +115,8 @@ export function Grid({
 }
 
 function WordDivider({ wordNumber }: { wordNumber: number }) {
-  return <p className="word-divider">Word {wordNumber}</p>;
+  const { dict } = useI18n();
+  return <p className="word-divider">{format(dict.game.word, { number: wordNumber })}</p>;
 }
 
 function Tile({
@@ -132,10 +136,13 @@ function Tile({
   reveal: boolean;
   win: boolean;
 }) {
+  const { dict } = useI18n();
   const scored = state !== "empty" && state !== "typed";
-  const label = `Row ${row + 1}, letter ${position + 1}: ${letter ? letter.toUpperCase() : "empty"}${
-    scored ? `, ${state}` : ""
-  }`;
+  const label = `${format(dict.game.tileLabel, {
+    row: row + 1,
+    position: position + 1,
+    letter: letter ? letter.toUpperCase() : dict.game.emptyTile,
+  })}${scored ? `, ${dict.game.feedback[state]}` : ""}`;
 
   const timing = {
     "--flip-ms": `${FLIP_MS}ms`,

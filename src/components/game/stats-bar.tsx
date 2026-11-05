@@ -1,3 +1,7 @@
+"use client";
+
+import { format } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
 import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
 import { cn } from "@/lib/utils";
 
@@ -9,18 +13,19 @@ interface StatsBarProps {
 }
 
 export function StatsBar({ wordNumber, streak, guessesLeft, bonus }: StatsBarProps) {
+  const { dict } = useI18n();
   return (
     <dl className="mx-auto grid w-full max-w-lg grid-cols-4 gap-1 text-center">
-      <Stat label="Word" value={wordNumber ?? "–"} />
-      <Stat label="Streak" value={streak ?? "–"} />
+      <Stat label={dict.stats.word} value={wordNumber ?? "–"} />
+      <Stat label={dict.stats.streak} value={streak ?? "–"} />
       <Stat
-        label="Guesses left"
+        label={dict.stats.guessesLeft}
         value={guessesLeft ?? "–"}
         urgent={guessesLeft !== undefined && guessesLeft <= 1}
       />
       <Stat
-        label="Bonus"
-        srLabel={`Bonus guesses banked, out of ${MAX_BONUS_GUESSES} at most`}
+        label={dict.stats.bonus}
+        srLabel={format(dict.stats.bonusDescription, { max: MAX_BONUS_GUESSES })}
         value={bonus === undefined ? "–" : `+${bonus}`}
       />
     </dl>

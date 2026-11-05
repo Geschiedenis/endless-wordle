@@ -1,3 +1,4 @@
+import type { Locale } from "@/i18n/config";
 import type {
   ApiErrorCode,
   ApiErrorResponse,
@@ -35,6 +36,6 @@ export function apiSend<T>(path: string, method: "POST" | "PUT" | "DELETE", body
 
 export const gameApi = {
   state: () => apiRequest<GameResponse>("/api/game/state"),
-  newGame: () => apiSend<GameResponse>("/api/game/new", "POST"),
+  newGame: (language: Locale) => apiSend<GameResponse>("/api/game/new", "POST", { language }),
   guess: (guess: string) => apiSend<GuessResponse>("/api/game/guess", "POST", { guess }),
 };

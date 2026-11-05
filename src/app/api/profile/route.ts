@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { isLocale } from "@/i18n/config";
 import { NO_USERNAME_CONFIRMATION, type ProfileResponse } from "@/lib/account-types";
 import { getCurrentUser } from "@/lib/server/auth";
 import { errorResponse, guardedRoute, jsonResponse, parseJsonBody, rateLimiters } from "@/lib/server/http";
@@ -21,7 +22,8 @@ export const GET = guardedRoute(rateLimiters.profile, async () => {
       .single<{ games_played: number | string; best_score: number; average_words: number | string }>(),
     supabase
       .from("games")
-      .select("words_solved, total_guesses, created_at")
+      // Every column, so this keeps working before the language migration has run.
+      .select("*")
       .order("created_at", { ascending: false })
       .limit(RECENT_GAMES),
   ]);
@@ -35,10 +37,11 @@ export const GET = guardedRoute(rateLimiters.profile, async () => {
       bestScore: stats.data.best_score,
       averageWords: Number(stats.data.average_words),
     },
-    recentGames: games.data.map((game) => ({
+    recentGames: games.data.map((game: { words_solved: number; total_guesses: number; created_at: string; language?: string }) => ({
       wordsSolved: game.words_solved,
       totalGuesses: game.total_guesses,
       playedAt: game.created_at,
+      language: isLocale(game.language) ? game.language : "en",
     })),
   });
 });

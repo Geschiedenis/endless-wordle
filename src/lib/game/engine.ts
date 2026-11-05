@@ -1,11 +1,13 @@
 import { computeFeedback, isSolved } from "./feedback";
 import { guessesAllowed, rolloverBonus } from "./rollover";
+import type { Locale } from "@/i18n/config";
 import type { GameState, GameView, GuessResponse } from "./types";
 
 /** Starts a session. The caller supplies randomness, keeping this pure. */
-export function createGame(seed: string, answer: string): GameState {
+export function createGame(seed: string, answer: string, language: Locale = "en"): GameState {
   return {
     seed,
+    language,
     answer,
     status: "playing",
     wordsSolved: 0,
@@ -69,6 +71,7 @@ export function toGameView(state: GameState): GameView {
   const allowed = guessesAllowed(state.bonusGuesses);
   return {
     status: state.status,
+    language: state.language,
     wordNumber: state.wordsSolved + 1,
     wordsSolved: state.wordsSolved,
     bonusGuesses: state.bonusGuesses,

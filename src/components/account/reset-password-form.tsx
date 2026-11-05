@@ -5,11 +5,15 @@ import { FormMessage } from "@/components/account/form-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { errorMessage, format } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
 import { apiSend } from "@/lib/game/api-client";
 import { fullPageLoad } from "@/lib/navigation";
 import { PASSWORD_MIN_LENGTH } from "@/lib/validation";
 
 export function ResetPasswordForm() {
+  const { dict } = useI18n();
+  const t = dict.resetPassword;
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,16 +24,18 @@ export function ResetPasswordForm() {
     setError(null);
     const response = await apiSend("/api/auth/update-password", "POST", { password });
     if (response.ok) return fullPageLoad("/play");
-    setError(response.error === "invalid_request" ? `Use at least ${PASSWORD_MIN_LENGTH} characters.` : response.message);
+    setError(
+      response.error === "invalid_request" ? format(t.tooShort, { min: PASSWORD_MIN_LENGTH }) : errorMessage(dict, response),
+    );
     setBusy(false);
   }
 
   return (
     <div className="mx-auto w-full max-w-sm">
-      <h1 className="text-center text-3xl font-bold tracking-tight">Set a new password</h1>
+      <h1 className="text-center text-3xl font-bold tracking-tight">{t.title}</h1>
       <form onSubmit={(event) => void submit(event)} className="mt-6 flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="new-password">New password</Label>
+          <Label htmlFor="new-password">{t.newPassword}</Label>
           <Input
             id="new-password"
             type="password"
@@ -41,11 +47,11 @@ export function ResetPasswordForm() {
             onChange={(event) => setPassword(event.target.value)}
             className="h-11"
           />
-          <p className="text-xs text-muted-foreground">At least {PASSWORD_MIN_LENGTH} characters.</p>
+          <p className="text-xs text-muted-foreground">{format(t.help, { min: PASSWORD_MIN_LENGTH })}</p>
         </div>
         <FormMessage error={error} />
         <Button type="submit" disabled={busy} className="h-11 text-base font-semibold">
-          Save password
+          {t.submit}
         </Button>
       </form>
     </div>

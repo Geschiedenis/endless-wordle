@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LOCALES } from "@/i18n/config";
 import { findUsernameProblem } from "@/lib/username";
 
 /** bcrypt, which Supabase uses, only reads the first 72 bytes. */
@@ -14,7 +15,12 @@ export const loginSchema = z.strictObject({
   password: z.string().min(1).max(PASSWORD_MAX_LENGTH),
 });
 
-export const signupSchema = z.strictObject({ email, password: newPassword });
+export const signupSchema = z.strictObject({
+  email,
+  password: newPassword,
+  /** Stored with the account, so Supabase's emails can be written in this language. */
+  locale: z.enum(LOCALES).default("en"),
+});
 
 export const emailSchema = z.strictObject({ email });
 

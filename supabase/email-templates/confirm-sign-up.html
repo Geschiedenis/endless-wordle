@@ -1,3 +1,257 @@
+{{ $lang := "en" }}{{ with .Data.locale }}{{ $lang = . }}{{ end }}
+{{ if eq $lang "nl" }}
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Bevestig je e-mailadres voor Endless Wordle</title>
+  <style>:root { color-scheme: dark; supported-color-schemes: dark; }</style>
+</head>
+<body style="margin:0;padding:0;background-color:#121213;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#121213;">Bevestig je e-mailadres om je account af te maken.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121213" style="background-color:#121213;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1f1f22" style="width:100%;max-width:480px;background-color:#1f1f22;border:1px solid #3f3f46;border-radius:10px;">
+          <tr>
+            <td align="center" style="padding:32px 32px 0;">
+              <a href="{{ .SiteURL }}/nl" style="text-decoration:none;">
+                <img src="{{ .SiteURL }}/logo.png" width="64" height="64" alt="Endless Wordle" style="display:block;width:64px;height:64px;border:0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.3px;line-height:30px;">Bevestig je e-mailadres</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:12px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;">Bedankt voor je registratie. Bevestig je e-mailadres om je account af te maken en je scores te bewaren.</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#2f7d3b" style="background-color:#2f7d3b;border-radius:8px;">
+                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:20px;text-decoration:none;border-radius:8px;">E-mailadres bevestigen</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">
+              Werkt de knop niet? Kopieer deze link naar je browser:<br>
+              <a href="{{ .ConfirmationURL }}" style="color:#f4f4f5;word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 32px;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">Heb je geen account bij Endless Wordle aangemaakt? Dan kun je deze e-mail negeren.</td>
+          </tr>
+        </table>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;">
+          <tr>
+            <td align="center" style="padding:16px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;">
+              <a href="{{ .SiteURL }}/nl" style="color:#a1a1aa;text-decoration:underline;">Endless Wordle</a>, de Wordle die nooit stopt.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+{{ else if eq $lang "de" }}
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Bestätige deine E-Mail-Adresse für Endless Wordle</title>
+  <style>:root { color-scheme: dark; supported-color-schemes: dark; }</style>
+</head>
+<body style="margin:0;padding:0;background-color:#121213;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#121213;">Bestätige deine E-Mail-Adresse, um dein Konto fertig einzurichten.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121213" style="background-color:#121213;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1f1f22" style="width:100%;max-width:480px;background-color:#1f1f22;border:1px solid #3f3f46;border-radius:10px;">
+          <tr>
+            <td align="center" style="padding:32px 32px 0;">
+              <a href="{{ .SiteURL }}/de" style="text-decoration:none;">
+                <img src="{{ .SiteURL }}/logo.png" width="64" height="64" alt="Endless Wordle" style="display:block;width:64px;height:64px;border:0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.3px;line-height:30px;">Bestätige deine E-Mail-Adresse</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:12px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;">Danke für deine Registrierung. Bestätige deine E-Mail-Adresse, um dein Konto fertig einzurichten und deine Punktestände zu speichern.</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#2f7d3b" style="background-color:#2f7d3b;border-radius:8px;">
+                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:20px;text-decoration:none;border-radius:8px;">E-Mail-Adresse bestätigen</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">
+              Der Button funktioniert nicht? Kopiere diesen Link in deinen Browser:<br>
+              <a href="{{ .ConfirmationURL }}" style="color:#f4f4f5;word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 32px;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">Wenn du kein Konto bei Endless Wordle erstellt hast, kannst du diese E-Mail ignorieren.</td>
+          </tr>
+        </table>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;">
+          <tr>
+            <td align="center" style="padding:16px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;">
+              <a href="{{ .SiteURL }}/de" style="color:#a1a1aa;text-decoration:underline;">Endless Wordle</a>, das Wordle, das nie aufhört.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+{{ else if eq $lang "fr" }}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Confirmez votre e-mail pour Endless Wordle</title>
+  <style>:root { color-scheme: dark; supported-color-schemes: dark; }</style>
+</head>
+<body style="margin:0;padding:0;background-color:#121213;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#121213;">Confirmez votre e-mail pour terminer la création de votre compte.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121213" style="background-color:#121213;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1f1f22" style="width:100%;max-width:480px;background-color:#1f1f22;border:1px solid #3f3f46;border-radius:10px;">
+          <tr>
+            <td align="center" style="padding:32px 32px 0;">
+              <a href="{{ .SiteURL }}/fr" style="text-decoration:none;">
+                <img src="{{ .SiteURL }}/logo.png" width="64" height="64" alt="Endless Wordle" style="display:block;width:64px;height:64px;border:0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.3px;line-height:30px;">Confirmez votre e-mail</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:12px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;">Merci de vous être inscrit. Confirmez votre e-mail pour terminer la création de votre compte et enregistrer vos scores.</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#2f7d3b" style="background-color:#2f7d3b;border-radius:8px;">
+                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:20px;text-decoration:none;border-radius:8px;">Confirmer l'e-mail</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">
+              Le bouton ne fonctionne pas ? Copiez ce lien dans votre navigateur :<br>
+              <a href="{{ .ConfirmationURL }}" style="color:#f4f4f5;word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 32px;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">Si vous n'avez pas créé de compte Endless Wordle, vous pouvez ignorer cet e-mail.</td>
+          </tr>
+        </table>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;">
+          <tr>
+            <td align="center" style="padding:16px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;">
+              <a href="{{ .SiteURL }}/fr" style="color:#a1a1aa;text-decoration:underline;">Endless Wordle</a>, le Wordle qui ne s'arrête jamais.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+{{ else if eq $lang "es" }}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Confirma tu correo para Endless Wordle</title>
+  <style>:root { color-scheme: dark; supported-color-schemes: dark; }</style>
+</head>
+<body style="margin:0;padding:0;background-color:#121213;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#121213;">Confirma tu correo para terminar de crear tu cuenta.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#121213" style="background-color:#121213;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1f1f22" style="width:100%;max-width:480px;background-color:#1f1f22;border:1px solid #3f3f46;border-radius:10px;">
+          <tr>
+            <td align="center" style="padding:32px 32px 0;">
+              <a href="{{ .SiteURL }}/es" style="text-decoration:none;">
+                <img src="{{ .SiteURL }}/logo.png" width="64" height="64" alt="Endless Wordle" style="display:block;width:64px;height:64px;border:0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.3px;line-height:30px;">Confirma tu correo</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:12px 32px 0;color:#f4f4f5;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;">Gracias por registrarte. Confirma tu correo para terminar de crear tu cuenta y empezar a guardar tus puntuaciones.</td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 32px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="#2f7d3b" style="background-color:#2f7d3b;border-radius:8px;">
+                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:20px;text-decoration:none;border-radius:8px;">Confirmar correo</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">
+              ¿El botón no funciona? Copia este enlace en tu navegador:<br>
+              <a href="{{ .ConfirmationURL }}" style="color:#f4f4f5;word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px 32px;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:20px;">Si no creaste una cuenta en Endless Wordle, puedes ignorar este correo.</td>
+          </tr>
+        </table>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:480px;">
+          <tr>
+            <td align="center" style="padding:16px 32px 0;color:#a1a1aa;font-family:Geist,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;">
+              <a href="{{ .SiteURL }}/es" style="color:#a1a1aa;text-decoration:underline;">Endless Wordle</a>, el Wordle que nunca termina.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+{{ else }}
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,3 +314,4 @@
   </table>
 </body>
 </html>
+{{ end }}

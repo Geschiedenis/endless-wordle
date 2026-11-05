@@ -9,8 +9,8 @@ export function guessesAllowed(bonusGuesses: number): number {
  * Bonus carried into the next word: whatever was unused on the word just
  * solved, base and bonus guesses alike, up to the cap.
  *
- * Solving in 4 of 6 gives 2. Solving in 4 of 8 gives 4. Solving in 3 of 12
- * would give 9, capped to 6.
+ * Solving in 4 of 6 gives 2. Solving in 5 of 8 gives 3. Solving in 2 of 8
+ * would give 6, capped to 3.
  */
 export function rolloverBonus(
   bonusGuesses: number,

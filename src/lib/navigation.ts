@@ -1,3 +1,5 @@
+import { isLocale, localePath, splitLocale } from "@/i18n/config";
+
 /**
  * Places a login may send someone back to. An allowlist, so a crafted link can't
  * use the login flow to redirect people to another site.
@@ -16,5 +18,16 @@ export function safeNextPath(value: string | null | undefined): string {
  * memory: the game, the header and the previous account's data.
  */
 export function fullPageLoad(path: string) {
-  window.location.assign(path);
+  window.location.assign(inPageLocale(path));
+}
+
+/**
+ * Keeps a site path in the current page's language, read from <html lang>. Paths
+ * that already name a language, and outside URLs, pass through unchanged.
+ */
+function inPageLocale(path: string): string {
+  if (!path.startsWith("/") || path.startsWith("//")) return path;
+  const pageLocale = document.documentElement.lang;
+  if (!isLocale(pageLocale) || splitLocale(path).locale) return path;
+  return localePath(pageLocale, path);
 }

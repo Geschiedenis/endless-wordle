@@ -53,7 +53,7 @@
   --on-correct: #ffffff;
   --present: #e3b341;
   --on-present: #1a1a1b;
-  --absent: #5f6368;
+  --absent: #737679;
   --on-absent: #ffffff;
   --key: #dfe1e6;
   --on-key: #1a1a1b;
@@ -118,8 +118,13 @@
  * Bonus rows and earlier words scroll inside the grid, and the page itself never does.
  */
 .game-grid {
+  /* Rows fade out over this distance at the top and bottom edges as they scroll. */
+  --fade: 1.5rem;
   container-type: size;
+  padding-block: var(--fade);
+  scroll-padding-block: var(--fade);
   scrollbar-width: thin;
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -170,6 +175,26 @@
   content: "";
 }
 
+/* Text that only shows with high contrast off, or on. */
+.hc-show,
+[data-contrast="high"] .hc-hide {
+  display: none;
+}
+
+[data-contrast="high"] .hc-show {
+  display: inline;
+}
+
+/* Example boards on the how-to-play page, at a fixed size. */
+.demo-board {
+  --tile: 2.5rem;
+  --gap: 0.25rem;
+}
+
+.demo-board-small {
+  --tile: 2rem;
+}
+
 /* Unfolds downwards. Nothing here moves the layout, so the scroll lands in the right place. */
 .word-enter {
   transform-origin: top;
@@ -187,6 +212,7 @@
   width: var(--tile);
   height: var(--tile);
   border: 2px solid var(--tile-edge);
+  border-radius: calc(var(--tile) * 0.08);
   background-color: var(--tile-bg);
   color: var(--tile-fg);
   font-size: calc(var(--tile) * 0.55);
@@ -227,15 +253,21 @@
 [data-contrast="high"] [data-state="correct"]::after,
 [data-contrast="high"] [data-state="present"]::after {
   position: absolute;
-  top: 1px;
+  top: 3px;
   right: 3px;
   font-size: max(0.625rem, calc(var(--tile, 2.5rem) * 0.26));
   font-weight: 700;
   line-height: 1;
 }
 
+/* A real check icon (Lucide's), drawn in the text colour through a mask. */
 [data-contrast="high"] [data-state="correct"]::after {
-  content: "\2713";
+  width: max(0.625rem, calc(var(--tile, 2.5rem) * 0.26));
+  height: max(0.625rem, calc(var(--tile, 2.5rem) * 0.26));
+  background-color: currentColor;
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
 [data-contrast="high"] [data-state="present"]::after {
@@ -282,6 +314,27 @@
     clip-path: inset(0 0 -1rem 0);
     transform: scale(1);
   }
+}
+
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-content-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+}
+
+.dialog-overlay[data-state="open"] {
+  animation: dialog-overlay-in 150ms ease-out;
+}
+
+.dialog-content[data-state="open"] {
+  animation: dialog-content-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes tile-pop {
@@ -366,6 +419,8 @@
   .tile::after,
   .row-shake,
   .word-enter,
+  .dialog-overlay,
+  .dialog-content,
   .toast {
     animation: none !important;
   }

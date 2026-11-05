@@ -1,9 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { Dictionary } from "@/i18n/dictionaries";
+import { format, plural } from "@/i18n/format";
+import { useI18n } from "@/i18n/provider";
 import { gameApi } from "@/lib/game/api-client";
 import { WORD_LENGTH } from "@/lib/game/constants";
 import { keyStatuses } from "@/lib/game/keyboard";
+import { normalizeLetter } from "@/lib/game/languages";
 import type { GameView, GuessResponse, ScoredGuess, SolvedWord } from "@/lib/game/types";
 
 /** Tile timing. The values reach the CSS animations through custom properties. */
@@ -22,11 +26,13 @@ export type Phase =
   | "submitting" // waiting for the server
   | "revealing" // tiles are flipping
   | "solved" // brief pause on the solved word
+  | "mismatch" // a game in another language is in progress; the player decides
   | "error"; // could not load a game
 
 const prefersReducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function useGame() {
+  const { locale, dict } = useI18n();
   const [phase, setPhase] = useState<Phase>("loading");
   const [game, setGame] = useState<GameView | null>(null);
   /** Words solved since this page loaded. The server only keeps the current word's guesses. */
@@ -60,21 +66,32 @@ export function useGame() {
     setSolvedWords([]);
     setCurrent("");
     setScoreSaved(undefined);
-    const response = await gameApi.newGame();
+    const response = await gameApi.newGame(locale);
     if (response.ok) {
       setGame(response.data.game);
       setPhase("ready");
     } else {
       setPhase("error");
     }
-  }, []);
+  }, [locale]);
 
-  /** Resumes the game in the cookie, or starts one if there isn't any. */
+  /**
+   * Resumes the game in progress, or starts one if there isn't any. A game in another
+   * language that's under way waits for the player to choose, because starting a new
+   * one ends it. One that hasn't started, or has ended, is simply replaced.
+   */
   const load = useCallback(async () => {
     setPhase("loading");
     const response = await gameApi.state();
     if (response.ok) {
       const loaded = response.data.game;
+      if (loaded.language !== locale) {
+        const underWay = loaded.status === "playing" && (loaded.guesses.length > 0 || loaded.wordsSolved > 0);
+        if (!underWay) return startNewGame();
+        setGame(loaded);
+        setPhase("mismatch");
+        return;
+      }
       // Another tab may have moved the game on or restarted it.
       setSolvedWords((words) => words.filter((word) => word.wordNumber < loaded.wordNumber));
       setGame(loaded);
@@ -84,7 +101,7 @@ export function useGame() {
     } else {
       setPhase("error");
     }
-  }, [startNewGame]);
+  }, [locale, startNewGame]);
 
   useEffect(() => {
     if (loadStarted.current) return;
@@ -96,10 +113,11 @@ export function useGame() {
 
   const addLetter = useCallback(
     (letter: string) => {
-      if (!acceptingInput) return;
-      setCurrent((word) => (word.length < WORD_LENGTH ? word + letter.toLowerCase() : word));
+      const normalized = normalizeLetter(locale, letter);
+      if (!acceptingInput || !normalized) return;
+      setCurrent((word) => ([...word].length < WORD_LENGTH ? word + normalized : word));
     },
-    [acceptingInput],
+    [acceptingInput, locale],
   );
 
   const removeLetter = useCallback(() => {
@@ -109,7 +127,7 @@ export function useGame() {
 
   const finishReveal = useCallback(
     ({ result, game: next, scoreSaved: saved }: GuessResponse, earlierGuesses: ScoredGuess[]) => {
-      setAnnouncement(describeGuess(result, next));
+      setAnnouncement(describeGuess(dict, result, next));
       setScoreSaved(saved);
 
       if (!result.solved) {
@@ -120,7 +138,7 @@ export function useGame() {
       }
 
       const bonus = result.bonusEarned ?? 0;
-      showToast(bonus > 0 ? `Solved! +${bonus} bonus ${plural(bonus, "guess", "guesses")}` : "Solved!");
+      showToast(bonus > 0 ? plural(dict.game.solvedWithBonus, bonus) : dict.game.solved);
       setPhase("solved");
       setTimeout(
         () => {
@@ -135,14 +153,14 @@ export function useGame() {
         prefersReducedMotion() ? SOLVED_PAUSE_MS : SOLVED_PAUSE_MS + BOUNCE_STAGGER_MS * WORD_LENGTH,
       );
     },
-    [showToast],
+    [dict, showToast],
   );
 
   const submit = useCallback(async () => {
     if (!acceptingInput) return;
-    if (current.length < WORD_LENGTH) {
+    if ([...current].length < WORD_LENGTH) {
       shake();
-      showToast("Not enough letters");
+      showToast(dict.game.notEnoughLetters);
       return;
     }
 
@@ -163,11 +181,11 @@ export function useGame() {
     switch (response.error) {
       case "not_in_word_list":
         shake();
-        showToast("Not in word list");
+        showToast(dict.game.notInWordList);
         setPhase("ready");
         break;
       case "no_game":
-        showToast("Your game expired, so here's a new one");
+        showToast(dict.game.expired);
         await startNewGame();
         break;
       case "game_over":
@@ -176,14 +194,14 @@ export function useGame() {
         await load();
         break;
       case "rate_limited":
-        showToast("Slow down a little, then try again");
+        showToast(dict.game.slowDown);
         setPhase("ready");
         break;
       default:
-        showToast("Something went wrong. Try again.");
+        showToast(dict.game.somethingWrong);
         setPhase("ready");
     }
-  }, [acceptingInput, current, finishReveal, game, load, shake, showToast, startNewGame]);
+  }, [acceptingInput, current, dict, finishReveal, game, load, shake, showToast, startNewGame]);
 
   /** Guesses on the grid, including the one being revealed. */
   const guesses: ScoredGuess[] = useMemo(() => {
@@ -217,19 +235,14 @@ export function useGame() {
   };
 }
 
-function plural(count: number, one: string, many: string): string {
-  return count === 1 ? one : many;
-}
-
 /** Screen reader summary, since the flip itself is purely visual. */
-function describeGuess(result: GuessResponse["result"], next: GameView): string {
+function describeGuess(dict: Dictionary, result: GuessResponse["result"], next: GameView): string {
   const letters = result.feedback
-    .map((status, i) => `${result.word[i].toUpperCase()} ${status}`)
+    .map((status, i) => `${[...result.word][i].toUpperCase()} ${dict.game.feedback[status]}`)
     .join(", ");
   if (result.solved) {
-    return `${letters}. Solved. Word ${next.wordNumber} starts with ${next.guessesAllowed} guesses.`;
+    return format(dict.game.announceSolved, { letters, number: next.wordNumber, guesses: next.guessesAllowed });
   }
-  if (next.status === "lost") return `${letters}. No guesses left.`;
-  const left = next.guessesRemaining;
-  return `${letters}. ${left} ${plural(left, "guess", "guesses")} left.`;
+  if (next.status === "lost") return format(dict.game.announceLost, { letters });
+  return plural(dict.game.announceLeft, next.guessesRemaining, { letters });
 }

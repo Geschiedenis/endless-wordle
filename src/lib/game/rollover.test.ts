@@ -21,7 +21,7 @@ describe("rolloverBonus", () => {
   });
 
   it("accumulates: unused bonus guesses carry over too", () => {
-    expect(rolloverBonus(2, 4)).toBe(4);
+    expect(rolloverBonus(1, 5)).toBe(2);
     expect(rolloverBonus(2, 7)).toBe(1);
   });
 
@@ -31,11 +31,11 @@ describe("rolloverBonus", () => {
   });
 
   it("gives exactly the cap when unused equals the cap", () => {
-    expect(rolloverBonus(1, 1)).toBe(6);
+    expect(rolloverBonus(0, BASE_GUESSES - MAX_BONUS_GUESSES)).toBe(MAX_BONUS_GUESSES);
   });
 
   it("respects a different cap", () => {
-    expect(rolloverBonus(0, 1, 3)).toBe(3);
+    expect(rolloverBonus(0, 1, 5)).toBe(5);
   });
 
   it("never goes negative", () => {

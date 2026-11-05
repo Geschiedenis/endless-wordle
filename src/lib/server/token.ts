@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
-import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
+import { isLocale } from "@/i18n/config";
 import { guessesAllowed } from "@/lib/game/rollover";
 import type { GameState } from "@/lib/game/types";
 
@@ -64,21 +64,33 @@ export function openGameState(
     const { state, exp } = JSON.parse(plaintext) as { state: GameState; exp: number };
     if (typeof exp !== "number" || exp <= now) return null;
     if (!isUsableState(state)) return null;
-    // Guest cookies from before V2 don't have this field.
-    return { ...state, totalGuesses: state.totalGuesses ?? state.guesses.length };
+    return {
+      ...state,
+      // Guest cookies from before V2 don't have totalGuesses, and games from before
+      // languages existed are English.
+      totalGuesses: state.totalGuesses ?? state.guesses.length,
+      language: isLocale(state.language) ? state.language : "en",
+    };
   } catch {
     return null;
   }
 }
 
 /**
- * Tokens from an older deploy can outlive a rules change, such as a lower bonus
- * cap. Only we can create tokens, so this guards against our own past, not forgery.
+ * The highest bonus cap the game has ever had. The cap is now lower, but games
+ * started before that may still carry more, and they should play out rather than
+ * be thrown away. The next solved word rolls over under the current cap.
+ */
+const HIGHEST_BONUS_CAP_EVER = 6;
+
+/**
+ * Tokens from an older deploy can outlive a rules change. Only we can create
+ * tokens, so this guards against our own past, not forgery.
  */
 function isUsableState(state: GameState): boolean {
   return (
     state.bonusGuesses >= 0 &&
-    state.bonusGuesses <= MAX_BONUS_GUESSES &&
+    state.bonusGuesses <= HIGHEST_BONUS_CAP_EVER &&
     state.guesses.length <= guessesAllowed(state.bonusGuesses)
   );
 }

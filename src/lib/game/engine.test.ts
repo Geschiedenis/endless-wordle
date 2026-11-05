@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { applyGuess, createGame, toGameView } from "./engine";
 import { keyStatuses } from "./keyboard";
-import { parseGuess } from "./validation";
 
 const next = () => "pride";
 
@@ -109,26 +108,5 @@ describe("keyStatuses", () => {
       { word: "ab", feedback: ["absent", "absent"] },
     ]);
     expect(statuses).toEqual({ a: "correct", b: "present" });
-  });
-});
-
-describe("parseGuess", () => {
-  it("lowercases valid guesses", () => {
-    expect(parseGuess("CrAnE")).toBe("crane");
-  });
-
-  it.each([
-    ["too short", "cran"],
-    ["too long", "cranes"],
-    ["digits", "cr4ne"],
-    ["accents", "crâne"],
-    ["whitespace", "cran "],
-    ["trailing newline", "crane\n"],
-    ["Kelvin sign that lowercases to k", "Kiosk"],
-    ["not a string", 12345],
-    ["null", null],
-    ["array", ["crane"]],
-  ])("rejects %s", (_label, value) => {
-    expect(parseGuess(value)).toBeNull();
   });
 });

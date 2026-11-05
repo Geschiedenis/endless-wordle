@@ -1,10 +1,10 @@
 "use client";
 
 import { Delete } from "lucide-react";
+import { useI18n } from "@/i18n/provider";
+import { LANGUAGES } from "@/lib/game/languages";
 import type { LetterFeedback } from "@/lib/game/types";
 import { cn } from "@/lib/utils";
-
-const ROWS = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
 interface KeyboardProps {
   statuses: Record<string, LetterFeedback>;
@@ -23,26 +23,29 @@ const KEY_CLASS =
 const keepFocus = (event: React.MouseEvent) => event.preventDefault();
 
 export function Keyboard({ statuses, onLetter, onEnter, onBackspace }: KeyboardProps) {
+  const { locale, dict } = useI18n();
+  const rows = LANGUAGES[locale].keyboard;
   return (
-    <div role="group" aria-label="Keyboard" className="mx-auto flex w-full max-w-lg flex-col gap-1.5">
-      {ROWS.map((row, rowIndex) => (
-        <div key={row} className={cn("flex gap-1", rowIndex === 1 && "px-[5%]")}>
+    <div role="group" aria-label={dict.game.keyboardLabel} className="mx-auto flex w-full max-w-lg flex-col gap-1.5">
+      {rows.map((row, rowIndex) => (
+        // The middle row is indented when it's shorter than the top row, as on a real keyboard.
+        <div key={row} className={cn("flex gap-1", rowIndex === 1 && row.length < rows[0].length && "px-[5%]")}>
           {rowIndex === 2 && (
             <button
               type="button"
-              aria-label="Enter, submit guess"
+              aria-label={dict.game.enterLabel}
               onClick={onEnter}
               onMouseDown={keepFocus}
               className={cn(KEY_CLASS, "flex-[1.6] text-xs")}
             >
-              Enter
+              {dict.game.enter}
             </button>
           )}
           {Array.from(row, (letter) => (
             <button
               key={letter}
               type="button"
-              aria-label={`${letter.toUpperCase()}${statuses[letter] ? `, ${statuses[letter]}` : ""}`}
+              aria-label={`${letter.toUpperCase()}${statuses[letter] ? `, ${dict.game.feedback[statuses[letter]]}` : ""}`}
               data-state={statuses[letter]}
               onClick={() => onLetter(letter)}
               onMouseDown={keepFocus}
@@ -54,7 +57,7 @@ export function Keyboard({ statuses, onLetter, onEnter, onBackspace }: KeyboardP
           {rowIndex === 2 && (
             <button
               type="button"
-              aria-label="Backspace, delete letter"
+              aria-label={dict.game.backspaceLabel}
               onClick={onBackspace}
               onMouseDown={keepFocus}
               className={cn(KEY_CLASS, "flex-[1.6]")}
