@@ -43,7 +43,7 @@ export default async function FaqPage() {
   };
 
   return (
-    <PageShell>
+    <PageShell wide>
       <script
         type="application/ld+json"
         // Escaping < keeps the JSON from ever closing the script tag early.

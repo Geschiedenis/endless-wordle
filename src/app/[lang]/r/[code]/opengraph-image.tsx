@@ -13,25 +13,6 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const COLOURS = { miss: "#3a3a3c", solved: "#2f7d3b", lost: "#c0392b" };
-/** Flag colours as stripes, since the image renderer can't show flag emoji reliably. */
-const FLAG_STRIPES: Record<Locale, { colours: string[]; vertical?: boolean }> =
-  {
-    en: {
-      colours: [
-        "#B22234",
-        "#FFFFFF",
-        "#B22234",
-        "#FFFFFF",
-        "#B22234",
-        "#FFFFFF",
-        "#B22234",
-      ],
-    },
-    nl: { colours: ["#AE1C28", "#FFFFFF", "#21468B"] },
-    de: { colours: ["#000000", "#DD0000", "#FFCE00"] },
-    fr: { colours: ["#0055A4", "#FFFFFF", "#EF4135"], vertical: true },
-    es: { colours: ["#AA151B", "#F1BF00", "#F1BF00", "#AA151B"] },
-  };
 
 export default async function Image({
   params,
@@ -43,13 +24,12 @@ export default async function Image({
   const dict = DICTIONARIES[locale];
   const result = decodeResult(code) ?? { wordsSolved: 0, words: [] };
   const words = plural(dict.gameOver.words, result.wordsSolved);
-  const logo = await readFile(
-    path.join(process.cwd(), "public", "logo.svg"),
-    "base64",
-  );
+  const [logo, flag] = await Promise.all([
+    readFile(path.join(process.cwd(), "public", "logo.svg"), "base64"),
+    readFile(path.join(process.cwd(), "public", "flags", `${locale}.svg`), "base64"),
+  ]);
   const rows = result.words.slice(-MAX_SHARED_WORDS);
   const square = rows.length > 7 ? 30 : 40;
-  const flag = FLAG_STRIPES[locale];
 
   return new ImageResponse(
     <div
@@ -75,25 +55,13 @@ export default async function Image({
             alt=""
             style={{ borderRadius: 14 }}
           />
-          <div
-            style={{
-              position: "relative",
-              display: "flex",
-              flexDirection: flag.vertical ? "row" : "column",
-              width: 66,
-              height: 44,
-              borderRadius: 6,
-              overflow: "hidden",
-            }}
-          >
-            {flag.colours.map((colour, i) => (
-              <div key={i} style={{ flex: 1, background: colour }} />
-            ))}
-            {/* The blue corner of the US flag, over the stripes. */}
-            {locale === "en" && (
-              <div style={{ position: "absolute", top: 0, left: 0, width: 28, height: 24, background: "#3C3B6E" }} />
-            )}
-          </div>
+          <img
+            src={`data:image/svg+xml;base64,${flag}`}
+            width={64}
+            height={48}
+            alt=""
+            style={{ borderRadius: 6 }}
+          />
         </div>
         <div style={{ fontSize: 40, color: "#a1a1aa" }}>Endless Lingle</div>
         <div style={{ fontSize: 92, lineHeight: 1, letterSpacing: -2 }}>

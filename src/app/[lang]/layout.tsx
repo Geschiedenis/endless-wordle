@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { CookieNotice } from "@/components/cookie-notice";
-import { NavigationTracker } from "@/components/navigation-tracker";
 import { LOCALES, SITE_URL } from "@/i18n/config";
 import { ADSENSE_CLIENT } from "@/lib/adsense";
 import { getDictionary, getLocale } from "@/i18n/server";
@@ -49,10 +47,6 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
         {children}
         <CookieNotice />
         <Analytics />
-        {/* Reads the address, which pages with link-dependent parts only know at request time. */}
-        <Suspense fallback={null}>
-          <NavigationTracker />
-        </Suspense>
       </body>
     </html>
   );

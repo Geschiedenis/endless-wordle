@@ -81,14 +81,16 @@ export function HeroFan() {
   const drop = (1 - LAYOUT.visible) * BOX.height;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    // Pinned to the page, not the screen, so it moves with the footer's fade when a phone
+    // bounces the page or hides its address bar.
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
       <div
         ref={fan}
         className="hero-fan"
         style={
           {
             "--arc": LAYOUT.arc,
-            "--spacing": LAYOUT.spacing,
+            "--fan-spacing": LAYOUT.spacing,
             "--height": LAYOUT.height,
             left: "50%",
             bottom: 0,
@@ -114,7 +116,7 @@ export function HeroFan() {
               } as CSSProperties
             }
           >
-            <Flag locale={locale} className="h-3 w-[18px]" />
+            <Flag locale={locale} className="h-3 w-4" />
             <div className="hero-card-board">
               <DemoBoard rows={rows} />
             </div>

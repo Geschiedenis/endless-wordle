@@ -201,7 +201,7 @@
 /*
  * The fan of example games on the home page (hero-fan.tsx), rising from the bottom
  * edge. Each card's place comes from --x, --y and --r; --arc scales the tilt (--r),
- * --height the steps (--y) and --spacing the gaps (--x). --mx and --my, set from the
+ * --height the steps (--y) and --fan-spacing the gaps (--x). --mx and --my, set from the
  * cursor, lean the fan towards the pointer. Transforms only, so it never shifts the layout.
  */
 .hero-fan {
@@ -222,11 +222,11 @@
   gap: 0.4rem;
   padding: 0.55rem 0.6rem 0.65rem;
   border: 1px solid var(--border);
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   background: var(--popover);
   box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.55);
   transform: translate(-50%, -50%)
-    translateX(calc(var(--x) * var(--spacing, 1) * 1px + var(--mx) * var(--depth) * 6px))
+    translateX(calc(var(--x) * var(--fan-spacing, 1) * 1px + var(--mx) * var(--depth) * 6px))
     translateY(calc(var(--y) * var(--height, 1) * 1px + var(--my) * 10px))
     rotate(calc(var(--r) * var(--arc, 1) * 1deg + var(--mx) * 4deg));
   transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -298,7 +298,7 @@
 @media (prefers-reduced-motion: reduce) {
   /* A still fan: it doesn't follow the cursor. */
   .hero-card {
-    transform: translate(-50%, -50%) translateX(calc(var(--x) * var(--spacing, 1) * 1px))
+    transform: translate(-50%, -50%) translateX(calc(var(--x) * var(--fan-spacing, 1) * 1px))
       translateY(calc(var(--y) * var(--height, 1) * 1px)) rotate(calc(var(--r) * var(--arc, 1) * 1deg));
     transition: none;
   }

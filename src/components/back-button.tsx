@@ -1,30 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { localePath } from "@/i18n/config";
+import { Link } from "@/i18n/link";
 import { useI18n } from "@/i18n/provider";
-import { canGoBackInApp } from "@/lib/in-app-history";
 
-/**
- * Returns to the previous page of the site, such as a game in progress, which picks up
- * where it was. Opened directly from outside, there's nothing to go back to on the
- * site, so it goes to the home page rather than leaving.
- */
+/** Goes to the home page. A plain link, so it can also be opened in a new tab. */
 export function BackButton() {
-  const router = useRouter();
-  const { locale, dict } = useI18n();
+  const { dict } = useI18n();
   return (
     <Button
+      asChild
       variant="ghost"
       size="icon"
       className="-ml-2 size-10 shrink-0"
-      aria-label={dict.header.back}
-      title={dict.header.back}
-      onClick={() => (canGoBackInApp() ? router.back() : router.push(localePath(locale, "/")))}
     >
-      <ArrowLeft aria-hidden="true" className="size-5" />
+      <Link href="/" aria-label={dict.header.back} title={dict.header.back}>
+        <ArrowLeft aria-hidden="true" className="size-5" />
+      </Link>
     </Button>
   );
 }

@@ -33,24 +33,22 @@ export default async function TipsPage() {
   const visuals = tipVisuals(locale, dict.stats.guessesLeft);
 
   return (
-    <PageShell>
+    <PageShell wide>
       <PageHeading>{tips.title}</PageHeading>
       <p className="mt-2 text-muted-foreground">{tips.intro}</p>
 
       <ol className="mt-8 flex flex-col gap-4">
         {tips.items.map(({ title, body }, index) => (
           <li key={title} className="rounded-xl border bg-muted/30 p-5">
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-1.5">
               <span
                 aria-hidden="true"
-                className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
+                className="mb-1.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
               >
                 {index + 1}
               </span>
-              <div className="flex flex-col gap-1.5">
-                <h2 className="text-lg font-semibold">{title}</h2>
-                <p>{body}</p>
-              </div>
+              <h2 className="text-lg font-semibold">{title}</h2>
+              <p>{body}</p>
             </div>
             {visuals[index] && (
               // The text explains each tip, so the example is decoration for screen readers.

@@ -46,7 +46,7 @@ export default async function HowToPlayPage() {
     example.first[first.states!.indexOf(state)];
 
   return (
-    <PageShell>
+    <PageShell wide>
       <PageHeading>{t.title}</PageHeading>
       <p className="mt-2 text-muted-foreground">{t.intro}</p>
 
@@ -202,17 +202,15 @@ function Step({
 }) {
   return (
     <li className="rounded-xl border bg-muted/30 p-5 [&_a]:underline [&_a]:underline-offset-2">
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-1.5">
         <span
           aria-hidden="true"
-          className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
+          className="mb-1.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
         >
           {number}
         </span>
-        <div className="flex flex-col gap-1.5">
-          <h2 className="text-lg font-semibold">{title}</h2>
-          {body}
-        </div>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        {body}
       </div>
       {children}
     </li>
