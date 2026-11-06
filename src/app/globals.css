@@ -230,11 +230,69 @@
     translateY(calc(var(--y) * var(--height, 1) * 1px + var(--my) * 10px))
     rotate(calc(var(--r) * var(--arc, 1) * 1deg + var(--mx) * 4deg));
   transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Dealt in from below, the middle card first. It uses `translate`, which adds to
+     `transform`, so the deal and the cursor lean never fight. */
+  --deal-delay: calc(var(--order) * 110ms + 200ms);
+  animation: hero-deal 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--deal-delay) both;
 }
 
 .hero-card-board .tile {
   font-size: calc(var(--tile) * 0.6);
   border-width: 1px;
+}
+
+/* Once a card has landed, its guesses flip over row by row, as in the game. */
+.hero-card-board .tile:is([data-state="correct"], [data-state="present"], [data-state="absent"]) {
+  --flip-at: calc(var(--deal-delay) + 650ms + var(--row) * 420ms + var(--col) * 80ms);
+  animation: tile-flip 450ms ease-in-out var(--flip-at) both;
+}
+
+/* High-contrast markers wait for their tile to flip, as in the game. */
+.hero-card-board .tile:is([data-state="correct"], [data-state="present"])::after {
+  animation: marker-in 1ms linear calc(var(--flip-at) + 225ms) both;
+}
+
+.hero-card-board .game-row:nth-child(1) { --row: 0; }
+.hero-card-board .game-row:nth-child(2) { --row: 1; }
+.hero-card-board .game-row:nth-child(3) { --row: 2; }
+.hero-card-board .game-row:nth-child(4) { --row: 3; }
+.hero-card-board .game-row:nth-child(5) { --row: 4; }
+.hero-card-board .game-row:nth-child(6) { --row: 5; }
+.hero-card-board .tile:nth-child(1) { --col: 0; }
+.hero-card-board .tile:nth-child(2) { --col: 1; }
+.hero-card-board .tile:nth-child(3) { --col: 2; }
+.hero-card-board .tile:nth-child(4) { --col: 3; }
+.hero-card-board .tile:nth-child(5) { --col: 4; }
+
+/*
+ * The home page text rises into place. The title only moves and is never see-through,
+ * so it counts as painted straight away for page speed (LCP). The rest fades in after it.
+ */
+.hero-rise {
+  animation: hero-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-fade {
+  animation: hero-fade 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 120ms) both;
+}
+
+@keyframes hero-deal {
+  from {
+    translate: 0 160%;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(14px);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -243,6 +301,14 @@
     transform: translate(-50%, -50%) translateX(calc(var(--x) * var(--spacing, 1) * 1px))
       translateY(calc(var(--y) * var(--height, 1) * 1px)) rotate(calc(var(--r) * var(--arc, 1) * 1deg));
     transition: none;
+  }
+
+  .hero-card,
+  .hero-card-board .tile,
+  .hero-card-board .tile::after,
+  .hero-rise,
+  .hero-fade {
+    animation: none;
   }
 }
 

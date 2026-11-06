@@ -304,7 +304,7 @@ export const nl: Dictionary = {
   cookies: {
     title: "Cookies op Endless Lingle",
     description:
-      "We gebruiken noodzakelijke cookies om het spel te laten werken en je ingelogd te houden. Als je accepteert, gebruiken we ook Google Analytics om te begrijpen hoe de site wordt gebruikt. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen via Cookie-instellingen onderaan de pagina.",
+      "We gebruiken noodzakelijke cookies om het spel te laten werken en je ingelogd te houden. Als je accepteert, gebruiken we ook Google Analytics om te begrijpen hoe de site wordt gebruikt. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen bij Instellingen.",
     details: "Details over cookies",
     reject: "Weigeren",
     accept: "Accepteren",

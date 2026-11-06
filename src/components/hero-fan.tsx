@@ -109,6 +109,7 @@ export function HeroFan() {
                 "--y": FAN[index].y,
                 "--r": FAN[index].r,
                 "--depth": index - 2,
+                "--order": Math.abs(index - 2),
                 zIndex: index === 2 ? 3 : 2 - Math.abs(index - 2),
               } as CSSProperties
             }

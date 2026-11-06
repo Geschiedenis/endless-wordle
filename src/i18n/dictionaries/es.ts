@@ -308,7 +308,7 @@ export const es: Dictionary = {
   cookies: {
     title: "Cookies en Endless Lingle",
     description:
-      "Usamos cookies necesarias para que el juego funcione y mantener tu sesión iniciada. Si aceptas, también usamos Google Analytics para entender cómo se usa el sitio. No usamos cookies publicitarias. Puedes cambiar tu elección cuando quieras en Configuración de cookies, al final de la página.",
+      "Usamos cookies necesarias para que el juego funcione y mantener tu sesión iniciada. Si aceptas, también usamos Google Analytics para entender cómo se usa el sitio. No usamos cookies publicitarias. Puedes cambiar tu elección cuando quieras en Ajustes.",
     details: "Detalles de las cookies",
     reject: "Rechazar",
     accept: "Aceptar",

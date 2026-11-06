@@ -42,9 +42,9 @@ export default async function LandingPage() {
       <TopBar logo="center" className="z-20" />
       {/* Centered between the logo and the top of the fan. Phones need less room below, as their footer stacks. */}
       <main className="relative z-10 flex flex-1 flex-col items-center justify-center pb-12 text-center sm:pb-24">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
-        <p className="mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
-        <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
+        <h1 className="hero-rise text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
+        <p className="hero-fade mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
+        <div className="hero-fade mt-8 flex w-full max-w-xs flex-col gap-3 [--delay:240ms]">
           <Button asChild className="h-12 text-base font-semibold">
             <Link href="/play">{dict.home.play}</Link>
           </Button>
@@ -53,8 +53,8 @@ export default async function LandingPage() {
           </Button>
         </div>
       </main>
-      {/* Fades over the fan, so the footer links stay readable on top of it. */}
-      <div className="relative z-10 bg-gradient-to-t from-background via-background/90 to-transparent pt-10">
+      {/* Fades over the fan, so the footer links stay readable on top of it. Edge to edge, past the page padding. */}
+      <div className="relative z-10 -mx-4 bg-gradient-to-t from-background via-background/90 to-transparent px-4 pt-10">
         <SiteFooter />
       </div>
     </div>

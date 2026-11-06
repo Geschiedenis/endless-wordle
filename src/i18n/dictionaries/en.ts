@@ -301,7 +301,7 @@ export const en = {
   cookies: {
     title: "Cookies on Endless Lingle",
     description:
-      "We use necessary cookies to run the game and keep you logged in. If you accept, we also use Google Analytics to understand how the site is used. We don't use advertising cookies. You can change your choice at any time under Cookie settings at the bottom of the page.",
+      "We use necessary cookies to run the game and keep you logged in. If you accept, we also use Google Analytics to understand how the site is used. We don't use advertising cookies. You can change your choice at any time in Settings.",
     details: "Cookie details",
     reject: "Reject",
     accept: "Accept",
