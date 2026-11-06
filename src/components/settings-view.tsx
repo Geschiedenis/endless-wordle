@@ -1,6 +1,6 @@
 "use client";
 
-import { BackButton } from "@/components/back-button";
+import { PageHeading } from "@/components/page-heading";
 import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -22,10 +22,7 @@ export function SettingsView() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-2">
-        <BackButton />
-        <h1 className="text-3xl font-bold tracking-tight">{t.title}</h1>
-      </div>
+      <PageHeading>{t.title}</PageHeading>
 
       {session.status === "guest" && session.accountsEnabled && (
         <SectionCard>

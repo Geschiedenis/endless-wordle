@@ -79,6 +79,7 @@ export const en = {
     guessesLeft: "Guesses left",
     bonus: "Bonus",
     bonusDescription: "Bonus guesses banked, out of {max} at most",
+    guessesLeftWithBonus: "{total} guesses left, including {bonus} bonus",
   },
 
   game: {

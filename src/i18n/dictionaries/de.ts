@@ -76,6 +76,7 @@ export const de: Dictionary = {
     guessesLeft: "Versuche übrig",
     bonus: "Bonus",
     bonusDescription: "Gesparte Bonusversuche, höchstens {max}",
+    guessesLeftWithBonus: "Noch {total} Versuche, davon {bonus} Bonus",
   },
 
   game: {

@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { Mail } from "lucide-react";
 import { FormMessage } from "@/components/account/form-message";
+import { PageHeading } from "@/components/page-heading";
 import { Button } from "@/components/ui/button";
 import { InputWithIcon } from "@/components/ui/input-with-icon";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -89,7 +90,7 @@ export function LoginForm() {
 
   return (
     <div className="mx-auto w-full max-w-sm">
-      <h1 className="text-center text-3xl font-bold tracking-tight">{titles[mode].title}</h1>
+      <PageHeading align="center">{titles[mode].title}</PageHeading>
 
       <FormMessage error={shownError} success={success} className="mt-6" />
 

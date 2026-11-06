@@ -76,6 +76,7 @@ export const nl: Dictionary = {
     guessesLeft: "Pogingen over",
     bonus: "Bonus",
     bonusDescription: "Opgespaarde bonuspogingen, maximaal {max}",
+    guessesLeftWithBonus: "Nog {total} pogingen, waarvan {bonus} bonus",
   },
 
   game: {

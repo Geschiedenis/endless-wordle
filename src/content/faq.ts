@@ -31,7 +31,7 @@ export const FAQ: Record<Locale, FaqContent> = {
       {
         question: "How do bonus guesses work?",
         answer:
-          "Every guess you didn't need on a word carries over to the next one, up to 3 at a time. Solve a word in 4 of 6 guesses and the next word gets 8. Bonus rows have a dashed border, and the Bonus counter at the top shows how many you've banked.",
+          "Every guess you didn't need on a word carries over to the next one, up to 3 at a time. Solve a word in 4 of 6 guesses and the next word gets 8. Bonus rows have a dashed border, and the Guesses left counter at the top shows them as +1, +2 or +3.",
       },
       {
         question: "What do the colours mean?",
@@ -96,7 +96,7 @@ export const FAQ: Record<Locale, FaqContent> = {
       {
         question: "Hoe werken bonuspogingen?",
         answer:
-          "Elke poging die je bij een woord niet nodig had, gaat mee naar het volgende woord, tot maximaal 3 tegelijk. Raad je een woord in 4 van de 6 pogingen, dan krijgt het volgende woord er 8. Bonusrijen hebben een gestippelde rand, en de Bonus-teller bovenaan laat zien hoeveel je er hebt opgespaard.",
+          "Elke poging die je bij een woord niet nodig had, gaat mee naar het volgende woord, tot maximaal 3 tegelijk. Raad je een woord in 4 van de 6 pogingen, dan krijgt het volgende woord er 8. Bonusrijen hebben een gestippelde rand, en de teller Pogingen over bovenaan toont ze als +1, +2 of +3.",
       },
       {
         question: "Wat betekenen de kleuren?",
@@ -161,7 +161,7 @@ export const FAQ: Record<Locale, FaqContent> = {
       {
         question: "Wie funktionieren Bonusversuche?",
         answer:
-          "Jeder Versuch, den du bei einem Wort nicht gebraucht hast, wandert zum nächsten, bis zu 3 auf einmal. Löst du ein Wort in 4 von 6 Versuchen, hat das nächste Wort 8. Bonuszeilen haben einen gestrichelten Rand, und der Bonus-Zähler oben zeigt, wie viele du gespart hast.",
+          "Jeder Versuch, den du bei einem Wort nicht gebraucht hast, wandert zum nächsten, bis zu 3 auf einmal. Löst du ein Wort in 4 von 6 Versuchen, hat das nächste Wort 8. Bonuszeilen haben einen gestrichelten Rand, und der Zähler „Versuche übrig“ oben zeigt sie als +1, +2 oder +3.",
       },
       {
         question: "Was bedeuten die Farben?",
@@ -227,7 +227,7 @@ export const FAQ: Record<Locale, FaqContent> = {
       {
         question: "Comment fonctionnent les essais bonus ?",
         answer:
-          "Chaque essai dont vous n'avez pas eu besoin sur un mot passe au suivant, jusqu'à 3 à la fois. Trouvez un mot en 4 essais sur 6 et le mot suivant en aura 8. Les lignes bonus ont une bordure en pointillés, et le compteur Bonus en haut indique combien vous en avez en réserve.",
+          "Chaque essai dont vous n'avez pas eu besoin sur un mot passe au suivant, jusqu'à 3 à la fois. Trouvez un mot en 4 essais sur 6 et le mot suivant en aura 8. Les lignes bonus ont une bordure en pointillés, et le compteur Essais restants en haut les affiche en +1, +2 ou +3.",
       },
       {
         question: "Que signifient les couleurs ?",
@@ -293,7 +293,7 @@ export const FAQ: Record<Locale, FaqContent> = {
       {
         question: "¿Cómo funcionan los intentos extra?",
         answer:
-          "Cada intento que no necesitaste en una palabra pasa a la siguiente, hasta 3 a la vez. Si aciertas una palabra en 4 de 6 intentos, la siguiente tendrá 8. Las filas extra tienen un borde discontinuo, y el contador Bonus de arriba muestra cuántos llevas acumulados.",
+          "Cada intento que no necesitaste en una palabra pasa a la siguiente, hasta 3 a la vez. Si aciertas una palabra en 4 de 6 intentos, la siguiente tendrá 8. Las filas extra tienen un borde discontinuo, y el contador de intentos de arriba los muestra como +1, +2 o +3.",
       },
       {
         question: "¿Qué significan los colores?",

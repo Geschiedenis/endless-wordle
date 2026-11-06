@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Hourglass } from "lucide-react";
-import { BONUS_ROW, DemoBoard, EMPTY_ROW, type DemoRow } from "@/components/demo-board";
+import {
+  BONUS_ROW,
+  DemoBoard,
+  EMPTY_ROW,
+  type DemoRow,
+} from "@/components/demo-board";
 import { PageShell } from "@/components/page-shell";
-import { Button } from "@/components/ui/button";
+import { PlayCta } from "@/components/play-cta";
+import { PageHeading } from "@/components/page-heading";
 import { TIPS } from "@/content/tips";
 import type { Locale } from "@/i18n/config";
-import { Link } from "@/i18n/link";
 import { getDictionary, getLocale, pageMetadata } from "@/i18n/server";
-import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
+import { BASE_GUESSES, MAX_BONUS_GUESSES } from "@/lib/game/constants";
 import { TIP_EXAMPLES } from "@/lib/game/examples";
 import { computeFeedback } from "@/lib/game/feedback";
 import { keyStatuses } from "@/lib/game/keyboard";
 import { LANGUAGES } from "@/lib/game/languages";
 
 export function generateMetadata(): Promise<Metadata> {
-  return pageMetadata({ path: "/tips", page: "tips", description: "tipsDescription" });
+  return pageMetadata({
+    path: "/tips",
+    page: "tips",
+    description: "tipsDescription",
+  });
 }
 
 export default async function TipsPage() {
   const [locale, dict] = await Promise.all([getLocale(), getDictionary()]);
   const tips = TIPS[locale];
-  const visuals = tipVisuals(locale, dict.stats.bonus);
+  const visuals = tipVisuals(locale, dict.stats.guessesLeft);
 
   return (
     <PageShell>
-      <h1 className="text-3xl font-bold tracking-tight">{tips.title}</h1>
+      <PageHeading>{tips.title}</PageHeading>
       <p className="mt-2 text-muted-foreground">{tips.intro}</p>
 
       <ol className="mt-8 flex flex-col gap-4">
@@ -56,13 +65,7 @@ export default async function TipsPage() {
         ))}
       </ol>
 
-      <section className="mt-12 flex flex-col items-center gap-2 rounded-xl border bg-muted/40 px-4 py-8 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">{dict.howTo.readyTitle}</h2>
-        <p className="text-muted-foreground">{dict.howTo.readyBody}</p>
-        <Button asChild className="mt-3 h-12 w-full max-w-xs text-base font-semibold">
-          <Link href="/play">{dict.howTo.playNow}</Link>
-        </Button>
-      </section>
+      <PlayCta label={dict.howTo.playNow} note={dict.howTo.readyBody} />
     </PageShell>
   );
 }
@@ -71,11 +74,19 @@ export default async function TipsPage() {
  * One example per tip, in the same order as the tips. Words come from the language's
  * own lists (see TIP_EXAMPLES), scored by the game's own rules.
  */
-function tipVisuals(locale: Locale, bonusLabel: string): ReactNode[] {
+function tipVisuals(locale: Locale, guessesLeftLabel: string): ReactNode[] {
   const { answer, weak, explore, mover, ending, double } = TIP_EXAMPLES[locale];
   const starter = TIPS[locale].starters[0];
-  const scored = (word: string): DemoRow => ({ word, states: computeFeedback(word, answer) });
-  const keys = keyStatuses([weak, explore].map((word) => ({ word, feedback: computeFeedback(word, answer) })));
+  const scored = (word: string): DemoRow => ({
+    word,
+    states: computeFeedback(word, answer),
+  });
+  const keys = keyStatuses(
+    [weak, explore].map((word) => ({
+      word,
+      feedback: computeFeedback(word, answer),
+    })),
+  );
 
   return [
     // 1. Start with common letters: the suggested starter, scored.
@@ -85,21 +96,57 @@ function tipVisuals(locale: Locale, bonusLabel: string): ReactNode[] {
     // 3. Move yellow letters: a yellow letter turns green in a new spot.
     <DemoBoard key="mover" rows={[scored(explore), scored(mover)]} />,
     // 4. Letters can repeat.
-    <DemoBoard key="double" rows={[{ word: double, states: ["correct", "correct", "correct", "correct", "correct"] }]} />,
+    <DemoBoard
+      key="double"
+      rows={[
+        {
+          word: double,
+          states: ["correct", "correct", "correct", "correct", "correct"],
+        },
+      ]}
+    />,
     // 5. Common endings: the ending lit up.
-    <DemoBoard key="ending" rows={[{ word: ending, states: ["typed", "typed", "typed", "correct", "correct"] }]} />,
-    // 6. Bonus: a full bank of bonus rows.
+    <DemoBoard
+      key="ending"
+      rows={[
+        {
+          word: ending,
+          states: ["typed", "typed", "typed", "correct", "correct"],
+        },
+      ]}
+    />,
+    // 6. Bonus: a full bank of bonus rows, counted as in the game's stats bar.
     <div key="bonus" className="flex items-center gap-5">
       <div className="flex flex-col items-center rounded-lg bg-muted px-4 py-2">
-        <span className="text-2xl font-bold tabular-nums">+{MAX_BONUS_GUESSES}</span>
-        <span className="text-xs text-muted-foreground">{bonusLabel}</span>
+        <span className="text-2xl font-bold tabular-nums">
+          {BASE_GUESSES}
+          <span className="ml-1 text-base text-primary">
+            +{MAX_BONUS_GUESSES}
+          </span>
+        </span>
+        <span className="text-xs text-muted-foreground">
+          {guessesLeftLabel}
+        </span>
       </div>
-      <DemoBoard rows={[EMPTY_ROW, EMPTY_ROW, ...Array.from({ length: MAX_BONUS_GUESSES }, () => BONUS_ROW)]} />
+      <DemoBoard
+        rows={[
+          EMPTY_ROW,
+          EMPTY_ROW,
+          ...Array.from({ length: MAX_BONUS_GUESSES }, () => BONUS_ROW),
+        ]}
+      />
     </div>,
     // 7. Watch the keyboard: the keys after the two guesses from tip 2.
-    <MiniKeyboard key="keyboard" rows={LANGUAGES[locale].keyboard} statuses={keys} />,
+    <MiniKeyboard
+      key="keyboard"
+      rows={LANGUAGES[locale].keyboard}
+      statuses={keys}
+    />,
     // 8. Take your time.
-    <div key="time" className="flex size-16 items-center justify-center rounded-full bg-muted">
+    <div
+      key="time"
+      className="flex size-16 items-center justify-center rounded-full bg-muted"
+    >
       <Hourglass className="size-8 text-muted-foreground" />
     </div>,
     // 9. High contrast: the same guess in both colour sets.
@@ -113,7 +160,13 @@ function tipVisuals(locale: Locale, bonusLabel: string): ReactNode[] {
 }
 
 /** A small, static copy of the game's keyboard, coloured like after a few guesses. */
-function MiniKeyboard({ rows, statuses }: { rows: readonly string[]; statuses: Record<string, string> }) {
+function MiniKeyboard({
+  rows,
+  statuses,
+}: {
+  rows: readonly string[];
+  statuses: Record<string, string>;
+}) {
   return (
     <div className="flex w-full max-w-sm flex-col gap-1">
       {rows.map((row) => (

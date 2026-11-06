@@ -8,7 +8,8 @@ import {
   type DemoRow,
 } from "@/components/demo-board";
 import { PageShell } from "@/components/page-shell";
-import { Button } from "@/components/ui/button";
+import { PlayCta } from "@/components/play-cta";
+import { PageHeading } from "@/components/page-heading";
 import { format, rich } from "@/i18n/format";
 import { Link } from "@/i18n/link";
 import { getDictionary, getLocale, pageMetadata } from "@/i18n/server";
@@ -46,7 +47,7 @@ export default async function HowToPlayPage() {
 
   return (
     <PageShell>
-      <h1 className="text-3xl font-bold tracking-tight">{t.title}</h1>
+      <PageHeading>{t.title}</PageHeading>
       <p className="mt-2 text-muted-foreground">{t.intro}</p>
 
       <ol className="mt-8 flex flex-col gap-4">
@@ -178,21 +179,11 @@ export default async function HowToPlayPage() {
         </Step>
       </ol>
 
-      <section className="mt-12 flex flex-col items-center gap-2 rounded-xl border bg-muted/40 px-4 py-8 text-center">
-        <h2 className="text-2xl font-bold tracking-tight">{t.readyTitle}</h2>
-        <p className="text-muted-foreground">{t.readyBody}</p>
-        <Button
-          asChild
-          className="mt-3 h-12 w-full max-w-xs text-base font-semibold"
-        >
-          <Link href="/play">{t.playNow}</Link>
-        </Button>
-        <p className="mt-2 text-sm text-muted-foreground [&_a]:underline [&_a]:underline-offset-2">
-          {rich(t.moreTips, {
-            tips: <Link href="/tips">{t.moreTipsLink}</Link>,
-          })}
-        </p>
-      </section>
+      <p className="mt-8 text-center text-sm text-muted-foreground [&_a]:underline [&_a]:underline-offset-2">
+        {rich(t.moreTips, { tips: <Link href="/tips">{t.moreTipsLink}</Link> })}
+      </p>
+
+      <PlayCta label={t.playNow} note={t.readyBody} />
     </PageShell>
   );
 }
