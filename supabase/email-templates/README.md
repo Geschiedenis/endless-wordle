@@ -4,12 +4,12 @@ Paste each file into its template in Supabase under **Authentication > Emails**,
 
 | Supabase template | File | Subject | Sent by the app today |
 | --- | --- | --- | --- |
-| Confirm sign up | `confirm-sign-up.html` | Confirm your email for Endless Wordle | Yes |
-| Reset password | `reset-password.html` | Reset your Endless Wordle password | Yes |
-| Invite user | `invite-user.html` | You're invited to Endless Wordle | Only if invited from the Supabase dashboard |
-| Magic link or OTP | `magic-link.html` | Your Endless Wordle login link | No |
-| Change email address | `change-email.html` | Confirm your new email for Endless Wordle | No |
-| Reauthentication | `reauthentication.html` | Your Endless Wordle verification code | No |
+| Confirm sign up | `confirm-sign-up.html` | Confirm your email for Endless Lingle | Yes |
+| Reset password | `reset-password.html` | Reset your Endless Lingle password | Yes |
+| Invite user | `invite-user.html` | You're invited to Endless Lingle | Only if invited from the Supabase dashboard |
+| Magic link or OTP | `magic-link.html` | Your Endless Lingle login link | No |
+| Change email address | `change-email.html` | Confirm your new email for Endless Lingle | No |
+| Reauthentication | `reauthentication.html` | Your Endless Lingle verification code | No |
 
 Each file holds all five languages. Supabase has one template per email type, so the template picks a language from the one stored on the account at sign-up (`{{ .Data.locale }}`). Accounts created before languages existed get English. The subjects above are English only.
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildShareText, MAX_SHARED_WORDS } from "./share";
 
-const base = { locale: "nl" as const, wordsLabel: "2 woorden", url: "https://endlesswordle.app/nl" };
+const base = { locale: "nl" as const, wordsLabel: "2 woorden", url: "https://endlesslingle.com/nl" };
 
 describe("buildShareText", () => {
   it("lists each word as squares, ending in green or red", () => {
@@ -14,7 +14,7 @@ describe("buildShareText", () => {
       ],
     });
     expect(text).toBe(
-      ["Endless Wordle 🇳🇱 · 2 woorden", "⬛⬛🟩", "🟩", "⬛⬛⬛⬛⬛🟥", "https://endlesswordle.app/nl"].join("\n"),
+      ["Endless Lingle 🇳🇱 · 2 woorden", "⬛⬛🟩", "🟩", "⬛⬛⬛⬛⬛🟥", "https://endlesslingle.com/nl"].join("\n"),
     );
   });
 

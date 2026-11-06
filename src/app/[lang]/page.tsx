@@ -18,7 +18,7 @@ export default async function LandingPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Endless Wordle",
+    name: "Endless Lingle",
     url: `${SITE_URL}${localePath(locale, "/")}`,
     description: dict.meta.description,
     inLanguage: locale,
@@ -41,7 +41,7 @@ export default async function LandingPage() {
       <TopBar showLogo={false} />
       <main className="flex flex-1 flex-col items-center justify-center pb-8 text-center">
         <Logo />
-        <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Endless Wordle</h1>
+        <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
         <p className="mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
         <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
           <Button asChild className="h-12 text-base font-semibold">

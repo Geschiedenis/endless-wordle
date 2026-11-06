@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { CookieNotice } from "@/components/cookie-notice";
 import { LOCALES, SITE_URL } from "@/i18n/config";
+import { ADSENSE_CLIENT } from "@/lib/adsense";
 import { getDictionary, getLocale } from "@/i18n/server";
 import { PREFERENCES_SCRIPT } from "@/lib/preferences";
 import "../globals.css";
@@ -21,9 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const dict = await getDictionary();
   return {
     metadataBase: new URL(SITE_URL),
-    title: "Endless Wordle",
+    title: "Endless Lingle",
     description: dict.meta.description,
-    applicationName: "Endless Wordle",
+    applicationName: "Endless Lingle",
+    // Proves site ownership to AdSense. A tag only: it loads nothing.
+    ...(ADSENSE_CLIENT ? { other: { "google-adsense-account": ADSENSE_CLIENT } } : {}),
   };
 }
 

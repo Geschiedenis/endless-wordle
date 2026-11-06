@@ -17,12 +17,12 @@ export interface SharedWord {
  * line per word: a grey square per missed guess, then green for a solve or red for
  * the word that ended the game. No letters, so it never gives a word away.
  *
- *   Endless Wordle 🇳🇱 · 3 woorden
+ *   Endless Lingle 🇳🇱 · 3 woorden
  *   ⬛⬛🟩
  *   ⬛⬛⬛⬛🟩
  *   ⬛🟩
  *   ⬛⬛⬛⬛⬛⬛⬛🟥
- *   https://endlesswordle.app/nl
+ *   https://endlesslingle.com/nl
  */
 export function buildShareText({
   locale,
@@ -45,5 +45,5 @@ export function buildShareText({
     wasSolved ? `${"⬛".repeat(Math.max(0, guesses - 1))}${solved}` : `${"⬛".repeat(Math.max(0, guesses - 1))}🟥`,
   );
   if (words.length > MAX_SHARED_WORDS) lines.unshift("⋯");
-  return [`Endless Wordle ${FLAGS[locale]} · ${wordsLabel}`, ...lines, url].join("\n");
+  return [`Endless Lingle ${FLAGS[locale]} · ${wordsLabel}`, ...lines, url].join("\n");
 }

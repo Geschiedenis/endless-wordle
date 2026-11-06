@@ -3,14 +3,14 @@ import type { Dictionary } from "./en";
 export const nl: Dictionary = {
   meta: {
     description:
-      "Een Wordle die nooit stopt. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
-    homeTitle: "Endless Wordle: onbeperkt Wordle spelen, ook in het Nederlands",
+      "Een woordspel zoals Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
+    homeTitle: "Endless Lingle: onbeperkt woordspel zoals Wordle, ook in het Nederlands",
     playDescription:
-      "Speel Endless Wordle gratis in je browser: raad het ene woord van vijf letters na het andere, en neem ongebruikte pogingen mee naar het volgende woord. Geen account nodig.",
+      "Speel Endless Lingle gratis in je browser: raad het ene woord van vijf letters na het andere, en neem ongebruikte pogingen mee naar het volgende woord. Geen account nodig.",
     howToPlayDescription:
-      "Lees hoe Endless Wordle werkt: wat de kleuren betekenen, hoe ongebruikte pogingen meegaan en hoe lang je reeks kan worden.",
-    imageAlt: "Een donker Endless Wordle-bord, met het logo en de slogan.",
-    pageTitle: "{page} | Endless Wordle",
+      "Lees hoe Endless Lingle werkt: wat de kleuren betekenen, hoe ongebruikte pogingen meegaan en hoe lang je reeks kan worden.",
+    imageAlt: "Een donker Endless Lingle-bord, met het logo en de slogan.",
+    pageTitle: "{page} | Endless Lingle",
     play: "Spelen",
     howToPlay: "Hoe werkt het",
     login: "Inloggen",
@@ -19,6 +19,12 @@ export const nl: Dictionary = {
     resetPassword: "Nieuw wachtwoord instellen",
     privacy: "Privacy",
     terms: "Voorwaarden",
+    faq: "Veelgestelde vragen",
+    tips: "Tips",
+    faqDescription:
+      "Antwoorden op veelgestelde vragen over Endless Lingle: bonuspogingen, de kleuren, talen, je spel bewaren en resultaten delen.",
+    tipsDescription:
+      "Tips voor langere reeksen in Endless Lingle: goede startwoorden, je bonuspogingen gebruiken, veelvoorkomende uitgangen en meer.",
   },
 
   languages: {
@@ -30,7 +36,7 @@ export const nl: Dictionary = {
   },
 
   header: {
-    home: "Endless Wordle, terug naar de startpagina",
+    home: "Endless Lingle, terug naar de startpagina",
     language: "Taal: {language}. Taal wijzigen",
     login: "Inloggen",
     account: "Account",
@@ -48,11 +54,13 @@ export const nl: Dictionary = {
     privacy: "Privacy",
     terms: "Voorwaarden",
     cookieSettings: "Cookie-instellingen",
+    faq: "Veelgestelde vragen",
+    tips: "Tips",
   },
 
   home: {
     tagline:
-      "Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
+      "Net als Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
     play: "Spelen",
     howToPlay: "Hoe werkt het",
   },
@@ -129,7 +137,7 @@ export const nl: Dictionary = {
   howTo: {
     title: "Hoe werkt het",
     intro:
-      "Het is Wordle, maar het spel stopt niet na één woord. Kijk hoeveel woorden je achter elkaar kunt raden.",
+      "Het speelt als Wordle, maar het spel stopt niet na één woord. Kijk hoeveel woorden je achter elkaar kunt raden.",
     step1Title: "Raad een woord van vijf letters",
     step1Body:
       "Typ een bestaand woord van vijf letters en druk op Enter. Elk woord begint met {guesses} pogingen.",
@@ -168,6 +176,8 @@ export const nl: Dictionary = {
     readyTitle: "Klaar om te spelen?",
     readyBody: "Geen account nodig. Begin meteen.",
     playNow: "Nu spelen",
+    moreTips: "Wil je het langer volhouden? Lees onze {tips}.",
+    moreTipsLink: "tips voor langere reeksen",
   },
 
   login: {
@@ -258,7 +268,7 @@ export const nl: Dictionary = {
   },
 
   cookies: {
-    title: "Cookies op Endless Wordle",
+    title: "Cookies op Endless Lingle",
     description:
       "We gebruiken noodzakelijke cookies om het spel te laten werken en je ingelogd te houden. Als je accepteert, gebruiken we ook Google Analytics om te begrijpen hoe de site wordt gebruikt. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen via Cookie-instellingen onderaan de pagina.",
     details: "Details over cookies",

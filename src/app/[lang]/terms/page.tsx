@@ -12,17 +12,17 @@ export default function TermsPage() {
   return (
     <LegalPage title="Terms of use">
       <p>
-        These terms apply when you use Endless Wordle, a service run by {LEGAL.operator}, based in {LEGAL.country}. By
+        These terms apply when you use Endless Lingle, a service run by {LEGAL.operator}, based in {LEGAL.country}. By
         using the site, you agree to them. If you don&apos;t agree, please don&apos;t use it.
       </p>
 
       <h2>The game</h2>
       <p>
-        Endless Wordle is a free word game. We may change, pause or stop all or part of it at any time. If we plan to
+        Endless Lingle is a free word game. We may change, pause or stop all or part of it at any time. If we plan to
         close the service for good, we&apos;ll try to give account holders reasonable notice by email.
       </p>
       <p>
-        Endless Wordle is an independent project. It isn&apos;t affiliated with or endorsed by The New York Times
+        Endless Lingle is an independent project inspired by Wordle. It isn&apos;t affiliated with or endorsed by The New York Times
         Company, which owns the Wordle game and trademark.
       </p>
 

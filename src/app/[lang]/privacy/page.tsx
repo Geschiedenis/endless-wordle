@@ -15,14 +15,14 @@ export default function PrivacyPage() {
   return (
     <LegalPage title="Privacy notice">
       <p>
-        You can play Endless Wordle without an account. This notice explains
+        You can play Endless Lingle without an account. This notice explains
         what personal data we use, why we use it and what your rights are under
         the EU General Data Protection Regulation (GDPR).
       </p>
 
       <h2>Who is responsible for your data</h2>
       <p>
-        Endless Wordle is run by {LEGAL.operator}, based in {LEGAL.country}, who
+        Endless Lingle is run by {LEGAL.operator}, based in {LEGAL.country}, who
         is the data controller. For any privacy question or request, email{" "}
         <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a>.
       </p>

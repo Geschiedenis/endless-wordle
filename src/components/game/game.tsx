@@ -71,7 +71,7 @@ export function Game() {
 
   return (
     <main className="flex h-dvh flex-col gap-2 overflow-hidden px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:px-4">
-      <h1 className="sr-only">Endless Wordle</h1>
+      <h1 className="sr-only">Endless Lingle</h1>
       {/* The game's own gutter is 8px on phones, so this tops it up to the usual 16px. */}
       <TopBar className="px-2 sm:px-0" />
 

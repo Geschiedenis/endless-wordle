@@ -57,7 +57,7 @@ export function stopAnalytics() {
   (window as unknown as Record<string, boolean>)[`ga-disable-${GA_ID}`] = true;
   window.gtag?.("consent", "update", { analytics_storage: "denied" });
 
-  // Analytics sets its cookies on the top domain (.endlesswordle.app), so clear both forms.
+  // Analytics sets its cookies on the top domain (.endlesslingle.com), so clear both forms.
   const host = window.location.hostname.replace(/^www\./, "");
   for (const name of document.cookie.split(";").map((cookie) => cookie.split("=")[0].trim())) {
     if (name !== "_ga" && !name.startsWith("_ga_")) continue;

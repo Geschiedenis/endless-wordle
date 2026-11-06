@@ -3,14 +3,14 @@ import type { Dictionary } from "./en";
 export const de: Dictionary = {
   meta: {
     description:
-      "Ein Wordle, das nie aufhört. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
-    homeTitle: "Endless Wordle: unbegrenzt Wordle spielen, auch auf Deutsch",
+      "Ein Wortspiel wie Wordle, das nie aufhört. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
+    homeTitle: "Endless Lingle: unbegrenztes Wortspiel wie Wordle, auch auf Deutsch",
     playDescription:
-      "Spiele Endless Wordle kostenlos im Browser: Rate ein Wort mit fünf Buchstaben nach dem anderen, und übrige Versuche wandern zum nächsten Wort. Kein Konto nötig.",
+      "Spiele Endless Lingle kostenlos im Browser: Rate ein Wort mit fünf Buchstaben nach dem anderen, und übrige Versuche wandern zum nächsten Wort. Kein Konto nötig.",
     howToPlayDescription:
-      "So wird Endless Wordle gespielt: was die Farben bedeuten, wie übrige Versuche mitwandern und wie lang deine Serie werden kann.",
-    imageAlt: "Ein dunkles Endless-Wordle-Spielfeld mit Logo und Slogan.",
-    pageTitle: "{page} | Endless Wordle",
+      "So wird Endless Lingle gespielt: was die Farben bedeuten, wie übrige Versuche mitwandern und wie lang deine Serie werden kann.",
+    imageAlt: "Ein dunkles Endless-Lingle-Spielfeld mit Logo und Slogan.",
+    pageTitle: "{page} | Endless Lingle",
     play: "Spielen",
     howToPlay: "So wird gespielt",
     login: "Anmelden",
@@ -19,6 +19,12 @@ export const de: Dictionary = {
     resetPassword: "Neues Passwort festlegen",
     privacy: "Datenschutz",
     terms: "Nutzungsbedingungen",
+    faq: "Häufige Fragen",
+    tips: "Tipps",
+    faqDescription:
+      "Antworten auf häufige Fragen zu Endless Lingle: Bonusversuche, die Farben, Sprachen, Spielstände und das Teilen von Ergebnissen.",
+    tipsDescription:
+      "Tipps für längere Serien bei Endless Lingle: gute Startwörter, Bonusversuche nutzen, häufige Endungen und mehr.",
   },
 
   languages: {
@@ -30,7 +36,7 @@ export const de: Dictionary = {
   },
 
   header: {
-    home: "Endless Wordle, zurück zur Startseite",
+    home: "Endless Lingle, zurück zur Startseite",
     language: "Sprache: {language}. Sprache ändern",
     login: "Anmelden",
     account: "Konto",
@@ -48,11 +54,13 @@ export const de: Dictionary = {
     privacy: "Datenschutz",
     terms: "Nutzungsbedingungen",
     cookieSettings: "Cookie-Einstellungen",
+    faq: "FAQ",
+    tips: "Tipps",
   },
 
   home: {
     tagline:
-      "Wordle, aber ohne Ende. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
+      "Wie Wordle, aber ohne Ende. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
     play: "Spielen",
     howToPlay: "So wird gespielt",
   },
@@ -129,7 +137,7 @@ export const de: Dictionary = {
   howTo: {
     title: "So wird gespielt",
     intro:
-      "Es ist Wordle, nur hört das Spiel nach einem Wort nicht auf. Wie viele Wörter schaffst du am Stück?",
+      "Es spielt sich wie Wordle, nur hört das Spiel nach einem Wort nicht auf. Wie viele Wörter schaffst du am Stück?",
     step1Title: "Rate ein Wort mit fünf Buchstaben",
     step1Body:
       "Tippe ein echtes Wort mit fünf Buchstaben und drücke Enter. Jedes Wort beginnt mit {guesses} Versuchen.",
@@ -167,6 +175,8 @@ export const de: Dictionary = {
     readyTitle: "Bereit zum Spielen?",
     readyBody: "Kein Konto nötig. Leg direkt los.",
     playNow: "Jetzt spielen",
+    moreTips: "Willst du länger durchhalten? Lies unsere {tips}.",
+    moreTipsLink: "Tipps für längere Serien",
   },
 
   login: {
@@ -259,7 +269,7 @@ export const de: Dictionary = {
   },
 
   cookies: {
-    title: "Cookies bei Endless Wordle",
+    title: "Cookies bei Endless Lingle",
     description:
       "Wir verwenden notwendige Cookies, damit das Spiel funktioniert und du angemeldet bleibst. Wenn du zustimmst, verwenden wir außerdem Google Analytics, um zu verstehen, wie die Seite genutzt wird. Werbe-Cookies verwenden wir nicht. Du kannst deine Wahl jederzeit unter Cookie-Einstellungen unten auf der Seite ändern.",
     details: "Details zu Cookies",

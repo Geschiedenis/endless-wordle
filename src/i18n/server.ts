@@ -24,7 +24,7 @@ interface PageMetadataOptions {
   /** Page name for the title. Leave out for the home page, which uses its own title. */
   page?: keyof Meta;
   /** Falls back to the site's general description. */
-  description?: "playDescription" | "howToPlayDescription";
+  description?: "playDescription" | "howToPlayDescription" | "faqDescription" | "tipsDescription";
   /** False for account pages, which shouldn't appear in search results. */
   index?: boolean;
 }
@@ -48,7 +48,7 @@ export async function pageMetadata({ path, page, description, index = true }: Pa
     alternates: { canonical: url, languages: languageAlternates(path) },
     openGraph: {
       type: "website",
-      siteName: "Endless Wordle",
+      siteName: "Endless Lingle",
       title,
       description: text,
       url,

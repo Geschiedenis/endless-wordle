@@ -16,9 +16,15 @@ export function SiteFooter() {
     <footer className="flex w-full flex-col items-center gap-2 py-4 text-xs text-muted-foreground sm:grid sm:grid-cols-[1fr_auto_1fr] sm:gap-4">
       <p className="flex items-center gap-1.5 sm:order-first sm:justify-self-start">
         <Logo size={16} className="rounded-[3px]" />
-        Endless Wordle © 2026
+        Endless Lingle © 2026
       </p>
-      <nav aria-label={dict.footer.legal} className="order-first flex justify-center gap-3 sm:order-none">
+      <nav className="order-first flex flex-wrap justify-center gap-x-3 gap-y-1 sm:order-none">
+        <Link href="/faq" className="underline underline-offset-2">
+          {dict.footer.faq}
+        </Link>
+        <Link href="/tips" className="underline underline-offset-2">
+          {dict.footer.tips}
+        </Link>
         <Link href="/privacy" className="underline underline-offset-2">
           {dict.footer.privacy}
         </Link>

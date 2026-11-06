@@ -11,7 +11,7 @@ import type { LetterFeedback } from "@/lib/game/types";
  * The preview image shown when a page is shared or appears in search, one per
  * language. Built once per language at build time. Pages below inherit it.
  */
-export const alt = "Endless Wordle";
+export const alt = "Endless Lingle";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -41,7 +41,7 @@ export default async function Image({ params }: { params: Promise<{ lang: string
       >
         <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: 28 }}>
           <img src={`data:image/svg+xml;base64,${logo}`} width={112} height={112} alt="" style={{ borderRadius: 18 }} />
-          <div style={{ fontSize: 84, letterSpacing: -2, lineHeight: 1 }}>Endless Wordle</div>
+          <div style={{ fontSize: 84, letterSpacing: -2, lineHeight: 1 }}>Endless Lingle</div>
           <div style={{ fontSize: 32, lineHeight: 1.35, color: "#a1a1aa" }}>{dict.home.tagline}</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

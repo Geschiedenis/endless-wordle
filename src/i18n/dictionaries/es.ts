@@ -3,14 +3,14 @@ import type { Dictionary } from "./en";
 export const es: Dictionary = {
   meta: {
     description:
-      "Un Wordle que nunca termina. Los intentos que no usas pasan a la siguiente palabra, y la partida solo acaba cuando te quedas sin ellos.",
-    homeTitle: "Endless Wordle: Wordle ilimitado, también en español",
+      "Un juego de palabras como Wordle que nunca termina. Los intentos que no usas pasan a la siguiente palabra, y la partida solo acaba cuando te quedas sin ellos.",
+    homeTitle: "Endless Lingle: juego de palabras ilimitado como Wordle, también en español",
     playDescription:
-      "Juega gratis a Endless Wordle en tu navegador: adivina palabras de cinco letras una tras otra, y los intentos que te sobran pasan a la siguiente. Sin cuenta.",
+      "Juega gratis a Endless Lingle en tu navegador: adivina palabras de cinco letras una tras otra, y los intentos que te sobran pasan a la siguiente. Sin cuenta.",
     howToPlayDescription:
-      "Aprende a jugar a Endless Wordle: qué significan los colores, cómo pasan los intentos que sobran y cuánto puede durar tu racha.",
-    imageAlt: "Un tablero oscuro de Endless Wordle, con el logo y el eslogan.",
-    pageTitle: "{page} | Endless Wordle",
+      "Aprende a jugar a Endless Lingle: qué significan los colores, cómo pasan los intentos que sobran y cuánto puede durar tu racha.",
+    imageAlt: "Un tablero oscuro de Endless Lingle, con el logo y el eslogan.",
+    pageTitle: "{page} | Endless Lingle",
     play: "Jugar",
     howToPlay: "Cómo se juega",
     login: "Iniciar sesión",
@@ -19,6 +19,12 @@ export const es: Dictionary = {
     resetPassword: "Nueva contraseña",
     privacy: "Privacidad",
     terms: "Condiciones",
+    faq: "Preguntas frecuentes",
+    tips: "Consejos",
+    faqDescription:
+      "Respuestas a preguntas frecuentes sobre Endless Lingle: intentos extra, colores, idiomas, guardar tu partida y compartir resultados.",
+    tipsDescription:
+      "Consejos para rachas más largas en Endless Lingle: buenas palabras iniciales, usar los intentos extra, terminaciones comunes y más.",
   },
 
   languages: {
@@ -30,7 +36,7 @@ export const es: Dictionary = {
   },
 
   header: {
-    home: "Endless Wordle, volver al inicio",
+    home: "Endless Lingle, volver al inicio",
     language: "Idioma: {language}. Cambiar idioma",
     login: "Entrar",
     account: "Cuenta",
@@ -48,11 +54,13 @@ export const es: Dictionary = {
     privacy: "Privacidad",
     terms: "Condiciones",
     cookieSettings: "Configuración de cookies",
+    faq: "Preguntas frecuentes",
+    tips: "Consejos",
   },
 
   home: {
     tagline:
-      "Wordle, pero sin final. Los intentos que no usas pasan a la siguiente palabra, y la partida solo acaba cuando te quedas sin ellos.",
+      "Como Wordle, pero sin final. Los intentos que no usas pasan a la siguiente palabra, y la partida solo acaba cuando te quedas sin ellos.",
     play: "Jugar",
     howToPlay: "Cómo se juega",
   },
@@ -129,7 +137,7 @@ export const es: Dictionary = {
   howTo: {
     title: "Cómo se juega",
     intro:
-      "Es Wordle, pero la partida no termina tras una palabra. ¿Cuántas puedes acertar seguidas?",
+      "Se juega como Wordle, pero la partida no termina tras una palabra. ¿Cuántas puedes acertar seguidas?",
     step1Title: "Adivina una palabra de cinco letras",
     step1Body:
       "Escribe una palabra real de cinco letras y pulsa Enviar. Cada palabra empieza con {guesses} intentos.",
@@ -169,6 +177,8 @@ export const es: Dictionary = {
     readyTitle: "¿Listo para jugar?",
     readyBody: "No necesitas cuenta. Empieza ya.",
     playNow: "Jugar ahora",
+    moreTips: "¿Quieres aguantar más? Lee nuestros {tips}.",
+    moreTipsLink: "consejos para rachas más largas",
   },
 
   login: {
@@ -261,7 +271,7 @@ export const es: Dictionary = {
   },
 
   cookies: {
-    title: "Cookies en Endless Wordle",
+    title: "Cookies en Endless Lingle",
     description:
       "Usamos cookies necesarias para que el juego funcione y mantener tu sesión iniciada. Si aceptas, también usamos Google Analytics para entender cómo se usa el sitio. No usamos cookies publicitarias. Puedes cambiar tu elección cuando quieras en Configuración de cookies, al final de la página.",
     details: "Detalles de las cookies",

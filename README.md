@@ -1,6 +1,6 @@
-# Endless Wordle
+# Endless Lingle
 
-A Wordle that never stops. Solve a word and the next one starts straight away, with your unused guesses rolling over as a bonus. The game ends the first time you fail to solve a word.
+A Wordle-style word game that never stops. Solve a word and the next one starts straight away, with your unused guesses rolling over as a bonus. The game ends the first time you fail to solve a word.
 
 Play as a guest, or create an account to save your scores.
 
@@ -43,7 +43,8 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page: the `anon`/`public` key (`publishable` on newer projects) | Server code |
 | `SUPABASE_SERVICE_ROLE_KEY` | Same page: the `service_role` key (`secret` on newer projects) | Server only. **Bypasses all Row Level Security. Never expose it.** |
 | `NEXT_PUBLIC_GA_ID` | Optional. Google Analytics: Admin > Data streams > your stream, the Measurement ID (`G-...`). Set it for Production only. | Google Analytics, which only loads after a visitor accepts analytics cookies. Read at build time, so redeploy after changing it. |
-| `NEXT_PUBLIC_SITE_URL` | Optional. Your live address, such as `https://endlesswordle.app`, which is also the default. | Search results, link previews, the sitemap and shared results |
+| `NEXT_PUBLIC_ADSENSE_CLIENT` | Optional. AdSense: Account > Settings > Account information, the publisher ID (`ca-pub-...`). | The AdSense ownership tag and `/ads.txt`. No ads load yet. Read at build time. |
+| `NEXT_PUBLIC_SITE_URL` | Optional. Your live address, such as `https://endlesslingle.com`, which is also the default. | Search results, link previews, the sitemap and shared results |
 
 **Locally:** put them in `.env.local`, which git ignores. Restart `npm run dev` afterwards. All are optional for guest play.
 
@@ -58,7 +59,7 @@ Do these in order, **before deploying V2**.
 ### 1. Create a project and run the migration
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently three files, and each file only needs to run once.
+2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently four files, and each file only needs to run once.
 
 To check it worked, **Table Editor** should list `profiles`, `games` and `active_games`, each marked as protected by RLS.
 
@@ -92,7 +93,7 @@ Then deploy. If a variable is missing, the build fails with its name and your li
 - **Structured data.** The home page describes the site as a free browser game in schema.org terms.
 - **Sharing results.** After a game, Share copies a coloured grid with one line per word, with no letters, or opens the share sheet on phones.
 
-After deploying, add the site to [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters), and submit `https://endlesswordle.app/sitemap.xml` to both.
+After deploying, add the site to [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters), and submit `https://endlesslingle.com/sitemap.xml` to both.
 
 ## Logo
 

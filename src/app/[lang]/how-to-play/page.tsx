@@ -115,6 +115,9 @@ export default async function HowToPlayPage() {
         <Button asChild className="mt-3 h-12 w-full max-w-xs text-base font-semibold">
           <Link href="/play">{t.playNow}</Link>
         </Button>
+        <p className="mt-2 text-sm text-muted-foreground [&_a]:underline [&_a]:underline-offset-2">
+          {rich(t.moreTips, { tips: <Link href="/tips">{t.moreTipsLink}</Link> })}
+        </p>
       </section>
     </PageShell>
   );

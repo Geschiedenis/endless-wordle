@@ -6,14 +6,14 @@
 export const en = {
   meta: {
     description:
-      "A Wordle that never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
-    homeTitle: "Endless Wordle: unlimited Wordle that never stops",
+      "A Wordle-style word game that never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
+    homeTitle: "Endless Lingle: the unlimited Wordle-style word game",
     playDescription:
-      "Play Endless Wordle free in your browser: guess five-letter words one after another, with spare guesses rolling over to the next word. No account needed.",
+      "Play Endless Lingle free in your browser: guess five-letter words one after another, with spare guesses rolling over to the next word. No account needed.",
     howToPlayDescription:
-      "Learn how to play Endless Wordle: what the colours mean, how spare guesses roll over, and how long your streak can last.",
-    imageAlt: "A dark Endless Wordle board, with the logo and the tagline.",
-    pageTitle: "{page} | Endless Wordle",
+      "Learn how to play Endless Lingle: what the colours mean, how spare guesses roll over, and how long your streak can last.",
+    imageAlt: "A dark Endless Lingle board, with the logo and the tagline.",
+    pageTitle: "{page} | Endless Lingle",
     play: "Play",
     howToPlay: "How to play",
     login: "Log in",
@@ -22,6 +22,12 @@ export const en = {
     resetPassword: "Set a new password",
     privacy: "Privacy",
     terms: "Terms",
+    faq: "FAQ",
+    tips: "Tips",
+    faqDescription:
+      "Answers to common questions about Endless Lingle: bonus guesses, the colours, languages, saving your game and sharing results.",
+    tipsDescription:
+      "Tips for longer Endless Lingle streaks: good starting words, using your bonus guesses, common endings and more.",
   },
 
   /** Language names as written in this language, for sentences like "a game in Dutch". */
@@ -34,7 +40,7 @@ export const en = {
   },
 
   header: {
-    home: "Endless Wordle, back to home",
+    home: "Endless Lingle, back to home",
     language: "Language: {language}. Change language",
     login: "Login",
     account: "Account",
@@ -52,11 +58,13 @@ export const en = {
     privacy: "Privacy",
     terms: "Terms",
     cookieSettings: "Cookie settings",
+    faq: "FAQ",
+    tips: "Tips",
   },
 
   home: {
     tagline:
-      "Wordle, but it never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
+      "Like Wordle, but it never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
     play: "Play",
     howToPlay: "How to play",
   },
@@ -129,7 +137,7 @@ export const en = {
   howTo: {
     title: "How to play",
     intro:
-      "It's Wordle, except the game doesn't stop after one word. See how many you can solve in a row.",
+      "It plays like Wordle, except the game doesn't stop after one word. See how many you can solve in a row.",
     step1Title: "Guess a five-letter word",
     step1Body:
       "Type any real five-letter word and press Enter. Each word starts with {guesses} guesses.",
@@ -167,6 +175,8 @@ export const en = {
     readyTitle: "Ready to play?",
     readyBody: "No account needed. Jump straight in.",
     playNow: "Play now",
+    moreTips: "Want to last longer? Read our {tips}.",
+    moreTipsLink: "tips for longer streaks",
   },
 
   login: {
@@ -255,7 +265,7 @@ export const en = {
   },
 
   cookies: {
-    title: "Cookies on Endless Wordle",
+    title: "Cookies on Endless Lingle",
     description:
       "We use necessary cookies to run the game and keep you logged in. If you accept, we also use Google Analytics to understand how the site is used. We don't use advertising cookies. You can change your choice at any time under Cookie settings at the bottom of the page.",
     details: "Cookie details",

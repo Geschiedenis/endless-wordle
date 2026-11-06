@@ -3,14 +3,14 @@ import type { Dictionary } from "./en";
 export const fr: Dictionary = {
   meta: {
     description:
-      "Un Wordle qui ne s'arrête jamais. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
-    homeTitle: "Endless Wordle : Wordle illimité, aussi en français",
+      "Un jeu de mots façon Wordle qui ne s'arrête jamais. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
+    homeTitle: "Endless Lingle : jeu de mots illimité façon Wordle, aussi en français",
     playDescription:
-      "Jouez gratuitement à Endless Wordle dans votre navigateur : devinez des mots de cinq lettres à la suite, et reportez vos essais restants sur le mot suivant. Aucun compte nécessaire.",
+      "Jouez gratuitement à Endless Lingle dans votre navigateur : devinez des mots de cinq lettres à la suite, et reportez vos essais restants sur le mot suivant. Aucun compte nécessaire.",
     howToPlayDescription:
-      "Découvrez comment jouer à Endless Wordle : la signification des couleurs, le report des essais restants et la durée possible de votre série.",
-    imageAlt: "Une grille Endless Wordle sombre, avec le logo et le slogan.",
-    pageTitle: "{page} | Endless Wordle",
+      "Découvrez comment jouer à Endless Lingle : la signification des couleurs, le report des essais restants et la durée possible de votre série.",
+    imageAlt: "Une grille Endless Lingle sombre, avec le logo et le slogan.",
+    pageTitle: "{page} | Endless Lingle",
     play: "Jouer",
     howToPlay: "Comment jouer",
     login: "Connexion",
@@ -19,6 +19,12 @@ export const fr: Dictionary = {
     resetPassword: "Définir un nouveau mot de passe",
     privacy: "Confidentialité",
     terms: "Conditions",
+    faq: "Questions fréquentes",
+    tips: "Astuces",
+    faqDescription:
+      "Réponses aux questions fréquentes sur Endless Lingle : essais bonus, couleurs, langues, sauvegarde de la partie et partage des résultats.",
+    tipsDescription:
+      "Astuces pour des séries plus longues sur Endless Lingle : bons mots de départ, essais bonus, terminaisons courantes et plus encore.",
   },
 
   languages: {
@@ -30,7 +36,7 @@ export const fr: Dictionary = {
   },
 
   header: {
-    home: "Endless Wordle, retour à l'accueil",
+    home: "Endless Lingle, retour à l'accueil",
     language: "Langue : {language}. Changer de langue",
     login: "Connexion",
     account: "Compte",
@@ -48,11 +54,13 @@ export const fr: Dictionary = {
     privacy: "Confidentialité",
     terms: "Conditions",
     cookieSettings: "Paramètres des cookies",
+    faq: "FAQ",
+    tips: "Astuces",
   },
 
   home: {
     tagline:
-      "Wordle, mais sans fin. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
+      "Comme Wordle, mais sans fin. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
     play: "Jouer",
     howToPlay: "Comment jouer",
   },
@@ -129,7 +137,7 @@ export const fr: Dictionary = {
   howTo: {
     title: "Comment jouer",
     intro:
-      "C'est Wordle, sauf que la partie ne s'arrête pas après un mot. Combien de mots trouverez-vous d'affilée ?",
+      "Ça se joue comme Wordle, sauf que la partie ne s'arrête pas après un mot. Combien de mots trouverez-vous d'affilée ?",
     step1Title: "Devinez un mot de cinq lettres",
     step1Body:
       "Tapez un vrai mot de cinq lettres et appuyez sur Entrée. Chaque mot commence avec {guesses} essais.",
@@ -170,6 +178,8 @@ export const fr: Dictionary = {
     readyTitle: "Prêt à jouer ?",
     readyBody: "Aucun compte nécessaire. Lancez-vous.",
     playNow: "Jouer maintenant",
+    moreTips: "Envie de tenir plus longtemps ? Lisez nos {tips}.",
+    moreTipsLink: "astuces pour des séries plus longues",
   },
 
   login: {
@@ -261,7 +271,7 @@ export const fr: Dictionary = {
   },
 
   cookies: {
-    title: "Cookies sur Endless Wordle",
+    title: "Cookies sur Endless Lingle",
     description:
       "Nous utilisons des cookies nécessaires pour faire fonctionner le jeu et vous garder connecté. Si vous acceptez, nous utilisons aussi Google Analytics pour comprendre comment le site est utilisé. Nous n'utilisons pas de cookies publicitaires. Vous pouvez modifier votre choix à tout moment via Paramètres des cookies, en bas de la page.",
     details: "Détails des cookies",

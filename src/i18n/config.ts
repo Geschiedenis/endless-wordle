@@ -6,12 +6,12 @@ export const LOCALES = ["en", "nl", "de", "fr", "es"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 /** Pages search engines should find, for the sitemap. Account pages are left out. */
-export const PUBLIC_PATHS = ["/", "/play", "/how-to-play", "/privacy", "/terms"] as const;
+export const PUBLIC_PATHS = ["/", "/play", "/how-to-play", "/tips", "/faq", "/privacy", "/terms"] as const;
 
 export const DEFAULT_LOCALE: Locale = "en";
 
 /** The live site, for links that leave the page: search results, shared links and the sitemap. */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://endlesswordle.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://endlesslingle.com").replace(/\/$/, "");
 
 /** Open Graph wants a region with the language. */
 export const OG_LOCALES: Record<Locale, string> = {
