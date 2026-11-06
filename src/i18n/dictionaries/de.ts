@@ -4,7 +4,8 @@ export const de: Dictionary = {
   meta: {
     description:
       "Ein Wortspiel wie Wordle, das nie aufhört. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
-    homeTitle: "Endless Lingle: unbegrenztes Wortspiel wie Wordle, auch auf Deutsch",
+    homeTitle:
+      "Endless Lingle: unbegrenztes Wortspiel wie Wordle, auch auf Deutsch",
     playDescription:
       "Spiele Endless Lingle kostenlos im Browser: Rate ein Wort mit fünf Buchstaben nach dem anderen, und übrige Versuche wandern zum nächsten Wort. Kein Konto nötig.",
     howToPlayDescription:
@@ -25,6 +26,7 @@ export const de: Dictionary = {
       "Antworten auf häufige Fragen zu Endless Lingle: Bonusversuche, die Farben, Sprachen, Spielstände und das Teilen von Ergebnissen.",
     tipsDescription:
       "Tipps für längere Serien bei Endless Lingle: gute Startwörter, Bonusversuche nutzen, häufige Endungen und mehr.",
+    settings: "Einstellungen",
   },
 
   languages: {
@@ -47,6 +49,8 @@ export const de: Dictionary = {
     darkMode: "Dunkelmodus",
     highContrast: "Hoher Kontrast, geeignet bei Farbenblindheit",
     highContrastTitle: "Hoher Kontrast / Farbenblind-Modus",
+    settings: "Einstellungen",
+    back: "Zurück",
   },
 
   footer: {
@@ -56,6 +60,7 @@ export const de: Dictionary = {
     cookieSettings: "Cookie-Einstellungen",
     faq: "FAQ",
     tips: "Tipps",
+    settings: "Einstellungen",
   },
 
   home: {
@@ -132,6 +137,12 @@ export const de: Dictionary = {
     button: "Teilen",
     copied: "In die Zwischenablage kopiert",
     failed: "Teilen hat nicht geklappt. Versuch es noch einmal.",
+    resultTitle: "Endless-Lingle-Ergebnis",
+    resultChallenge: "Schaffst du mehr?",
+    resultHeading: "{words} am Stück",
+    resultImage: "Ein Endless-Lingle-Ergebnis: {words}",
+    resultInvalid:
+      "Dieser Ergebnislink funktioniert nicht. Starte einfach dein eigenes Spiel.",
   },
 
   howTo: {
@@ -202,6 +213,10 @@ export const de: Dictionary = {
       "Ein Konto ist freiwillig. Es speichert deine E-Mail-Adresse, deinen Benutzernamen und deine Punktestände. Siehe {privacy} und {terms}.",
     privacyLink: "Datenschutzhinweise",
     termsLink: "Nutzungsbedingungen",
+    repeatPassword: "Passwort wiederholen",
+    passwordMismatch: "Die Passwörter stimmen nicht überein.",
+    showPassword: "Passwort anzeigen",
+    hidePassword: "Passwort verbergen",
   },
 
   username: {
@@ -249,6 +264,25 @@ export const de: Dictionary = {
     deleteConfirm: "Gib {word} zur Bestätigung ein",
     deleteSubmit: "Endgültig löschen",
     cancel: "Abbrechen",
+    statsTitle: "Statistik",
+    accountTitle: "Konto",
+  },
+
+  settings: {
+    title: "Einstellungen",
+    guestBody:
+      "Du spielst als Gast. Melde dich an, um deine Punktestände zu speichern und deine Statistik zu sehen.",
+    guestCta: "Anmelden oder registrieren",
+    displayTitle: "Darstellung",
+    darkModeLabel: "Dunkelmodus",
+    darkModeDescription: "Angenehmer für die Augen bei wenig Licht.",
+    highContrastLabel: "Hoher Kontrast",
+    highContrastDescription:
+      "Orange und blaue Felder mit Häkchen und Punkt, damit sich die Farben besser unterscheiden lassen.",
+    cookiesTitle: "Cookies",
+    cookiesDescription:
+      "Wähle, ob wir Analyse-Cookies verwenden dürfen. Notwendige Cookies sind immer aktiv.",
+    cookiesButton: "Cookie-Einstellungen ändern",
   },
 
   errors: {

@@ -4,7 +4,8 @@ export const es: Dictionary = {
   meta: {
     description:
       "Un juego de palabras como Wordle que nunca termina. Los intentos que no usas pasan a la siguiente palabra, y la partida solo acaba cuando te quedas sin ellos.",
-    homeTitle: "Endless Lingle: juego de palabras ilimitado como Wordle, también en español",
+    homeTitle:
+      "Endless Lingle: juego de palabras ilimitado como Wordle, también en español",
     playDescription:
       "Juega gratis a Endless Lingle en tu navegador: adivina palabras de cinco letras una tras otra, y los intentos que te sobran pasan a la siguiente. Sin cuenta.",
     howToPlayDescription:
@@ -25,6 +26,7 @@ export const es: Dictionary = {
       "Respuestas a preguntas frecuentes sobre Endless Lingle: intentos extra, colores, idiomas, guardar tu partida y compartir resultados.",
     tipsDescription:
       "Consejos para rachas más largas en Endless Lingle: buenas palabras iniciales, usar los intentos extra, terminaciones comunes y más.",
+    settings: "Ajustes",
   },
 
   languages: {
@@ -47,6 +49,8 @@ export const es: Dictionary = {
     darkMode: "Modo oscuro",
     highContrast: "Alto contraste, apto para daltónicos",
     highContrastTitle: "Alto contraste / modo daltónico",
+    settings: "Ajustes",
+    back: "Volver",
   },
 
   footer: {
@@ -56,6 +60,7 @@ export const es: Dictionary = {
     cookieSettings: "Configuración de cookies",
     faq: "Preguntas frecuentes",
     tips: "Consejos",
+    settings: "Ajustes",
   },
 
   home: {
@@ -132,6 +137,12 @@ export const es: Dictionary = {
     button: "Compartir",
     copied: "Copiado al portapapeles",
     failed: "No se pudo compartir. Inténtalo de nuevo.",
+    resultTitle: "Resultado de Endless Lingle",
+    resultChallenge: "¿Puedes superarlo?",
+    resultHeading: "Racha de {words}",
+    resultImage: "Un resultado de Endless Lingle: {words}",
+    resultInvalid:
+      "Este enlace de resultado no funciona. Empieza tu propia partida.",
   },
 
   howTo: {
@@ -204,6 +215,10 @@ export const es: Dictionary = {
       "La cuenta es opcional. Guarda tu correo, tu nombre de usuario y tus puntuaciones. Consulta el {privacy} y las {terms}.",
     privacyLink: "aviso de privacidad",
     termsLink: "condiciones",
+    repeatPassword: "Repite la contraseña",
+    passwordMismatch: "Las contraseñas no coinciden.",
+    showPassword: "Mostrar contraseña",
+    hidePassword: "Ocultar contraseña",
   },
 
   username: {
@@ -250,6 +265,25 @@ export const es: Dictionary = {
     deleteConfirm: "Escribe {word} para confirmar",
     deleteSubmit: "Eliminar definitivamente",
     cancel: "Cancelar",
+    statsTitle: "Estadísticas",
+    accountTitle: "Cuenta",
+  },
+
+  settings: {
+    title: "Ajustes",
+    guestBody:
+      "Estás jugando como invitado. Inicia sesión para guardar tus puntuaciones y ver tus estadísticas.",
+    guestCta: "Iniciar sesión o registrarse",
+    displayTitle: "Pantalla",
+    darkModeLabel: "Modo oscuro",
+    darkModeDescription: "Más cómodo para la vista con poca luz.",
+    highContrastLabel: "Alto contraste",
+    highContrastDescription:
+      "Casillas naranjas y azules con una marca y un punto, para distinguir mejor los colores.",
+    cookiesTitle: "Cookies",
+    cookiesDescription:
+      "Elige si podemos usar cookies analíticas. Las cookies necesarias siempre están activas.",
+    cookiesButton: "Cambiar la configuración de cookies",
   },
 
   errors: {

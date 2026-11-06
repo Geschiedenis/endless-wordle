@@ -1,11 +1,12 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut, PenLine, Settings, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "@/hooks/use-session";
@@ -44,16 +45,30 @@ export function AuthMenu() {
           <ChevronDown aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-auto min-w-36">
+      <DropdownMenuContent align="end" sideOffset={6} className="w-auto min-w-56 p-1.5">
         {session.username === null && (
-          <DropdownMenuItem asChild className="py-2">
-            <Link href="/choose-username">{dict.header.chooseUsername}</Link>
+          <DropdownMenuItem asChild className="min-h-11 gap-3 px-3 py-2.5 text-base [&_svg:not([class*='size-'])]:size-5">
+            <Link href="/choose-username">
+              <PenLine aria-hidden="true" />
+              {dict.header.chooseUsername}
+            </Link>
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem asChild className="py-2">
-          <Link href="/profile">{dict.header.profile}</Link>
+        <DropdownMenuItem asChild className="min-h-11 gap-3 px-3 py-2.5 text-base [&_svg:not([class*='size-'])]:size-5">
+          <Link href="/profile">
+            <UserRound aria-hidden="true" />
+            {dict.header.profile}
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="py-2" onSelect={() => void logout()}>
+        <DropdownMenuItem asChild className="min-h-11 gap-3 px-3 py-2.5 text-base [&_svg:not([class*='size-'])]:size-5">
+          <Link href="/settings">
+            <Settings aria-hidden="true" />
+            {dict.header.settings}
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="my-1.5" />
+        <DropdownMenuItem className="min-h-11 gap-3 px-3 py-2.5 text-base [&_svg:not([class*='size-'])]:size-5" onSelect={() => void logout()}>
+          <LogOut aria-hidden="true" />
           {dict.header.logout}
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -28,6 +28,7 @@ export const en = {
       "Answers to common questions about Endless Lingle: bonus guesses, the colours, languages, saving your game and sharing results.",
     tipsDescription:
       "Tips for longer Endless Lingle streaks: good starting words, using your bonus guesses, common endings and more.",
+    settings: "Settings",
   },
 
   /** Language names as written in this language, for sentences like "a game in Dutch". */
@@ -51,6 +52,8 @@ export const en = {
     darkMode: "Dark mode",
     highContrast: "High contrast, colour-blind friendly mode",
     highContrastTitle: "High contrast / colour-blind mode",
+    settings: "Settings",
+    back: "Back",
   },
 
   footer: {
@@ -60,6 +63,7 @@ export const en = {
     cookieSettings: "Cookie settings",
     faq: "FAQ",
     tips: "Tips",
+    settings: "Settings",
   },
 
   home: {
@@ -132,6 +136,12 @@ export const en = {
     button: "Share",
     copied: "Copied to clipboard",
     failed: "Sharing didn't work. Try again.",
+    resultTitle: "Endless Lingle result",
+    resultChallenge: "Can you beat this score?",
+    resultHeading: "{words} in a row",
+    resultImage: "An Endless Lingle result: {words}",
+    resultInvalid:
+      "This result link doesn't work. Start your own game instead.",
   },
 
   howTo: {
@@ -200,6 +210,10 @@ export const en = {
       "Accounts are optional. An account stores your email, username and scores. See the {privacy} and {terms}.",
     privacyLink: "privacy notice",
     termsLink: "terms",
+    repeatPassword: "Repeat password",
+    passwordMismatch: "The passwords don't match.",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
   },
 
   username: {
@@ -245,6 +259,25 @@ export const en = {
     deleteConfirm: "Type {word} to confirm",
     deleteSubmit: "Delete permanently",
     cancel: "Cancel",
+    statsTitle: "Statistics",
+    accountTitle: "Account",
+  },
+
+  settings: {
+    title: "Settings",
+    guestBody:
+      "You're playing as a guest. Log in to save your scores and see your statistics.",
+    guestCta: "Log in or sign up",
+    displayTitle: "Display",
+    darkModeLabel: "Dark mode",
+    darkModeDescription: "Easier on the eyes in low light.",
+    highContrastLabel: "High contrast",
+    highContrastDescription:
+      "Orange and blue tiles with a check mark and dot, so the colours are easier to tell apart.",
+    cookiesTitle: "Cookies",
+    cookiesDescription:
+      "Choose whether we may use analytics cookies. Necessary cookies are always on.",
+    cookiesButton: "Change cookie settings",
   },
 
   errors: {

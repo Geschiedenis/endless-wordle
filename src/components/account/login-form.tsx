@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { Mail } from "lucide-react";
 import { FormMessage } from "@/components/account/form-message";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { InputWithIcon } from "@/components/ui/input-with-icon";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { errorMessage, format, rich } from "@/i18n/format";
 import { Link } from "@/i18n/link";
@@ -27,6 +29,9 @@ export function LoginForm() {
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  /** Sign-up asks for the password twice, to catch typos before they lock someone out. */
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const mismatch = mode === "signup" && repeatPassword !== "" && repeatPassword !== password;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -42,6 +47,7 @@ export function LoginForm() {
 
   function switchMode(nextMode: Mode) {
     setMode(nextMode);
+    setRepeatPassword("");
     setActed(true);
     setError(null);
     setSuccess(null);
@@ -49,8 +55,13 @@ export function LoginForm() {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    setBusy(true);
     setActed(true);
+    // The hint under the repeat field already says what's wrong, so just send the visitor there.
+    if (mode === "signup" && password !== repeatPassword) {
+      document.getElementById("repeat-password")?.focus();
+      return;
+    }
+    setBusy(true);
     setError(null);
     setSuccess(null);
 
@@ -62,7 +73,11 @@ export function LoginForm() {
       // The language goes with the account, so its emails are written in it.
       const response = await apiSend<SignupResponse>("/api/auth/signup", "POST", { email, password, locale });
       if (response.ok && response.data.status === "signed_in") return fullPageLoad(usernamePath);
-      if (response.ok) setSuccess(t.checkEmail);
+      if (response.ok) {
+        setSuccess(t.checkEmail);
+        setPassword("");
+        setRepeatPassword("");
+      }
       else setError(errorMessage(dict, response));
     } else {
       const response = await apiSend("/api/auth/forgot-password", "POST", { email });
@@ -76,10 +91,13 @@ export function LoginForm() {
     <div className="mx-auto w-full max-w-sm">
       <h1 className="text-center text-3xl font-bold tracking-tight">{titles[mode].title}</h1>
 
+      <FormMessage error={shownError} success={success} className="mt-6" />
+
       <form onSubmit={(event) => void submit(event)} className="mt-6 flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="email">{t.email}</Label>
-          <Input
+          <InputWithIcon
+            icon={Mail}
             id="email"
             type="email"
             required
@@ -94,9 +112,8 @@ export function LoginForm() {
         {mode !== "forgot" && (
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="password">{t.password}</Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               required
               autoComplete={mode === "signup" ? "new-password" : "current-password"}
               minLength={mode === "signup" ? PASSWORD_MIN_LENGTH : undefined}
@@ -105,13 +122,31 @@ export function LoginForm() {
               onChange={(event) => setPassword(event.target.value)}
               className="h-11"
             />
-            {mode === "signup" && (
-              <p className="text-xs text-muted-foreground">{format(t.passwordHelp, { min: PASSWORD_MIN_LENGTH })}</p>
-            )}
           </div>
         )}
 
-        <FormMessage error={shownError} success={success} />
+        {mode === "signup" && (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="repeat-password">{t.repeatPassword}</Label>
+            <PasswordInput
+              id="repeat-password"
+              required
+              autoComplete="new-password"
+              maxLength={72}
+              value={repeatPassword}
+              onChange={(event) => setRepeatPassword(event.target.value)}
+              aria-invalid={mismatch || undefined}
+              aria-describedby={mismatch ? "repeat-password-hint" : undefined}
+              className="h-11"
+            />
+            {mismatch && (
+              <p id="repeat-password-hint" className="text-xs text-destructive">
+                {t.passwordMismatch}
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground">{format(t.passwordHelp, { min: PASSWORD_MIN_LENGTH })}</p>
+          </div>
+        )}
 
         <Button type="submit" disabled={busy} className="h-11 text-base font-semibold">
           {titles[mode].submit}

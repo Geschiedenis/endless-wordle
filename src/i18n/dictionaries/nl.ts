@@ -4,7 +4,8 @@ export const nl: Dictionary = {
   meta: {
     description:
       "Een woordspel zoals Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
-    homeTitle: "Endless Lingle: onbeperkt woordspel zoals Wordle, ook in het Nederlands",
+    homeTitle:
+      "Endless Lingle: onbeperkt woordspel zoals Wordle, ook in het Nederlands",
     playDescription:
       "Speel Endless Lingle gratis in je browser: raad het ene woord van vijf letters na het andere, en neem ongebruikte pogingen mee naar het volgende woord. Geen account nodig.",
     howToPlayDescription:
@@ -25,6 +26,7 @@ export const nl: Dictionary = {
       "Antwoorden op veelgestelde vragen over Endless Lingle: bonuspogingen, de kleuren, talen, je spel bewaren en resultaten delen.",
     tipsDescription:
       "Tips voor langere reeksen in Endless Lingle: goede startwoorden, je bonuspogingen gebruiken, veelvoorkomende uitgangen en meer.",
+    settings: "Instellingen",
   },
 
   languages: {
@@ -47,6 +49,8 @@ export const nl: Dictionary = {
     darkMode: "Donkere modus",
     highContrast: "Hoog contrast, geschikt bij kleurenblindheid",
     highContrastTitle: "Hoog contrast / kleurenblindmodus",
+    settings: "Instellingen",
+    back: "Terug",
   },
 
   footer: {
@@ -56,6 +60,7 @@ export const nl: Dictionary = {
     cookieSettings: "Cookie-instellingen",
     faq: "Veelgestelde vragen",
     tips: "Tips",
+    settings: "Instellingen",
   },
 
   home: {
@@ -132,6 +137,11 @@ export const nl: Dictionary = {
     button: "Delen",
     copied: "Gekopieerd naar het klembord",
     failed: "Delen lukte niet. Probeer het opnieuw.",
+    resultTitle: "Endless Lingle-resultaat",
+    resultChallenge: "Kun jij deze score verbeteren?",
+    resultHeading: "{words} op rij",
+    resultImage: "Een Endless Lingle-resultaat: {words}",
+    resultInvalid: "Deze resultaatlink werkt niet. Begin gewoon je eigen spel.",
   },
 
   howTo: {
@@ -202,6 +212,10 @@ export const nl: Dictionary = {
       "Een account is optioneel. Een account bewaart je e-mailadres, gebruikersnaam en scores. Lees de {privacy} en {terms}.",
     privacyLink: "privacyverklaring",
     termsLink: "voorwaarden",
+    repeatPassword: "Herhaal wachtwoord",
+    passwordMismatch: "De wachtwoorden komen niet overeen.",
+    showPassword: "Wachtwoord tonen",
+    hidePassword: "Wachtwoord verbergen",
   },
 
   username: {
@@ -248,6 +262,25 @@ export const nl: Dictionary = {
     deleteConfirm: "Typ {word} om te bevestigen",
     deleteSubmit: "Definitief verwijderen",
     cancel: "Annuleren",
+    statsTitle: "Statistieken",
+    accountTitle: "Account",
+  },
+
+  settings: {
+    title: "Instellingen",
+    guestBody:
+      "Je speelt als gast. Log in om je scores te bewaren en je statistieken te zien.",
+    guestCta: "Inloggen of registreren",
+    displayTitle: "Weergave",
+    darkModeLabel: "Donkere modus",
+    darkModeDescription: "Prettiger voor je ogen bij weinig licht.",
+    highContrastLabel: "Hoog contrast",
+    highContrastDescription:
+      "Oranje en blauwe tegels met een vinkje en een stip, zodat de kleuren beter te onderscheiden zijn.",
+    cookiesTitle: "Cookies",
+    cookiesDescription:
+      "Kies of we analytische cookies mogen gebruiken. Noodzakelijke cookies staan altijd aan.",
+    cookiesButton: "Cookie-instellingen wijzigen",
   },
 
   errors: {

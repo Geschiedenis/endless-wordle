@@ -9,6 +9,7 @@ import { useI18n } from "@/i18n/provider";
 import { useSession } from "@/hooks/use-session";
 import { localePath, SITE_URL } from "@/i18n/config";
 import { buildShareText, type SharedWord } from "@/lib/game/share";
+import { encodeResult } from "@/lib/game/share-code";
 import { isHighContrast } from "@/lib/preferences";
 
 interface GameOverProps {
@@ -37,7 +38,8 @@ export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain, sharedW
       locale,
       wordsLabel: plural(dict.gameOver.words, wordsSolved),
       words: sharedWords,
-      url: `${SITE_URL}${localePath(locale, "/")}`,
+      // A link to this result, whose preview shows the grid and score.
+      url: `${SITE_URL}${localePath(locale, `/r/${encodeResult({ wordsSolved, words: sharedWords })}`)}`,
       highContrast: isHighContrast(),
     });
     const useShareSheet = typeof navigator.share === "function" && matchMedia("(pointer: coarse)").matches;

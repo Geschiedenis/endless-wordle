@@ -53,13 +53,14 @@ export const TIPS: Record<Locale, TipsContent> = {
       },
       {
         title: "Struggling with the colours?",
-        body: "Turn on high-contrast mode with the contrast button at the top right. It uses orange and blue, and adds a check mark and dot to the tiles.",
+        body: "Turn on high contrast in Settings, under the gear button at the top right. It uses orange and blue, and adds a check mark and dot to the tiles.",
       },
     ],
   },
   nl: {
     title: "Tips voor langere reeksen",
-    intro: "Een paar gewoonten die een lange reeks woorden een stuk waarschijnlijker maken.",
+    intro:
+      "Een paar gewoonten die een lange reeks woorden een stuk waarschijnlijker maken.",
     starters: ["toren", "later", "raken"],
     items: [
       {
@@ -96,13 +97,14 @@ export const TIPS: Record<Locale, TipsContent> = {
       },
       {
         title: "Moeite met de kleuren?",
-        body: "Zet hoog contrast aan met de contrastknop rechtsboven. Die gebruikt oranje en blauw, en zet een vinkje en een stip op de tegels.",
+        body: "Zet hoog contrast aan bij Instellingen, via het tandwiel rechtsboven. Die gebruikt oranje en blauw, en zet een vinkje en een stip op de tegels.",
       },
     ],
   },
   de: {
     title: "Tipps für längere Serien",
-    intro: "Ein paar Gewohnheiten, mit denen eine lange Serie viel wahrscheinlicher wird.",
+    intro:
+      "Ein paar Gewohnheiten, mit denen eine lange Serie viel wahrscheinlicher wird.",
     starters: ["karte", "laser", "alter"],
     items: [
       {
@@ -139,13 +141,14 @@ export const TIPS: Record<Locale, TipsContent> = {
       },
       {
         title: "Probleme mit den Farben?",
-        body: "Schalte oben rechts mit dem Kontrast-Button den hohen Kontrast ein. Er nutzt Orange und Blau und ergänzt die Felder um ein Häkchen und einen Punkt.",
+        body: "Schalte den hohen Kontrast in den Einstellungen ein, über das Zahnrad oben rechts. Er nutzt Orange und Blau und ergänzt die Felder um ein Häkchen und einen Punkt.",
       },
     ],
   },
   fr: {
     title: "Astuces pour des séries plus longues",
-    intro: "Quelques habitudes qui rendent une longue série de mots bien plus probable.",
+    intro:
+      "Quelques habitudes qui rendent une longue série de mots bien plus probable.",
     starters: ["carte", "autre", "route"],
     items: [
       {
@@ -182,13 +185,14 @@ export const TIPS: Record<Locale, TipsContent> = {
       },
       {
         title: "Les couleurs vous posent problème ?",
-        body: "Activez le contraste élevé avec le bouton de contraste en haut à droite. Il utilise l'orange et le bleu, et ajoute une coche et un point sur les cases.",
+        body: "Activez le contraste élevé dans les Paramètres, via la roue dentée en haut à droite. Il utilise l'orange et le bleu, et ajoute une coche et un point sur les cases.",
       },
     ],
   },
   es: {
     title: "Consejos para rachas más largas",
-    intro: "Algunos hábitos que hacen mucho más probable una larga racha de palabras.",
+    intro:
+      "Algunos hábitos que hacen mucho más probable una larga racha de palabras.",
     starters: ["radio", "claro", "porta"],
     items: [
       {
@@ -225,7 +229,7 @@ export const TIPS: Record<Locale, TipsContent> = {
       },
       {
         title: "¿Te cuestan los colores?",
-        body: "Activa el alto contraste con el botón de contraste de arriba a la derecha. Usa naranja y azul, y añade una marca y un punto a las casillas.",
+        body: "Activa el alto contraste en Ajustes, con el engranaje de arriba a la derecha. Usa naranja y azul, y añade una marca y un punto a las casillas.",
       },
     ],
   },

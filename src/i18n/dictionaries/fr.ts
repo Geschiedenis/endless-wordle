@@ -4,7 +4,8 @@ export const fr: Dictionary = {
   meta: {
     description:
       "Un jeu de mots façon Wordle qui ne s'arrête jamais. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
-    homeTitle: "Endless Lingle : jeu de mots illimité façon Wordle, aussi en français",
+    homeTitle:
+      "Endless Lingle : jeu de mots illimité façon Wordle, aussi en français",
     playDescription:
       "Jouez gratuitement à Endless Lingle dans votre navigateur : devinez des mots de cinq lettres à la suite, et reportez vos essais restants sur le mot suivant. Aucun compte nécessaire.",
     howToPlayDescription:
@@ -25,6 +26,7 @@ export const fr: Dictionary = {
       "Réponses aux questions fréquentes sur Endless Lingle : essais bonus, couleurs, langues, sauvegarde de la partie et partage des résultats.",
     tipsDescription:
       "Astuces pour des séries plus longues sur Endless Lingle : bons mots de départ, essais bonus, terminaisons courantes et plus encore.",
+    settings: "Paramètres",
   },
 
   languages: {
@@ -47,6 +49,8 @@ export const fr: Dictionary = {
     darkMode: "Mode sombre",
     highContrast: "Contraste élevé, adapté au daltonisme",
     highContrastTitle: "Contraste élevé / mode daltonien",
+    settings: "Paramètres",
+    back: "Retour",
   },
 
   footer: {
@@ -56,6 +60,7 @@ export const fr: Dictionary = {
     cookieSettings: "Paramètres des cookies",
     faq: "FAQ",
     tips: "Astuces",
+    settings: "Paramètres",
   },
 
   home: {
@@ -132,6 +137,12 @@ export const fr: Dictionary = {
     button: "Partager",
     copied: "Copié dans le presse-papiers",
     failed: "Le partage n'a pas fonctionné. Réessayez.",
+    resultTitle: "Résultat Endless Lingle",
+    resultChallenge: "Pouvez-vous faire mieux ?",
+    resultHeading: "{words} d'affilée",
+    resultImage: "Un résultat Endless Lingle : {words}",
+    resultInvalid:
+      "Ce lien de résultat ne fonctionne pas. Lancez plutôt votre propre partie.",
   },
 
   howTo: {
@@ -205,6 +216,10 @@ export const fr: Dictionary = {
       "Le compte est facultatif. Il conserve votre e-mail, votre nom d'utilisateur et vos scores. Consultez la {privacy} et les {terms}.",
     privacyLink: "politique de confidentialité",
     termsLink: "conditions",
+    repeatPassword: "Répétez le mot de passe",
+    passwordMismatch: "Les mots de passe ne correspondent pas.",
+    showPassword: "Afficher le mot de passe",
+    hidePassword: "Masquer le mot de passe",
   },
 
   username: {
@@ -251,6 +266,25 @@ export const fr: Dictionary = {
     deleteConfirm: "Tapez {word} pour confirmer",
     deleteSubmit: "Supprimer définitivement",
     cancel: "Annuler",
+    statsTitle: "Statistiques",
+    accountTitle: "Compte",
+  },
+
+  settings: {
+    title: "Paramètres",
+    guestBody:
+      "Vous jouez en tant qu'invité. Connectez-vous pour enregistrer vos scores et voir vos statistiques.",
+    guestCta: "Se connecter ou s'inscrire",
+    displayTitle: "Affichage",
+    darkModeLabel: "Mode sombre",
+    darkModeDescription: "Plus doux pour les yeux en faible lumière.",
+    highContrastLabel: "Contraste élevé",
+    highContrastDescription:
+      "Cases orange et bleues avec une coche et un point, pour mieux distinguer les couleurs.",
+    cookiesTitle: "Cookies",
+    cookiesDescription:
+      "Choisissez si nous pouvons utiliser des cookies de mesure d'audience. Les cookies nécessaires sont toujours actifs.",
+    cookiesButton: "Modifier les paramètres des cookies",
   },
 
   errors: {

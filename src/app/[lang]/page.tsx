@@ -1,4 +1,4 @@
-import { Logo } from "@/components/logo";
+import { HeroFan } from "@/components/hero-fan";
 import { SiteFooter } from "@/components/site-footer";
 import { TopBar } from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
@@ -37,11 +37,10 @@ export default async function LandingPage() {
         // Escaping < keeps the JSON from ever closing the script tag early.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
-      {/* The page shows the big logo itself, so the bar leaves its middle empty. */}
-      <TopBar showLogo={false} />
+      <TopBar logo="center" />
       <main className="flex flex-1 flex-col items-center justify-center pb-8 text-center">
-        <Logo />
-        <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
+        <HeroFan />
+        <h1 className="relative z-10 mt-2 text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
         <p className="mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
         <div className="mt-8 flex w-full max-w-xs flex-col gap-3">
           <Button asChild className="h-12 text-base font-semibold">

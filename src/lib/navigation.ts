@@ -4,7 +4,7 @@ import { isLocale, localePath, splitLocale } from "@/i18n/config";
  * Places a login may send someone back to. An allowlist, so a crafted link can't
  * use the login flow to redirect people to another site.
  */
-const NEXT_PATHS = ["/play", "/profile", "/reset-password", "/choose-username"] as const;
+const NEXT_PATHS = ["/play", "/profile", "/settings", "/reset-password", "/choose-username"] as const;
 
 const DEFAULT_NEXT_PATH = "/play";
 

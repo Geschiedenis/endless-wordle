@@ -33,9 +33,9 @@ export function ChooseUsernameForm() {
     <div className="mx-auto w-full max-w-sm">
       <h1 className="text-center text-3xl font-bold tracking-tight">{dict.chooseUsername.title}</h1>
       <p className="mt-2 text-center text-muted-foreground">{dict.chooseUsername.subtitle}</p>
+      <FormMessage error={error} className="mt-6" />
       <form onSubmit={(event) => void submit(event)} className="mt-6 flex flex-col gap-4">
         <UsernameField value={username} onChange={setUsername} />
-        <FormMessage error={error} />
         <Button type="submit" disabled={busy} className="h-11 text-base font-semibold">
           {dict.chooseUsername.submit}
         </Button>

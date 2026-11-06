@@ -1,6 +1,7 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { AtSign } from "lucide-react";
+import { InputWithIcon } from "@/components/ui/input-with-icon";
 import { Label } from "@/components/ui/label";
 import { format } from "@/i18n/format";
 import { useI18n } from "@/i18n/provider";
@@ -19,7 +20,8 @@ export function UsernameField({
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor="username">{label ?? dict.username.label}</Label>
-      <Input
+      <InputWithIcon
+        icon={AtSign}
         id="username"
         required
         autoComplete="username"
