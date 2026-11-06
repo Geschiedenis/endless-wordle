@@ -257,7 +257,7 @@ export const en = {
   cookies: {
     title: "Cookies on Endless Wordle",
     description:
-      "We use necessary cookies to run the game and keep you logged in. With your consent, we may also use analytics and advertising cookies. We don't use any yet, and they'll only ever run if you accept. You can change your choice at any time under Cookie settings at the bottom of the page.",
+      "We use necessary cookies to run the game and keep you logged in. If you accept, we also use Google Analytics to understand how the site is used. We don't use advertising cookies. You can change your choice at any time under Cookie settings at the bottom of the page.",
     details: "Cookie details",
     reject: "Reject",
     accept: "Accept",
@@ -276,7 +276,7 @@ export const en = {
       analytics: {
         title: "Analytics",
         description:
-          "Help us understand how the site is used. Only with your consent.",
+          "Google Analytics shows us which pages are visited and how, so we can improve the game. Only with your consent.",
       },
       advertising: {
         title: "Advertising",
@@ -300,6 +300,11 @@ export const en = {
       preferences: {
         purpose: "Remember your dark mode and contrast choices.",
         duration: "Until you clear them",
+      },
+      analytics: {
+        purpose:
+          "Google Analytics: tells visits apart, to count visitors and pages.",
+        duration: "2 years",
       },
       consent: {
         purpose: "Remembers your cookie choice.",

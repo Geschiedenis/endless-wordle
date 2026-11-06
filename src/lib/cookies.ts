@@ -6,7 +6,7 @@
 export type CookieCategory = "necessary" | "analytics" | "advertising";
 
 export interface StorageItem {
-  key: "game" | "session" | "verifier" | "language" | "preferences" | "consent";
+  key: "game" | "session" | "verifier" | "language" | "preferences" | "consent" | "analytics";
   name: string;
   kind: "cookie" | "localStorage";
   category: CookieCategory;
@@ -21,4 +21,5 @@ export const STORAGE_ITEMS: readonly StorageItem[] = [
   { key: "language", name: "ew-lang", kind: "cookie", category: "necessary" },
   { key: "preferences", name: "ew-theme, ew-contrast", kind: "localStorage", category: "necessary" },
   { key: "consent", name: "ew-cookie-consent", kind: "localStorage", category: "necessary" },
+  { key: "analytics", name: "_ga, _ga_<id>", kind: "cookie", category: "analytics" },
 ];

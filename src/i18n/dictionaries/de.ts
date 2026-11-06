@@ -261,7 +261,7 @@ export const de: Dictionary = {
   cookies: {
     title: "Cookies bei Endless Wordle",
     description:
-      "Wir verwenden notwendige Cookies, damit das Spiel funktioniert und du angemeldet bleibst. Mit deiner Einwilligung verwenden wir eventuell auch Analyse- und Werbe-Cookies. Wir nutzen noch keine, und sie laufen nur, wenn du zustimmst. Du kannst deine Wahl jederzeit unter Cookie-Einstellungen unten auf der Seite ändern.",
+      "Wir verwenden notwendige Cookies, damit das Spiel funktioniert und du angemeldet bleibst. Wenn du zustimmst, verwenden wir außerdem Google Analytics, um zu verstehen, wie die Seite genutzt wird. Werbe-Cookies verwenden wir nicht. Du kannst deine Wahl jederzeit unter Cookie-Einstellungen unten auf der Seite ändern.",
     details: "Details zu Cookies",
     reject: "Ablehnen",
     accept: "Akzeptieren",
@@ -280,7 +280,7 @@ export const de: Dictionary = {
       analytics: {
         title: "Analyse",
         description:
-          "Helfen uns zu verstehen, wie die Seite genutzt wird. Nur mit deiner Einwilligung.",
+          "Google Analytics zeigt uns, welche Seiten wie besucht werden, damit wir das Spiel verbessern können. Nur mit deiner Einwilligung.",
       },
       advertising: {
         title: "Werbung",
@@ -307,6 +307,11 @@ export const de: Dictionary = {
         purpose:
           "Merken sich deine Einstellungen für Dunkelmodus und Kontrast.",
         duration: "Bis du sie löschst",
+      },
+      analytics: {
+        purpose:
+          "Google Analytics: unterscheidet Besuche, um Besucher und Seitenaufrufe zu zählen.",
+        duration: "2 Jahre",
       },
       consent: {
         purpose: "Merkt sich deine Cookie-Auswahl.",

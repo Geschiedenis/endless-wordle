@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
+import { Analytics } from "@/components/analytics";
 import { CookieNotice } from "@/components/cookie-notice";
 import { LOCALES, SITE_URL } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n/server";
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       <body className="flex min-h-full flex-col">
         {children}
         <CookieNotice />
+        <Analytics />
       </body>
     </html>
   );

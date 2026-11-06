@@ -260,7 +260,7 @@ export const nl: Dictionary = {
   cookies: {
     title: "Cookies op Endless Wordle",
     description:
-      "We gebruiken noodzakelijke cookies om het spel te laten werken en je ingelogd te houden. Met je toestemming gebruiken we mogelijk ook analytische en advertentiecookies. Die gebruiken we nu nog niet, en ze werken alleen als je ze accepteert. Je kunt je keuze altijd wijzigen via Cookie-instellingen onderaan de pagina.",
+      "We gebruiken noodzakelijke cookies om het spel te laten werken en je ingelogd te houden. Als je accepteert, gebruiken we ook Google Analytics om te begrijpen hoe de site wordt gebruikt. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen via Cookie-instellingen onderaan de pagina.",
     details: "Details over cookies",
     reject: "Weigeren",
     accept: "Accepteren",
@@ -279,7 +279,7 @@ export const nl: Dictionary = {
       analytics: {
         title: "Analytisch",
         description:
-          "Helpen ons begrijpen hoe de site wordt gebruikt. Alleen met je toestemming.",
+          "Google Analytics laat ons zien welke pagina's worden bezocht en hoe, zodat we het spel kunnen verbeteren. Alleen met je toestemming.",
       },
       advertising: {
         title: "Advertenties",
@@ -305,6 +305,11 @@ export const nl: Dictionary = {
       preferences: {
         purpose: "Onthouden je keuzes voor donkere modus en contrast.",
         duration: "Tot je ze wist",
+      },
+      analytics: {
+        purpose:
+          "Google Analytics: onderscheidt bezoeken, om bezoekers en pagina's te tellen.",
+        duration: "2 jaar",
       },
       consent: { purpose: "Onthoudt je cookiekeuze.", duration: "12 maanden" },
     },

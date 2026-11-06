@@ -42,6 +42,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase: Project Settings > API. Just `https://<project-ref>.supabase.co`, with no `/rest/v1/`. | Server code |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page: the `anon`/`public` key (`publishable` on newer projects) | Server code |
 | `SUPABASE_SERVICE_ROLE_KEY` | Same page: the `service_role` key (`secret` on newer projects) | Server only. **Bypasses all Row Level Security. Never expose it.** |
+| `NEXT_PUBLIC_GA_ID` | Optional. Google Analytics: Admin > Data streams > your stream, the Measurement ID (`G-...`). Set it for Production only. | Google Analytics, which only loads after a visitor accepts analytics cookies. Read at build time, so redeploy after changing it. |
 | `NEXT_PUBLIC_SITE_URL` | Optional. Your live address, such as `https://endlesswordle.app`, which is also the default. | Search results, link previews, the sitemap and shared results |
 
 **Locally:** put them in `.env.local`, which git ignores. Restart `npm run dev` afterwards. All are optional for guest play.

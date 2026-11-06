@@ -27,17 +27,25 @@ function assertProductionEnv() {
 /**
  * script-src needs 'unsafe-inline' because these pages are prerendered and Next.js
  * adds inline scripts to them. The stricter nonce approach requires rendering every
- * page per request. No page calls another origin: Supabase is only reached from the
- * server.
+ * page per request. Supabase is only reached from the server. The only other origins
+ * are Google Analytics', added when it's configured.
  */
 function contentSecurityPolicy(isDev: boolean): string {
+  // Google Analytics, only when it's configured. It still only loads after consent.
+  const analytics = process.env.NEXT_PUBLIC_GA_ID
+    ? {
+        script: " https://www.googletagmanager.com",
+        connect: " https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+        img: " https://*.google-analytics.com https://*.googletagmanager.com",
+      }
+    : { script: "", connect: "", img: "" };
   return [
     "default-src 'self'",
-    `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+    `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}${analytics.script}`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data:",
+    `img-src 'self' data:${analytics.img}`,
     "font-src 'self'",
-    `connect-src 'self'${isDev ? " ws:" : ""}`,
+    `connect-src 'self'${isDev ? " ws:" : ""}${analytics.connect}`,
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

@@ -1,17 +1,16 @@
 /**
  * The visitor's cookie choice, kept in local storage per browser.
  *
- * Nothing optional runs yet. When Google Analytics or ads are added, load them only
- * when hasConsent("analytics") or hasConsent("advertising") is true, and call
- * subscribeToConsent to react when the choice changes. With Google's Consent Mode,
- * map these to analytics_storage, ad_storage, ad_user_data and ad_personalization.
- * Then add their cookies to STORAGE_ITEMS and raise CONSENT_VERSION, which asks
+ * Google Analytics follows "analytics" (see src/lib/analytics.ts). Nothing uses
+ * "advertising" yet. Anything optional must check hasConsent and use
+ * subscribeToConsent to react when the choice changes. When optional cookies are
+ * added or changed, list them in STORAGE_ITEMS and raise CONSENT_VERSION, which asks
  * everyone again.
  */
 
 const STORAGE_KEY = "ew-cookie-consent";
 /** Raise this when the optional cookies change, so everyone is asked again. */
-const CONSENT_VERSION = 1;
+const CONSENT_VERSION = 2; // 2: Google Analytics added
 /** A choice is asked again after this long. */
 const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
 
