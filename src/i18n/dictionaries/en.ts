@@ -139,11 +139,8 @@ export const en = {
 
   daily: {
     heading: "Daily word #{number}",
-    intro: "One word a day, the same for everyone. Six guesses, no bonus.",
     solved: "You got it in {guesses}/6",
-    lost: "Better luck tomorrow",
-    doneToday: "You've played today's word.",
-    nextIn: "Next word in {time}",
+    comeBack: "Come back tomorrow!",
     playEndless: "Play endless",
     announceSolved: "{letters}. You solved today's word.",
   },

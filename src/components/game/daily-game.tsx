@@ -7,7 +7,7 @@ import { Keyboard } from "@/components/game/keyboard";
 import { TopBar } from "@/components/top-bar";
 import { Button } from "@/components/ui/button";
 import { localePath, SITE_URL } from "@/i18n/config";
-import { format, rich } from "@/i18n/format";
+import { format } from "@/i18n/format";
 import { Link } from "@/i18n/link";
 import { useI18n } from "@/i18n/provider";
 import { useDaily } from "@/hooks/use-daily";
@@ -32,10 +32,7 @@ export function DailyGame() {
       {/* The game's own gutter is 8px on phones, so this tops it up to the usual 16px. */}
       <TopBar className="px-2 sm:px-0" />
 
-      <header className="flex flex-col items-center gap-0.5 py-1 text-center">
-        <h1 className="text-lg font-bold tracking-tight">{title}</h1>
-        <p className="text-xs text-balance text-muted-foreground">{dict.daily.intro}</p>
-      </header>
+      <h1 className="py-1 text-center text-lg font-bold tracking-tight">{title}</h1>
 
       {phase === "error" ? (
         <div role="alert" className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
@@ -124,12 +121,11 @@ function DailyResult({ daily, title, onNewDay }: { daily: DailyView; title: stri
         <div>
           <p className="text-sm text-muted-foreground">{dict.gameOver.wordWas}</p>
           <p className="text-3xl font-bold tracking-[0.2em] uppercase">{daily.answer}</p>
-          <p className="text-sm text-muted-foreground">{dict.daily.lost}</p>
         </div>
       )}
-      <Countdown onNewDay={onNewDay} />
+      <ComeBackTomorrow onNewDay={onNewDay} />
 
-      <div className="grid w-full grid-cols-2 gap-2">
+      <div className="mt-3 grid w-full grid-cols-2 gap-2">
         <Button ref={share} variant="outline" onClick={() => void shareResult()} className="h-12 text-base font-semibold">
           <Share2 aria-hidden="true" />
           {dict.share.button}
@@ -143,30 +139,20 @@ function DailyResult({ daily, title, onNewDay }: { daily: DailyView; title: stri
   );
 }
 
-/** Time until the next word, at the player's midnight. Loads the new word when it arrives. */
-function Countdown({ onNewDay }: { onNewDay: () => unknown }) {
+/** Says when to come back, and loads the new word if the page is still open at the player's midnight. */
+function ComeBackTomorrow({ onNewDay }: { onNewDay: () => unknown }) {
   const { dict } = useI18n();
-  const [left, setLeft] = useState(() => msUntilNextDay(new Date()));
-  const previous = useRef(left);
+  const previous = useRef<number | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const next = msUntilNextDay(new Date());
+      const left = msUntilNextDay(new Date());
       // Just past midnight the time left jumps back up to a whole day.
-      if (next > previous.current) onNewDay();
-      previous.current = next;
-      setLeft(next);
+      if (previous.current !== null && left > previous.current) onNewDay();
+      previous.current = left;
     }, 1000);
     return () => clearInterval(timer);
   }, [onNewDay]);
 
-  const seconds = Math.floor(left / 1000);
-  const time = [Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60]
-    .map((part) => String(part).padStart(2, "0"))
-    .join(":");
-  return (
-    <p className="text-sm text-muted-foreground">
-      {rich(dict.daily.nextIn, { time: <span className="font-semibold text-foreground tabular-nums">{time}</span> })}
-    </p>
-  );
+  return <p className="text-sm text-muted-foreground">{dict.daily.comeBack}</p>;
 }

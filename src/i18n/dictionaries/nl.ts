@@ -140,11 +140,8 @@ export const nl: Dictionary = {
 
   daily: {
     heading: "Woord van de dag #{number}",
-    intro: "Elke dag één woord, voor iedereen hetzelfde. Zes pogingen, geen bonus.",
     solved: "Geraden in {guesses}/6",
-    lost: "Morgen beter",
-    doneToday: "Je hebt het woord van vandaag al gespeeld.",
-    nextIn: "Volgende woord over {time}",
+    comeBack: "Kom morgen terug!",
     playEndless: "Speel eindeloos",
     announceSolved: "{letters}. Je hebt het woord van vandaag geraden.",
   },

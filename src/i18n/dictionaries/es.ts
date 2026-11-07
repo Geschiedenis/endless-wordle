@@ -140,11 +140,8 @@ export const es: Dictionary = {
 
   daily: {
     heading: "Palabra del día #{number}",
-    intro: "Una palabra al día, la misma para todos. Seis intentos, sin extras.",
     solved: "Acertada en {guesses}/6",
-    lost: "Mañana será otro día",
-    doneToday: "Ya has jugado la palabra de hoy.",
-    nextIn: "Siguiente palabra en {time}",
+    comeBack: "¡Vuelve mañana!",
     playEndless: "Jugar sin fin",
     announceSolved: "{letters}. Has acertado la palabra de hoy.",
   },

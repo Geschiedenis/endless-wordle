@@ -140,11 +140,8 @@ export const fr: Dictionary = {
 
   daily: {
     heading: "Mot du jour #{number}",
-    intro: "Un mot par jour, le même pour tous. Six essais, sans bonus.",
     solved: "Trouvé en {guesses}/6",
-    lost: "Ce sera pour demain",
-    doneToday: "Vous avez déjà joué le mot du jour.",
-    nextIn: "Prochain mot dans {time}",
+    comeBack: "Revenez demain !",
     playEndless: "Jouer en mode infini",
     announceSolved: "{letters}. Vous avez trouvé le mot du jour.",
   },
