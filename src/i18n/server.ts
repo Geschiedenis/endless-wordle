@@ -24,7 +24,7 @@ interface PageMetadataOptions {
   /** Page name for the title. Leave out for the home page, which uses its own title. */
   page?: keyof Meta;
   /** Falls back to the site's general description. */
-  description?: "playDescription" | "howToPlayDescription" | "faqDescription" | "tipsDescription";
+  description?: "playDescription" | "howToPlayDescription" | "faqDescription" | "tipsDescription" | "dailyDescription";
   /** False for account pages, which shouldn't appear in search results. */
   index?: boolean;
 }

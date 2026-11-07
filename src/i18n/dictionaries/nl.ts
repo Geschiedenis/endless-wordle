@@ -2,6 +2,9 @@ import type { Dictionary } from "./en";
 
 export const nl: Dictionary = {
   meta: {
+    daily: "Woord van de dag",
+    dailyDescription:
+      "Het woord van vandaag in Endless Lingle: elke dag één woord van vijf letters, voor iedereen hetzelfde, in zes pogingen. Een gratis dagelijkse Wordle in vijf talen.",
     description:
       "Een woordspel zoals Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
     homeTitle:
@@ -64,6 +67,7 @@ export const nl: Dictionary = {
   },
 
   home: {
+    daily: "Woord van de dag",
     tagline:
       "Net als Wordle, maar dan zonder einde. Ongebruikte pogingen gaan mee naar het volgende woord, en het spel eindigt pas als je ze allemaal hebt opgebruikt.",
     play: "Spelen",
@@ -132,6 +136,17 @@ export const nl: Dictionary = {
     scoreSaved: "Score opgeslagen.",
     scoreNotSaved: "Je score kon niet worden opgeslagen.",
     playAgain: "Opnieuw spelen",
+  },
+
+  daily: {
+    heading: "Woord van de dag #{number}",
+    intro: "Elke dag één woord, voor iedereen hetzelfde. Zes pogingen, geen bonus.",
+    solved: "Geraden in {guesses}/6",
+    lost: "Morgen beter",
+    doneToday: "Je hebt het woord van vandaag al gespeeld.",
+    nextIn: "Volgende woord over {time}",
+    playEndless: "Speel eindeloos",
+    announceSolved: "{letters}. Je hebt het woord van vandaag geraden.",
   },
 
   share: {
@@ -241,6 +256,9 @@ export const nl: Dictionary = {
   },
 
   profile: {
+    distributionTitle: "Verdeling van pogingen",
+    distributionEmpty:
+      "Raad een woord om te zien hoeveel pogingen je meestal nodig hebt.",
     loadError: "Je profiel kon niet worden geladen. Probeer het opnieuw.",
     loading: "Laden…",
     bestScore: "Beste score",
@@ -335,6 +353,10 @@ export const nl: Dictionary = {
       game: {
         purpose: "Bewaart het spel van een gast dat nog bezig is.",
         duration: "30 dagen",
+      },
+      daily: {
+        purpose: "Bewaart de pogingen van een gast op het woord van de dag, zodat je het niet twee keer kunt spelen.",
+        duration: "3 dagen",
       },
       session: {
         purpose: "Houdt je ingelogd.",

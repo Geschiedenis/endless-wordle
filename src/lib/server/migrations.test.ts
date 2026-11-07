@@ -47,6 +47,20 @@ async function addGame(userId: string, wordsSolved: number, totalGuesses: number
   );
 }
 
+async function addSolvedIn(userId: string, solvedIn: number[]) {
+  await db.query(
+    "insert into public.games (user_id, words_solved, total_guesses, solved_in) values ($1, $2, $3, $4)",
+    [userId, solvedIn.length, solvedIn.reduce((a, b) => a + b, 0) + 6, solvedIn],
+  );
+}
+
+async function addDaily(userId: string, day: string, solvedIn: number | null, language = "en") {
+  await db.query(
+    "insert into public.daily_games (user_id, day, language, guesses, solved_in) values ($1, $2, $3, $4, $5)",
+    [userId, day, language, ["crane"], solvedIn],
+  );
+}
+
 beforeAll(async () => {
   db = new PGlite();
   await db.exec(SUPABASE_STUB);
@@ -125,7 +139,7 @@ describe("row level security", () => {
   });
 
   it("gives guests no table access at all", async () => {
-    for (const table of ["profiles", "games", "active_games"]) {
+    for (const table of ["profiles", "games", "active_games", "daily_games"]) {
       await expect(as("anon", null, `select * from public.${table}`)).rejects.toThrow(/permission denied/);
     }
   });
@@ -213,6 +227,7 @@ describe("deleting an account", () => {
     await addGame(ALICE, 3, 10);
     await addGame(BOB, 4, 10);
     await db.query("insert into public.active_games (user_id, state) values ($1, 'sealed')", [ALICE]);
+    await addDaily(ALICE, "2026-11-07", 3);
 
     await db.query("delete from auth.users where id = $1", [ALICE]);
 
@@ -220,6 +235,74 @@ describe("deleting an account", () => {
     expect(await count("select 1 from public.profiles where id = $1")).toBe(0);
     expect(await count("select 1 from public.games where user_id = $1")).toBe(0);
     expect(await count("select 1 from public.active_games where user_id = $1")).toBe(0);
+    expect(await count("select 1 from public.daily_games where user_id = $1")).toBe(0);
     expect((await db.query("select 1 from public.games")).rows).toHaveLength(1);
+  });
+});
+
+describe("daily games", () => {
+  it("lets users read only their own", async () => {
+    await addDaily(ALICE, "2026-11-07", 3);
+    await addDaily(BOB, "2026-11-07", 5);
+    const rows = await as<{ solved_in: number }>("authenticated", ALICE, "select solved_in from public.daily_games");
+    expect(rows).toEqual([{ solved_in: 3 }]);
+  });
+
+  it.each(["insert", "update", "delete"])("blocks %s from the browser", async (operation) => {
+    await addDaily(ALICE, "2026-11-07", null);
+    const sql = {
+      insert: `insert into public.daily_games (user_id, day, language) values ('${ALICE}', '2026-11-08', 'en')`,
+      update: "update public.daily_games set solved_in = 1",
+      delete: "delete from public.daily_games",
+    }[operation]!;
+    await expect(as("authenticated", ALICE, sql)).rejects.toThrow(/permission denied/);
+  });
+
+  it("allows one row per player, day and language", async () => {
+    await addDaily(ALICE, "2026-11-07", null);
+    await expect(addDaily(ALICE, "2026-11-07", 2)).rejects.toThrow(/duplicate key|unique/);
+    await addDaily(ALICE, "2026-11-07", 2, "nl");
+  });
+
+  it("caps a day at six guesses", async () => {
+    await expect(
+      db.query("insert into public.daily_games (user_id, day, language, guesses) values ($1, '2026-11-07', 'en', $2)", [
+        ALICE,
+        Array(7).fill("crane"),
+      ]),
+    ).rejects.toThrow(/check/);
+  });
+});
+
+describe("get_my_guess_distribution", () => {
+  type Row = { guesses: number; words: string | number };
+  const distribution = async (uid: string) =>
+    (await as<Row>("authenticated", uid, "select * from public.get_my_guess_distribution()")).map((row) => [
+      row.guesses,
+      Number(row.words),
+    ]);
+
+  it("counts the caller's solved words from endless games and daily words", async () => {
+    await addSolvedIn(ALICE, [3, 4, 3]);
+    await addSolvedIn(ALICE, [7]);
+    await addDaily(ALICE, "2026-11-07", 4);
+    await addDaily(ALICE, "2026-11-08", null);
+    await addSolvedIn(BOB, [1, 1, 1]);
+    expect(await distribution(ALICE)).toEqual([
+      [3, 2],
+      [4, 2],
+      [7, 1],
+    ]);
+  });
+
+  it("is empty for a new player and for games from before it was tracked", async () => {
+    await addGame(ALICE, 5, 20);
+    expect(await distribution(ALICE)).toEqual([]);
+  });
+
+  it("isn't available to guests", async () => {
+    await expect(as("anon", null, "select * from public.get_my_guess_distribution()")).rejects.toThrow(
+      /permission denied/,
+    );
   });
 });

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { isLocale } from "@/i18n/config";
+import { BASE_GUESSES } from "@/lib/game/constants";
 import { NO_USERNAME_CONFIRMATION, type ProfileResponse } from "@/lib/account-types";
 import { getCurrentUser } from "@/lib/server/auth";
 import { errorResponse, guardedRoute, jsonResponse, parseJsonBody, rateLimiters } from "@/lib/server/http";
@@ -15,7 +16,7 @@ export const GET = guardedRoute(rateLimiters.profile, async () => {
 
   // The user's own session, so Row Level Security limits this to their rows.
   const supabase = await createSessionClient();
-  const [username, stats, games] = await Promise.all([
+  const [username, stats, games, distribution] = await Promise.all([
     getUsername(supabase, user.id),
     supabase
       .rpc("get_my_stats")
@@ -26,9 +27,12 @@ export const GET = guardedRoute(rateLimiters.profile, async () => {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(RECENT_GAMES),
+    supabase.rpc("get_my_guess_distribution"),
   ]);
   if (stats.error) throw stats.error;
   if (games.error) throw games.error;
+  // Until the daily migration has run, the function doesn't exist (PGRST202): show an empty chart.
+  if (distribution.error && distribution.error.code !== "PGRST202") throw distribution.error;
 
   return jsonResponse<ProfileResponse>({
     username,
@@ -37,6 +41,7 @@ export const GET = guardedRoute(rateLimiters.profile, async () => {
       bestScore: stats.data.best_score,
       averageWords: Number(stats.data.average_words),
     },
+    guessDistribution: toDistribution((distribution.data ?? []) as DistributionRow[]),
     recentGames: games.data.map((game: { words_solved: number; total_guesses: number; created_at: string; language?: string }) => ({
       wordsSolved: game.words_solved,
       totalGuesses: game.total_guesses,
@@ -66,3 +71,13 @@ export const DELETE = guardedRoute(rateLimiters.deleteAccount, async (request) =
   }
   return jsonResponse({ ok: true });
 });
+
+type DistributionRow = { guesses: number; words: number | string };
+
+/** One count per number of guesses, from 1 to at least 6, with gaps filled in as zero. */
+function toDistribution(rows: DistributionRow[]): number[] {
+  const longest = Math.max(BASE_GUESSES, ...rows.map((row) => row.guesses));
+  const counts = Array.from({ length: longest }, () => 0);
+  for (const row of rows) if (row.guesses >= 1) counts[row.guesses - 1] = Number(row.words);
+  return counts;
+}

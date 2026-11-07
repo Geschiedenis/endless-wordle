@@ -25,6 +25,11 @@ export interface RecentGame {
 export interface ProfileResponse {
   username: string | null;
   stats: { gamesPlayed: number; bestScore: number; averageWords: number };
+  /**
+   * Solved words by the guesses they took, from 1 up to at least 6, across endless
+   * games and daily words. Index 0 is one guess.
+   */
+  guessDistribution: number[];
   recentGames: RecentGame[];
 }
 

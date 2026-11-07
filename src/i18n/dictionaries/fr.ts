@@ -2,6 +2,9 @@ import type { Dictionary } from "./en";
 
 export const fr: Dictionary = {
   meta: {
+    daily: "Mot du jour",
+    dailyDescription:
+      "Le mot du jour d'Endless Lingle : un mot de cinq lettres par jour, le même pour tous, en six essais. Un Wordle quotidien gratuit en cinq langues.",
     description:
       "Un jeu de mots façon Wordle qui ne s'arrête jamais. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
     homeTitle:
@@ -64,6 +67,7 @@ export const fr: Dictionary = {
   },
 
   home: {
+    daily: "Mot du jour",
     tagline:
       "Comme Wordle, mais sans fin. Les essais non utilisés passent au mot suivant, et la partie ne se termine que lorsque vous n'en avez plus.",
     play: "Jouer",
@@ -132,6 +136,17 @@ export const fr: Dictionary = {
     scoreSaved: "Score enregistré.",
     scoreNotSaved: "Votre score n'a pas pu être enregistré.",
     playAgain: "Rejouer",
+  },
+
+  daily: {
+    heading: "Mot du jour #{number}",
+    intro: "Un mot par jour, le même pour tous. Six essais, sans bonus.",
+    solved: "Trouvé en {guesses}/6",
+    lost: "Ce sera pour demain",
+    doneToday: "Vous avez déjà joué le mot du jour.",
+    nextIn: "Prochain mot dans {time}",
+    playEndless: "Jouer en mode infini",
+    announceSolved: "{letters}. Vous avez trouvé le mot du jour.",
   },
 
   share: {
@@ -245,6 +260,9 @@ export const fr: Dictionary = {
   },
 
   profile: {
+    distributionTitle: "Répartition des essais",
+    distributionEmpty:
+      "Trouvez un mot pour voir combien d'essais il vous faut d'habitude.",
     loadError: "Impossible de charger votre profil. Réessayez.",
     loading: "Chargement…",
     bestScore: "Meilleur score",
@@ -340,6 +358,10 @@ export const fr: Dictionary = {
       game: {
         purpose: "Enregistre la partie en cours d'un invité.",
         duration: "30 jours",
+      },
+      daily: {
+        purpose: "Enregistre les essais d'un invité sur le mot du jour, pour qu'il ne puisse pas être rejoué.",
+        duration: "3 jours",
       },
       session: {
         purpose: "Vous garde connecté.",

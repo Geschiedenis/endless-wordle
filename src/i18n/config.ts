@@ -6,7 +6,7 @@ export const LOCALES = ["en", "nl", "de", "fr", "es"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 /** Pages search engines should find, for the sitemap. Account pages are left out. */
-export const PUBLIC_PATHS = ["/", "/play", "/how-to-play", "/tips", "/faq", "/privacy", "/terms"] as const;
+export const PUBLIC_PATHS = ["/", "/play", "/daily", "/how-to-play", "/tips", "/faq", "/privacy", "/terms"] as const;
 
 export const DEFAULT_LOCALE: Locale = "en";
 

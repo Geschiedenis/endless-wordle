@@ -3,6 +3,8 @@ import type { GameState } from "./types";
 export interface FinalScore {
   wordsSolved: number;
   totalGuesses: number;
+  /** Guesses each solved word took. Shorter than wordsSolved for games from before it was tracked. */
+  solvedIn: number[];
 }
 
 /**
@@ -13,5 +15,5 @@ export function calculateFinalScore(state: GameState): FinalScore {
   if (state.status !== "lost") {
     throw new Error("Only a finished game has a final score");
   }
-  return { wordsSolved: state.wordsSolved, totalGuesses: state.totalGuesses };
+  return { wordsSolved: state.wordsSolved, totalGuesses: state.totalGuesses, solvedIn: state.solvedIn };
 }

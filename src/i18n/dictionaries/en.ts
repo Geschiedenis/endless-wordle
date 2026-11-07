@@ -5,6 +5,9 @@
  */
 export const en = {
   meta: {
+    daily: "Daily word",
+    dailyDescription:
+      "Today's Endless Lingle word: one five-letter word a day, the same for everyone, in six guesses. A free daily Wordle in five languages.",
     description:
       "A Wordle-style word game that never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
     homeTitle: "Endless Lingle: the unlimited Wordle-style word game",
@@ -67,6 +70,7 @@ export const en = {
   },
 
   home: {
+    daily: "Daily word",
     tagline:
       "Like Wordle, but it never stops. Spare guesses roll over to the next word, and the game only ends when you run out.",
     play: "Play",
@@ -131,6 +135,17 @@ export const en = {
     scoreSaved: "Score saved.",
     scoreNotSaved: "Your score couldn't be saved.",
     playAgain: "Play again",
+  },
+
+  daily: {
+    heading: "Daily word #{number}",
+    intro: "One word a day, the same for everyone. Six guesses, no bonus.",
+    solved: "You got it in {guesses}/6",
+    lost: "Better luck tomorrow",
+    doneToday: "You've played today's word.",
+    nextIn: "Next word in {time}",
+    playEndless: "Play endless",
+    announceSolved: "{letters}. You solved today's word.",
   },
 
   share: {
@@ -239,6 +254,9 @@ export const en = {
   },
 
   profile: {
+    distributionTitle: "Guess distribution",
+    distributionEmpty:
+      "Solve a word to see how many guesses you usually need.",
     loadError: "Your profile couldn't load. Please try again.",
     loading: "Loading…",
     bestScore: "Best score",
@@ -331,6 +349,10 @@ export const en = {
       game: {
         purpose: "Saves a guest's game in progress.",
         duration: "30 days",
+      },
+      daily: {
+        purpose: "Saves a guest's guesses on the daily word, so it can't be played twice.",
+        duration: "3 days",
       },
       session: {
         purpose: "Keeps you logged in.",

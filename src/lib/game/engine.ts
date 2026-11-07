@@ -14,6 +14,7 @@ export function createGame(seed: string, answer: string, language: Locale = "en"
     bonusGuesses: 0,
     guesses: [],
     totalGuesses: 0,
+    solvedIn: [],
   };
 }
 
@@ -51,6 +52,7 @@ export function applyGuess(
         bonusGuesses: bonusEarned,
         guesses: [],
         totalGuesses,
+        solvedIn: [...state.solvedIn, guesses.length],
       },
       result: { word: guess, feedback, solved: true, bonusEarned },
     };

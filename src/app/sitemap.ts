@@ -9,8 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     );
     return LOCALES.map((locale) => ({
       url: `${SITE_URL}${localePath(locale, path)}`,
-      changeFrequency: path === "/privacy" || path === "/terms" ? ("yearly" as const) : ("monthly" as const),
-      priority: path === "/" ? 1 : path === "/play" ? 0.9 : 0.5,
+      changeFrequency:
+        path === "/daily"
+          ? ("daily" as const)
+          : path === "/privacy" || path === "/terms"
+            ? ("yearly" as const)
+            : ("monthly" as const),
+      priority: path === "/" ? 1 : path === "/play" || path === "/daily" ? 0.9 : 0.5,
       alternates: { languages },
     }));
   });

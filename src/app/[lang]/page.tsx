@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { ArrowRight, ChevronDown, Gift, Infinity as InfinityIcon, Languages, Zap } from "lucide-react";
+import { ArrowRight, BookOpen, CalendarDays, ChevronDown, Gift, Infinity as InfinityIcon, Languages, Play, Zap } from "lucide-react";
 import { BONUS_ROW, DemoBoard, type DemoRow } from "@/components/demo-board";
 import { HeroFan } from "@/components/hero-fan";
 import { WIDE_CONTENT } from "@/components/page-shell";
@@ -64,10 +64,22 @@ export default async function LandingPage() {
             <p className="hero-fade mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
             <div className="hero-fade mt-8 flex w-full max-w-xs flex-col gap-3 [--delay:240ms]">
               <Button asChild className="h-12 text-base font-semibold">
-                <Link href="/play">{dict.home.play}</Link>
+                <Link href="/play">
+                  <Play aria-hidden="true" className="fill-current" />
+                  {dict.home.play}
+                </Link>
               </Button>
               <Button asChild variant="outline" className="h-11 text-base">
-                <Link href="/how-to-play">{dict.home.howToPlay}</Link>
+                <Link href="/daily">
+                  <CalendarDays aria-hidden="true" />
+                  {dict.home.daily}
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-11 text-base">
+                <Link href="/how-to-play">
+                  <BookOpen aria-hidden="true" />
+                  {dict.home.howToPlay}
+                </Link>
               </Button>
             </div>
           </div>
@@ -102,7 +114,10 @@ export default async function LandingPage() {
               {dict.howTo.readyTitle}
             </SectionHeading>
             <Button asChild className="mt-6 h-12 w-full max-w-xs text-base font-semibold">
-              <Link href="/play">{dict.howTo.playNow}</Link>
+              <Link href="/play">
+                <Play aria-hidden="true" className="fill-current" />
+                {dict.howTo.playNow}
+              </Link>
             </Button>
           </section>
         </div>

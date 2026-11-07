@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createGame } from "@/lib/game/engine";
-import { openGameState, sealGameState } from "./token";
+import { openGameState, openValue, sealGameState, sealValue } from "./token";
 
 const SECRET = "test-secret-test-secret-test-secret";
 const state = createGame("my-seed", "crane");
@@ -57,5 +57,17 @@ describe("game token", () => {
 
   it.each(["", "garbage", "v1.", "v1.abc", "v2.abc", "v1.abc.def"])("rejects %j", (token) => {
     expect(openGameState(token, SECRET)).toBeNull();
+  });
+});
+
+describe("sealed values for other purposes", () => {
+  it("never open as a game, even with the same secret", () => {
+    const token = sealValue({ day: "2026-11-07", guesses: [] }, "endless-lingle:daily", SECRET, 60);
+    expect(openGameState(token, SECRET)).toBeNull();
+    expect(openValue(token, "endless-lingle:daily", SECRET)).toEqual({ day: "2026-11-07", guesses: [] });
+  });
+
+  it("don't open a game token either", () => {
+    expect(openValue(sealGameState(state, SECRET, 60), "endless-lingle:daily", SECRET)).toBeNull();
   });
 });

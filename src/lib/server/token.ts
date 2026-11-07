@@ -14,24 +14,65 @@ const VERSION = "v1";
 const IV_BYTES = 12;
 const TAG_BYTES = 16;
 
-function deriveKey(secret: string): Buffer {
-  return createHash("sha256").update(`endless-wordle:game-token:${VERSION}:${secret}`).digest();
+function deriveKey(secret: string, purpose: string): Buffer {
+  return createHash("sha256").update(`${purpose}:${VERSION}:${secret}`).digest();
 }
 
-/** Encrypts state into a URL-safe token that expires after ttlSeconds. */
+/** Game tokens. The label is part of the key, so changing it would end every game in progress. */
+const GAME_PURPOSE = "endless-wordle:game-token";
+
+/** Encrypts any JSON value into a URL-safe token that expires after ttlSeconds. */
+export function sealValue(
+  value: unknown,
+  purpose: string,
+  secret: string,
+  ttlSeconds: number,
+  now: number = Date.now(),
+): string {
+  const iv = randomBytes(IV_BYTES);
+  const cipher = createCipheriv("aes-256-gcm", deriveKey(secret, purpose), iv);
+  cipher.setAAD(Buffer.from(VERSION));
+  const plaintext = JSON.stringify({ state: value, exp: now + ttlSeconds * 1000 });
+  const body = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
+  const sealed = Buffer.concat([iv, cipher.getAuthTag(), body]).toString("base64url");
+  return `${VERSION}.${sealed}`;
+}
+
+/**
+ * Returns the value, or null for anything that isn't a current, untampered token
+ * sealed for the same purpose. The caller still checks the value's shape.
+ */
+export function openValue(token: string, purpose: string, secret: string, now: number = Date.now()): unknown {
+  const [version, sealed, ...rest] = token.split(".");
+  if (version !== VERSION || !sealed || rest.length > 0) return null;
+
+  try {
+    const bytes = Buffer.from(sealed, "base64url");
+    if (bytes.length <= IV_BYTES + TAG_BYTES) return null;
+    const decipher = createDecipheriv("aes-256-gcm", deriveKey(secret, purpose), bytes.subarray(0, IV_BYTES));
+    decipher.setAAD(Buffer.from(VERSION));
+    decipher.setAuthTag(bytes.subarray(IV_BYTES, IV_BYTES + TAG_BYTES));
+    const plaintext = Buffer.concat([
+      decipher.update(bytes.subarray(IV_BYTES + TAG_BYTES)),
+      decipher.final(),
+    ]).toString("utf8");
+
+    const { state, exp } = JSON.parse(plaintext) as { state: unknown; exp: number };
+    if (typeof exp !== "number" || exp <= now) return null;
+    return state;
+  } catch {
+    return null;
+  }
+}
+
+/** Encrypts game state into a URL-safe token that expires after ttlSeconds. */
 export function sealGameState(
   state: GameState,
   secret: string,
   ttlSeconds: number,
   now: number = Date.now(),
 ): string {
-  const iv = randomBytes(IV_BYTES);
-  const cipher = createCipheriv("aes-256-gcm", deriveKey(secret), iv);
-  cipher.setAAD(Buffer.from(VERSION));
-  const plaintext = JSON.stringify({ state, exp: now + ttlSeconds * 1000 });
-  const body = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
-  const sealed = Buffer.concat([iv, cipher.getAuthTag(), body]).toString("base64url");
-  return `${VERSION}.${sealed}`;
+  return sealValue(state, GAME_PURPOSE, secret, ttlSeconds, now);
 }
 
 /**
@@ -43,37 +84,18 @@ export function openGameState(
   secret: string,
   now: number = Date.now(),
 ): GameState | null {
-  const [version, sealed, ...rest] = token.split(".");
-  if (version !== VERSION || !sealed || rest.length > 0) return null;
-
-  try {
-    const bytes = Buffer.from(sealed, "base64url");
-    if (bytes.length <= IV_BYTES + TAG_BYTES) return null;
-    const decipher = createDecipheriv(
-      "aes-256-gcm",
-      deriveKey(secret),
-      bytes.subarray(0, IV_BYTES),
-    );
-    decipher.setAAD(Buffer.from(VERSION));
-    decipher.setAuthTag(bytes.subarray(IV_BYTES, IV_BYTES + TAG_BYTES));
-    const plaintext = Buffer.concat([
-      decipher.update(bytes.subarray(IV_BYTES + TAG_BYTES)),
-      decipher.final(),
-    ]).toString("utf8");
-
-    const { state, exp } = JSON.parse(plaintext) as { state: GameState; exp: number };
-    if (typeof exp !== "number" || exp <= now) return null;
-    if (!isUsableState(state)) return null;
-    return {
-      ...state,
-      // Guest cookies from before V2 don't have totalGuesses, and games from before
-      // languages existed are English.
-      totalGuesses: state.totalGuesses ?? state.guesses.length,
-      language: isLocale(state.language) ? state.language : "en",
-    };
-  } catch {
-    return null;
-  }
+  const state = openValue(token, GAME_PURPOSE, secret, now) as GameState | null;
+  if (!state || typeof state !== "object" || !Array.isArray(state.guesses)) return null;
+  if (!isUsableState(state)) return null;
+  return {
+    ...state,
+    // Guest cookies from before V2 don't have totalGuesses, and games from before
+    // languages existed are English.
+    totalGuesses: state.totalGuesses ?? state.guesses.length,
+    language: isLocale(state.language) ? state.language : "en",
+    // Games from before the guess distribution don't know how long earlier words took.
+    solvedIn: Array.isArray(state.solvedIn) ? state.solvedIn : [],
+  };
 }
 
 /**

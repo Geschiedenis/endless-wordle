@@ -146,7 +146,8 @@
       3.75rem
     )
   );
-  gap: var(--gap);
+  /* Between words: clearly more than between rows, so each word reads as its own board. */
+  gap: calc(var(--tile) * 0.7);
 }
 
 .game-row {
@@ -159,23 +160,13 @@
   gap: var(--gap);
 }
 
+/* A quiet label above each word once there's more than one, lined up with the tiles. */
 .word-divider {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding-top: 0.25rem;
   color: var(--muted-foreground);
   font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-}
-
-.word-divider::before,
-.word-divider::after {
-  flex: 1;
-  height: 1px;
-  background-color: var(--tile-border);
-  content: "";
 }
 
 /* Text that only shows with high contrast off, or on. */

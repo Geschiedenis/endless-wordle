@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import type { DailyGuessResponse, DailyResponse } from "./daily";
 import type {
   ApiErrorCode,
   ApiErrorResponse,
@@ -38,4 +39,11 @@ export const gameApi = {
   state: () => apiRequest<GameResponse>("/api/game/state"),
   newGame: (language: Locale) => apiSend<GameResponse>("/api/game/new", "POST", { language }),
   guess: (guess: string) => apiSend<GuessResponse>("/api/game/guess", "POST", { guess }),
+};
+
+export const dailyApi = {
+  state: (language: Locale, day: string) =>
+    apiRequest<DailyResponse>(`/api/daily?${new URLSearchParams({ language, day })}`),
+  guess: (language: Locale, day: string, guess: string) =>
+    apiSend<DailyGuessResponse>("/api/daily/guess", "POST", { language, day, guess }),
 };

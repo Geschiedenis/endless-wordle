@@ -2,6 +2,9 @@ import type { Dictionary } from "./en";
 
 export const de: Dictionary = {
   meta: {
+    daily: "Wort des Tages",
+    dailyDescription:
+      "Das heutige Wort bei Endless Lingle: jeden Tag ein Wort mit fünf Buchstaben, für alle gleich, in sechs Versuchen. Ein kostenloses tägliches Wordle in fünf Sprachen.",
     description:
       "Ein Wortspiel wie Wordle, das nie aufhört. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
     homeTitle:
@@ -64,6 +67,7 @@ export const de: Dictionary = {
   },
 
   home: {
+    daily: "Wort des Tages",
     tagline:
       "Wie Wordle, aber ohne Ende. Übrige Versuche wandern zum nächsten Wort, und das Spiel endet erst, wenn dir keine mehr bleiben.",
     play: "Spielen",
@@ -132,6 +136,17 @@ export const de: Dictionary = {
     scoreSaved: "Punktestand gespeichert.",
     scoreNotSaved: "Dein Punktestand konnte nicht gespeichert werden.",
     playAgain: "Nochmal spielen",
+  },
+
+  daily: {
+    heading: "Wort des Tages #{number}",
+    intro: "Ein Wort pro Tag, für alle gleich. Sechs Versuche, kein Bonus.",
+    solved: "Gelöst in {guesses}/6",
+    lost: "Morgen klappt's bestimmt",
+    doneToday: "Du hast das heutige Wort schon gespielt.",
+    nextIn: "Nächstes Wort in {time}",
+    playEndless: "Endlos spielen",
+    announceSolved: "{letters}. Du hast das heutige Wort gelöst.",
   },
 
   share: {
@@ -242,6 +257,9 @@ export const de: Dictionary = {
   },
 
   profile: {
+    distributionTitle: "Verteilung der Versuche",
+    distributionEmpty:
+      "Löse ein Wort, um zu sehen, wie viele Versuche du meist brauchst.",
     loadError:
       "Dein Profil konnte nicht geladen werden. Bitte versuch es noch einmal.",
     loading: "Lädt…",
@@ -337,6 +355,10 @@ export const de: Dictionary = {
       game: {
         purpose: "Speichert das laufende Spiel eines Gasts.",
         duration: "30 Tage",
+      },
+      daily: {
+        purpose: "Speichert die Versuche eines Gasts beim Wort des Tages, damit es nicht zweimal gespielt werden kann.",
+        duration: "3 Tage",
       },
       session: {
         purpose: "Hält dich angemeldet.",

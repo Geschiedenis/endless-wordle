@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useEffectEvent } from "react";
 import { GameOver } from "@/components/game/game-over";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
@@ -12,12 +11,12 @@ import { format } from "@/i18n/format";
 import { useI18n } from "@/i18n/provider";
 import { rememberLocale } from "@/i18n/remember";
 import { BASE_GUESSES } from "@/lib/game/constants";
-import { normalizeLetter } from "@/lib/game/languages";
 import { useGame } from "@/hooks/use-game";
+import { usePhysicalKeyboard } from "@/hooks/use-physical-keyboard";
 import { cn } from "@/lib/utils";
 
 export function Game() {
-  const { locale, dict } = useI18n();
+  const { dict } = useI18n();
   const {
     phase,
     game,
@@ -37,38 +36,7 @@ export function Game() {
     retryLoad,
   } = useGame();
 
-  const onKeyDown = useEffectEvent((event: KeyboardEvent) => {
-    if (event.ctrlKey || event.metaKey || event.altKey) return;
-    // Menus and dialogs have their own keyboard handling.
-    if (
-      (event.target as Element | null)?.closest?.(
-        '[role="menu"], [role="dialog"]',
-      )
-    )
-      return;
-
-    // Enter or Space on a focused control should activate that control only.
-    const onControl = (event.target as Element | null)?.closest?.("a, button");
-    if (onControl && (event.key === "Enter" || event.key === " ")) return;
-
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (!event.repeat) void submit();
-    } else if (event.key === "Backspace") {
-      event.preventDefault();
-      removeLetter();
-    } else if (normalizeLetter(locale, event.key)) {
-      // Typing means the player is back in the game, so Enter should submit next.
-      if (onControl instanceof HTMLElement) onControl.blur();
-      addLetter(event.key);
-    }
-  });
-
-  useEffect(() => {
-    const listener = (event: KeyboardEvent) => onKeyDown(event);
-    window.addEventListener("keydown", listener);
-    return () => window.removeEventListener("keydown", listener);
-  }, []);
+  usePhysicalKeyboard({ onLetter: addLetter, onEnter: () => void submit(), onBackspace: removeLetter });
 
   const lost = game?.status === "lost" && !pending;
   const mismatch = phase === "mismatch";

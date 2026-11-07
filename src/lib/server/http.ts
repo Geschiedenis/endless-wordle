@@ -46,6 +46,8 @@ export const rateLimiters = {
   new: createMemoryRateLimiter({ limit: 30, windowMs: 60_000 }),
   guess: createMemoryRateLimiter({ limit: 60, windowMs: 60_000 }),
   state: createMemoryRateLimiter({ limit: 60, windowMs: 60_000 }),
+  daily: createMemoryRateLimiter({ limit: 60, windowMs: 60_000 }),
+  dailyGuess: createMemoryRateLimiter({ limit: 30, windowMs: 60_000 }),
   session: createMemoryRateLimiter({ limit: 120, windowMs: 60_000 }),
   login: createMemoryRateLimiter({ limit: 10, windowMs: 60_000 }),
   signup: createMemoryRateLimiter({ limit: 5, windowMs: 60_000 }),

@@ -59,7 +59,7 @@ Do these in order, **before deploying V2**.
 ### 1. Create a project and run the migration
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently four files, and each file only needs to run once.
+2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently five files, and each file only needs to run once.
 
 To check it worked, **Table Editor** should list `profiles`, `games` and `active_games`, each marked as protected by RLS.
 
@@ -118,7 +118,7 @@ The site and the game come in English, Dutch, German, French and Spanish. Each l
 - **Scores.** Each saved game records its language, which the profile shows with a flag.
 - **Emails.** Sign-up stores the language on the account, and the templates in [`supabase/email-templates`](supabase/email-templates) pick their language from it.
 
-To add a language: add it to `LOCALES` in [`src/i18n/config.ts`](src/i18n/config.ts), add a dictionary, its letters and keyboard, word lists in `data/<lang>/`, an example in [`src/lib/game/examples.ts`](src/lib/game/examples.ts), a flag in [`src/components/flag.tsx`](src/components/flag.tsx), and the code to the `games.language` check in a new migration. The tests point out anything missing.
+To add a language: add it to `LOCALES` in [`src/i18n/config.ts`](src/i18n/config.ts), add a dictionary, its letters and keyboard, word lists in `data/<lang>/`, an example in [`src/lib/game/examples.ts`](src/lib/game/examples.ts), a flag in `public/flags/`, and the code to the `games.language` and `daily_games.language` checks in a new migration. The tests point out anything missing.
 
 ## Project structure
 

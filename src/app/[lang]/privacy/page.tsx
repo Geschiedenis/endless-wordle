@@ -32,17 +32,18 @@ export default function PrivacyPage() {
         <li>
           <strong>If you create an account:</strong> your email address,
           password (stored only in hashed form), username, your game in
-          progress, and for each finished game the words solved, guesses used,
-          language and date. We use these to provide your account, save your
+          progress, for each finished game the words solved, guesses used,
+          language and date, and for each daily word your guesses, language
+          and day. We use these to provide your account, save your
           scores and send account emails, such as sign-up confirmations and
           password resets. Our legal basis is that this is necessary to provide
           the service you asked for (GDPR Article 6(1)(b)). We can&apos;t create
           an account without this data.
         </li>
         <li>
-          <strong>If you play as a guest:</strong> your game in progress is kept
-          in an encrypted cookie in your browser. We don&apos;t store your
-          scores.
+          <strong>If you play as a guest:</strong> your game in progress and
+          your guesses on the daily word are kept in encrypted cookies in your
+          browser. We don&apos;t store your scores.
         </li>
         <li>
           <strong>Everyone:</strong> your IP address and basic request details

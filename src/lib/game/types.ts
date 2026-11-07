@@ -25,6 +25,8 @@ export interface GameState {
   guesses: string[];
   /** Guesses made across every word in this game. */
   totalGuesses: number;
+  /** Guesses each solved word took, in order. For the guess distribution on the profile. */
+  solvedIn: number[];
 }
 
 export interface ScoredGuess {

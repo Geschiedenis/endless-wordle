@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import type { LetterFeedback } from "./types";
 
 /** Flag emoji for the share text, which goes to chat apps where emoji are expected. */
 const FLAGS: Record<Locale, string> = { en: "🇺🇸", nl: "🇳🇱", de: "🇩🇪", fr: "🇫🇷", es: "🇪🇸" };
@@ -46,4 +47,42 @@ export function buildShareText({
   );
   if (words.length > MAX_SHARED_WORDS) lines.unshift("⋯");
   return [`Endless Lingle ${FLAGS[locale]} · ${wordsLabel}`, ...lines, url].join("\n");
+}
+
+/**
+ * The daily word's share text, the way Wordle shares: the score, then a row of
+ * coloured squares per guess, without the letters.
+ *
+ *   Endless Lingle 🇳🇱 · Woord van de dag #3 · 4/6
+ *   ⬛🟨⬛⬛⬛
+ *   ⬛⬛🟩🟨⬛
+ *   🟩🟩🟩⬛🟩
+ *   🟩🟩🟩🟩🟩
+ *   https://endlesslingle.com/nl/daily
+ */
+export function buildDailyShareText({
+  locale,
+  title,
+  rows,
+  solved,
+  url,
+  highContrast = false,
+}: {
+  locale: Locale;
+  /** "Daily word #3", already translated. */
+  title: string;
+  rows: readonly (readonly LetterFeedback[])[];
+  solved: boolean;
+  url: string;
+  highContrast?: boolean;
+}): string {
+  const squares: Record<LetterFeedback, string> = highContrast
+    ? { correct: "🟧", present: "🟦", absent: "⬛" }
+    : { correct: "🟩", present: "🟨", absent: "⬛" };
+  const score = `${solved ? rows.length : "X"}/6`;
+  return [
+    `Endless Lingle ${FLAGS[locale]} · ${title} · ${score}`,
+    ...rows.map((row) => row.map((state) => squares[state]).join("")),
+    url,
+  ].join("\n");
 }
