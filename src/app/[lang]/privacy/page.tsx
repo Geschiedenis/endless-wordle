@@ -48,8 +48,11 @@ export default function PrivacyPage() {
         <li>
           <strong>Everyone:</strong> your IP address and basic request details
           are processed to deliver the site, limit abusive traffic and keep the
-          service secure. Our legal basis is our legitimate interest in running
-          a safe and reliable service (GDPR Article 6(1)(f)).
+          service secure. Until you pick a language, our hosting provider also
+          tells us which country your IP address is in, so we can offer the
+          site in your language. We don&apos;t store your country. Our legal
+          basis is our legitimate interest in running a safe and reliable
+          service that people can read (GDPR Article 6(1)(f)).
         </li>
         <li>
           <strong>If you accept analytics cookies:</strong> Google Analytics

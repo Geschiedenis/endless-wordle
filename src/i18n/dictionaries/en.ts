@@ -137,6 +137,14 @@ export const en = {
     playAgain: "Play again",
   },
 
+  /** The offer to switch languages. Shown in the language it offers, except "stay". */
+  suggestion: {
+    title: "Prefer to play in English?",
+    body: "Endless Lingle is also available in English, with English words.",
+    switch: "Play in English",
+    stay: "Stay here",
+  },
+
   daily: {
     heading: "Daily word #{number}",
     solved: "You got it in {guesses}/6",

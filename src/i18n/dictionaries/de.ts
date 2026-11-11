@@ -138,6 +138,14 @@ export const de: Dictionary = {
     playAgain: "Nochmal spielen",
   },
 
+  /** The offer to switch languages. Shown in the language it offers, except "stay". */
+  suggestion: {
+    title: "Lieber auf Deutsch spielen?",
+    body: "Endless Lingle gibt es auch auf Deutsch, mit deutschen Wörtern.",
+    switch: "Auf Deutsch spielen",
+    stay: "Hier bleiben",
+  },
+
   daily: {
     heading: "Wort des Tages #{number}",
     solved: "Gelöst in {guesses}/6",

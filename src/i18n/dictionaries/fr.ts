@@ -138,6 +138,14 @@ export const fr: Dictionary = {
     playAgain: "Rejouer",
   },
 
+  /** The offer to switch languages. Shown in the language it offers, except "stay". */
+  suggestion: {
+    title: "Vous préférez jouer en français ?",
+    body: "Endless Lingle existe aussi en français, avec des mots français.",
+    switch: "Jouer en français",
+    stay: "Rester ici",
+  },
+
   daily: {
     heading: "Mot du jour #{number}",
     solved: "Trouvé en {guesses}/6",

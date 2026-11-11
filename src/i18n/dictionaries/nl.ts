@@ -138,6 +138,14 @@ export const nl: Dictionary = {
     playAgain: "Opnieuw spelen",
   },
 
+  /** The offer to switch languages. Shown in the language it offers, except "stay". */
+  suggestion: {
+    title: "Liever in het Nederlands spelen?",
+    body: "Endless Lingle is er ook in het Nederlands, met Nederlandse woorden.",
+    switch: "Speel in het Nederlands",
+    stay: "Hier blijven",
+  },
+
   daily: {
     heading: "Woord van de dag #{number}",
     solved: "Geraden in {guesses}/6",

@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { CookieNotice } from "@/components/cookie-notice";
+import { LanguageSuggestion } from "@/components/language-suggestion";
 import { LOCALES, SITE_URL } from "@/i18n/config";
 import { ADSENSE_CLIENT } from "@/lib/adsense";
 import { getDictionary, getLocale } from "@/i18n/server";
@@ -46,6 +48,10 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       <body className="flex min-h-full flex-col">
         {children}
         <CookieNotice />
+        {/* Reads the address, which pages with link-dependent parts only know at request time. */}
+        <Suspense fallback={null}>
+          <LanguageSuggestion />
+        </Suspense>
         <Analytics />
       </body>
     </html>
