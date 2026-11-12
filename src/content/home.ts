@@ -21,6 +21,8 @@ export interface HomeContent {
   languageNames: Record<Locale, string>;
   faqTitle: string;
   faqAll: string;
+  /** The card for our other game, Endless Mini Cross. */
+  miniCross: { title: string; body: string; cta: string; url: string; imageLabel: string };
 }
 
 type Item = { title: string; body: string };
@@ -72,6 +74,13 @@ export const HOME: Record<Locale, HomeContent> = {
     languageNames: { en: "English", nl: "Dutch", de: "German", fr: "French", es: "Spanish" },
     faqTitle: "Frequently asked questions",
     faqAll: "All questions",
+    miniCross: {
+      title: "Play Endless Mini Cross too",
+      body: "Prefer crosswords? Endless Mini Cross gives you small 5x5 crosswords with easy clues, one after another. Beat the clock for bonus points. Free, endless and just as quick.",
+      cta: "Play Endless Mini Cross",
+      url: "https://endlessminicross.com",
+      imageLabel: "Endless Mini Cross: a small 5x5 crossword grid.",
+    },
   },
 
   nl: {
@@ -117,6 +126,13 @@ export const HOME: Record<Locale, HomeContent> = {
     languageNames: { en: "Engels", nl: "Nederlands", de: "Duits", fr: "Frans", es: "Spaans" },
     faqTitle: "Veelgestelde vragen",
     faqAll: "Alle vragen",
+    miniCross: {
+      title: "Speel ook Endless Mini Cross",
+      body: "Hou je meer van kruiswoordpuzzels? Endless Mini Cross geeft je kleine 5x5-kruiswoordpuzzels met makkelijke omschrijvingen, de een na de ander. Wees snel voor bonuspunten. Gratis, eindeloos en net zo snel gespeeld.",
+      cta: "Speel Endless Mini Cross",
+      url: "https://endlessminicross.com",
+      imageLabel: "Endless Mini Cross: een klein kruiswoordraadsel van 5x5.",
+    },
   },
 
   de: {
@@ -162,6 +178,13 @@ export const HOME: Record<Locale, HomeContent> = {
     languageNames: { en: "Englisch", nl: "Niederländisch", de: "Deutsch", fr: "Französisch", es: "Spanisch" },
     faqTitle: "Häufige Fragen",
     faqAll: "Alle Fragen",
+    miniCross: {
+      title: "Spiel auch Endless Mini Cross",
+      body: "Lieber Kreuzworträtsel? Endless Mini Cross bietet kleine 5x5-Kreuzworträtsel mit einfachen Hinweisen, eins nach dem anderen. Sei schnell und hol dir Bonuspunkte. Kostenlos, endlos und genauso schnell gespielt.",
+      cta: "Endless Mini Cross spielen",
+      url: "https://endlessminicross.com",
+      imageLabel: "Endless Mini Cross: ein kleines 5x5-Kreuzworträtsel.",
+    },
   },
 
   fr: {
@@ -208,6 +231,13 @@ export const HOME: Record<Locale, HomeContent> = {
     languageNames: { en: "Anglais", nl: "Néerlandais", de: "Allemand", fr: "Français", es: "Espagnol" },
     faqTitle: "Questions fréquentes",
     faqAll: "Toutes les questions",
+    miniCross: {
+      title: "Jouez aussi à Endless Mini Cross",
+      body: "Vous préférez les mots croisés ? Endless Mini Cross propose de petites grilles de 5x5 aux définitions simples, l'une après l'autre. Battez le chrono pour gagner des points bonus. Gratuit, sans fin et tout aussi rapide.",
+      cta: "Jouer à Endless Mini Cross",
+      url: "https://endlessminicross.com",
+      imageLabel: "Endless Mini Cross : une petite grille de mots croisés de 5x5.",
+    },
   },
 
   es: {
@@ -253,5 +283,12 @@ export const HOME: Record<Locale, HomeContent> = {
     languageNames: { en: "Inglés", nl: "Neerlandés", de: "Alemán", fr: "Francés", es: "Español" },
     faqTitle: "Preguntas frecuentes",
     faqAll: "Todas las preguntas",
+    miniCross: {
+      title: "Juega también a Endless Mini Cross",
+      body: "¿Prefieres los crucigramas? Endless Mini Cross te ofrece pequeños crucigramas de 5x5 con pistas fáciles, uno tras otro. Gánale al reloj para conseguir puntos extra. Gratis, sin fin e igual de rápido.",
+      cta: "Jugar a Endless Mini Cross",
+      url: "https://endlessminicross.com",
+      imageLabel: "Endless Mini Cross: un pequeño crucigrama de 5x5.",
+    },
   },
 };
