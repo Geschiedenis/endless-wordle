@@ -18,24 +18,22 @@ export function TopBar({
   logo = "start",
   className,
 }: {
-  /** Where the logo goes: before the language menu, or in the middle of the bar (the home page). */
-  logo?: "start" | "center";
+  /** "none" on the home page, which shows the logo above its title instead. */
+  logo?: "start" | "none";
   className?: string;
 }) {
   const { dict } = useI18n();
-  const home = (size: number) => (
+  const home = (
     <Link href="/" aria-label={dict.header.home} className="rounded-md">
-      <Logo size={size} />
+      <Logo height={22} />
     </Link>
   );
   return (
     <header className={cn("relative flex h-12 w-full shrink-0 items-center justify-between gap-2", className)}>
       <div className="flex items-center gap-1.5">
-        {logo === "start" && home(28)}
+        {logo === "start" && home}
         <LanguageMenu />
       </div>
-      {/* Sits a little lower than the bar's middle, so the bigger logo has room above it. */}
-      {logo === "center" && <div className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/4">{home(48)}</div>}
       <div className="flex min-w-0 items-center justify-end gap-1">
         <AuthMenu />
         <SettingsButton />

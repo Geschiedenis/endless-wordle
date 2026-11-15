@@ -1,24 +1,30 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+/** Width / height of public/logo.svg: six 100-unit tiles with 8-unit gaps, like a row on the board. */
+export const LOGO_RATIO = 640 / 100;
+
 interface LogoProps {
-  /** Width and height in pixels. */
-  size?: number;
+  /** Height in pixels. The width follows from the logo's ratio. */
+  height?: number;
+  /** Load it straight away, where it's the biggest thing on the first screen (the home page). */
+  eager?: boolean;
   /** Leave empty where the name is already written next to the logo. */
   alt?: string;
   className?: string;
 }
 
-/** The logo. public/logo.png is the same image, for emails, which can't show SVGs. */
-export function Logo({ size = 112, alt = "", className }: LogoProps) {
+/** The LINGLE logo, coloured like a guess on the board. public/logo.png is the same image, for emails, which can't show SVGs. */
+export function Logo({ height = 32, eager = false, alt = "", className }: LogoProps) {
   return (
     <Image
       src="/logo.svg"
       alt={alt}
-      width={size}
-      height={size}
+      width={Math.round(height * LOGO_RATIO)}
+      height={height}
       className={cn("shrink-0", className)}
       unoptimized
+      loading={eager ? "eager" : undefined}
     />
   );
 }

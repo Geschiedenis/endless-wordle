@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { LOGO_RATIO } from "@/components/logo";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 import { isLocale, type Locale } from "@/i18n/config";
@@ -40,7 +41,7 @@ export default async function Image({ params }: { params: Promise<{ lang: string
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", flex: 1, gap: 28 }}>
-          <img src={`data:image/svg+xml;base64,${logo}`} width={112} height={112} alt="" style={{ borderRadius: 18 }} />
+          <img src={`data:image/svg+xml;base64,${logo}`} width={Math.round(72 * LOGO_RATIO)} height={72} alt="" />
           <div style={{ fontSize: 84, letterSpacing: -2, lineHeight: 1 }}>Endless Lingle</div>
           <div style={{ fontSize: 32, lineHeight: 1.35, color: "#a1a1aa" }}>{dict.home.tagline}</div>
         </div>

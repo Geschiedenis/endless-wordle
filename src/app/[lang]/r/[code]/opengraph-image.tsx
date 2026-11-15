@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { LOGO_RATIO } from "@/components/logo";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 import { isLocale, type Locale } from "@/i18n/config";
@@ -50,10 +51,9 @@ export default async function Image({
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
           <img
             src={`data:image/svg+xml;base64,${logo}`}
-            width={88}
-            height={88}
+            width={Math.round(56 * LOGO_RATIO)}
+            height={56}
             alt=""
-            style={{ borderRadius: 14 }}
           />
           <img
             src={`data:image/svg+xml;base64,${flag}`}

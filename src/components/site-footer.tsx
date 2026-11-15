@@ -35,7 +35,7 @@ export function SiteFooter() {
         </Link>
       </nav>
       <p className="flex items-center gap-1.5 sm:col-start-1 sm:row-start-1 sm:justify-self-start">
-        <Logo size={16} className="rounded-[3px]" />
+        <Logo height={14} />
         Endless Lingle © 2026
       </p>
     </footer>
