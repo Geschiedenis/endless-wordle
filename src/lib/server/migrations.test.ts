@@ -306,3 +306,38 @@ describe("get_my_guess_distribution", () => {
     );
   });
 });
+
+describe("play statistics", () => {
+  const addWord = (word = "crane", guesses = 3, solved = true) =>
+    db.query("insert into public.word_plays (mode, language, word, guesses, solved) values ('endless', 'en', $1, $2, $3)", [
+      word,
+      guesses,
+      solved,
+    ]);
+
+  it("are only for the service role", async () => {
+    await addWord();
+    await db.query("insert into public.game_plays (language, words_solved, total_guesses) values ('en', 4, 19)");
+    for (const role of ["anon", "authenticated"]) {
+      for (const table of ["word_plays", "game_plays"]) {
+        await expect(as(role, role === "anon" ? null : ALICE, `select * from public.${table}`)).rejects.toThrow(
+          /permission denied/,
+        );
+      }
+      await expect(
+        as(role, null, "insert into public.word_plays (mode, language, word, guesses, solved) values ('daily', 'en', 'crane', 1, true)"),
+      ).rejects.toThrow(/permission denied/);
+    }
+    expect(await as("service_role", null, "select word from public.word_plays")).toEqual([{ word: "crane" }]);
+  });
+
+  it("only accept known modes and languages, and sensible guess counts", async () => {
+    await expect(
+      db.query("insert into public.word_plays (mode, language, word, guesses, solved) values ('blitz', 'en', 'crane', 1, true)"),
+    ).rejects.toThrow(/check/);
+    await expect(
+      db.query("insert into public.word_plays (mode, language, word, guesses, solved) values ('endless', 'xx', 'crane', 1, true)"),
+    ).rejects.toThrow(/check/);
+    await expect(addWord("crane", 0)).rejects.toThrow(/check/);
+  });
+});

@@ -13,6 +13,7 @@ import { rememberLocale } from "@/i18n/remember";
 import { suggestLocale, type GeoResponse } from "@/i18n/suggest";
 import { apiRequest } from "@/lib/game/api-client";
 import { getConsent, subscribeToConsent } from "@/lib/consent";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * Offers the site in the visitor's own language, worked out from their country or
@@ -51,6 +52,7 @@ export function LanguageSuggestion() {
   const text = DICTIONARIES[suggested].suggestion;
 
   function switchLanguage(next: Locale) {
+    trackEvent("language_suggestion", { action: "switch", from: locale, to: next });
     rememberLocale(next);
     // A full page load, like the flag menu: everything starts over in the new language.
     // eslint-disable-next-line @next/next/no-location-assign-relative-destination
@@ -58,6 +60,7 @@ export function LanguageSuggestion() {
   }
 
   function stay() {
+    if (suggested) trackEvent("language_suggestion", { action: "stay", from: locale, to: suggested });
     rememberLocale(locale);
     setSuggested(null);
   }

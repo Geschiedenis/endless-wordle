@@ -5,6 +5,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { format, plural } from "@/i18n/format";
 import { useI18n } from "@/i18n/provider";
 import { BOUNCE_STAGGER_MS, FLIP_MS, FLIP_STAGGER_MS } from "@/hooks/use-game";
+import { trackEvent } from "@/lib/analytics";
 import { dailyApi } from "@/lib/game/api-client";
 import { DAILY_GUESSES, localDay, type DailyGuessResponse, type DailyView } from "@/lib/game/daily";
 import { WORD_LENGTH } from "@/lib/game/constants";
@@ -96,6 +97,7 @@ export function useDaily() {
 
     if (response.ok) {
       const { result, daily: next } = response.data;
+      trackDaily(result, next);
       clearTimeout(toastTimer.current);
       setToast(null);
       setPending(result);
@@ -158,4 +160,15 @@ function describeGuess(
   if (result.solved) return format(dict.daily.announceSolved, { letters });
   if (next.status === "lost") return format(dict.game.announceLost, { letters });
   return plural(dict.game.announceLeft, DAILY_GUESSES - next.guesses.length, { letters });
+}
+
+/** Analytics once the day's word is over: the word, and the day's result. */
+function trackDaily(result: DailyGuessResponse["result"], next: DailyView) {
+  if (next.status === "playing") return;
+  const solved = next.status === "solved";
+  const guesses = next.guesses.length;
+  const params = { mode: "daily" as const, language: next.language, guesses, word_number: next.number };
+  if (solved) trackEvent("word_solved", { ...params, word: result.word });
+  else trackEvent("word_failed", { ...params, word: next.answer ?? "" });
+  trackEvent("daily_complete", { language: next.language, solved, guesses });
 }

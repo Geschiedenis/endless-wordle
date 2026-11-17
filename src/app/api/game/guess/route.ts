@@ -4,6 +4,7 @@ import { parseGuess } from "@/lib/game/languages";
 import { getCurrentUser } from "@/lib/server/auth";
 import { getGameStore } from "@/lib/server/game-store";
 import { errorResponse, guardedRoute, jsonResponse, rateLimiters } from "@/lib/server/http";
+import { recordGamePlay, recordWordPlay } from "@/lib/server/play-stats";
 import { recordFinalScore } from "@/lib/server/scores";
 import { ANSWERS, isValidGuess, wordAt } from "@/lib/server/words";
 
@@ -41,6 +42,15 @@ export const POST = guardedRoute(rateLimiters.guess, async (request) => {
 
   // Save first: this request's feedback is only revealed if its guess counted.
   if (!(await store.save(outcome.state))) return errorResponse("game_conflict");
+
+  // Anonymous statistics, for every player: the finished word, and the game once it ends.
+  const next = outcome.state;
+  if (outcome.result.solved) {
+    recordWordPlay({ mode: "endless", language: next.language, word: guess, guesses: next.solvedIn.at(-1) ?? 0, solved: true });
+  } else if (next.status === "lost") {
+    recordWordPlay({ mode: "endless", language: next.language, word: next.answer, guesses: next.guesses.length, solved: false });
+    recordGamePlay({ language: next.language, words_solved: next.wordsSolved, total_guesses: next.totalGuesses });
+  }
 
   const scoreSaved =
     user && outcome.state.status === "lost" ? await recordFinalScore(user, outcome.state) : undefined;

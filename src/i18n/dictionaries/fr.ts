@@ -351,7 +351,7 @@ export const fr: Dictionary = {
       analytics: {
         title: "Mesure d'audience",
         description:
-          "Google Analytics nous montre quelles pages sont visitées et comment, pour améliorer le jeu. Uniquement avec votre consentement.",
+          "Google Analytics nous montre quelles pages sont visitées et comment le jeu est joué, pour l'améliorer. Uniquement avec votre consentement.",
       },
       advertising: {
         title: "Publicité",

@@ -343,7 +343,7 @@ export const en = {
       analytics: {
         title: "Analytics",
         description:
-          "Google Analytics shows us which pages are visited and how, so we can improve the game. Only with your consent.",
+          "Google Analytics shows us which pages are visited and how the game is played, so we can improve it. Only with your consent.",
       },
       advertising: {
         title: "Advertising",

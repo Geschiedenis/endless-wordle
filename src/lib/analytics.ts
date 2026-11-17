@@ -51,6 +51,28 @@ export function startAnalytics() {
   document.head.appendChild(script);
 }
 
+/** The custom events the site sends, with their parameters. Register each parameter in GA (Admin, Custom definitions) to use it in reports. */
+export type AnalyticsEvent =
+  | { name: "game_start"; params: { language: string } }
+  | { name: "word_solved"; params: { mode: "endless" | "daily"; language: string; guesses: number; word_number: number; word: string } }
+  | { name: "word_failed"; params: { mode: "endless" | "daily"; language: string; guesses: number; word_number: number; word: string } }
+  | { name: "game_over"; params: { language: string; words_solved: number } }
+  | { name: "daily_complete"; params: { language: string; solved: boolean; guesses: number } }
+  | { name: "share"; params: { mode: "endless" | "daily"; method: "share_sheet" | "clipboard" } }
+  | { name: "language_suggestion"; params: { action: "switch" | "stay"; from: string; to: string } }
+  | { name: "login"; params: { method: "email" } }
+  | { name: "sign_up"; params: { method: "email" } };
+
+/**
+ * Sends a custom event. Does nothing until the visitor accepts analytics: gtag only exists
+ * once startAnalytics has run, and a later Reject switches it off. "beacon" lets an event
+ * still arrive when a full page load follows straight after, as after logging in.
+ */
+export function trackEvent<N extends AnalyticsEvent["name"]>(name: N, params: Extract<AnalyticsEvent, { name: N }>["params"]) {
+  if (!GA_ID || !loaded) return;
+  window.gtag?.("event", name, { ...params, transport_type: "beacon" });
+}
+
 /** Stops Google Analytics after a Reject, and removes the cookies it set. */
 export function stopAnalytics() {
   if (!GA_ID) return;

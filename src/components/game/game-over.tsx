@@ -11,6 +11,7 @@ import { localePath, SITE_URL } from "@/i18n/config";
 import { buildShareText, type SharedWord } from "@/lib/game/share";
 import { encodeResult } from "@/lib/game/share-code";
 import { isHighContrast } from "@/lib/preferences";
+import { trackEvent } from "@/lib/analytics";
 
 interface GameOverProps {
   answer: string;
@@ -46,9 +47,11 @@ export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain, sharedW
     try {
       if (useShareSheet) {
         await navigator.share({ text });
+        trackEvent("share", { mode: "endless", method: "share_sheet" });
         return;
       }
       await navigator.clipboard.writeText(text);
+      trackEvent("share", { mode: "endless", method: "clipboard" });
       setShareStatus(dict.share.copied);
     } catch (error) {
       // Closing the share sheet isn't a failure.

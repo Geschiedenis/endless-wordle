@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { format, plural } from "@/i18n/format";
 import { useI18n } from "@/i18n/provider";
+import { trackEvent } from "@/lib/analytics";
 import { gameApi } from "@/lib/game/api-client";
 import { WORD_LENGTH } from "@/lib/game/constants";
 import { keyStatuses } from "@/lib/game/keyboard";
@@ -168,6 +169,7 @@ export function useGame() {
     const response = await gameApi.guess(current);
 
     if (response.ok) {
+      trackGuess(game, response.data);
       clearTimeout(toastTimer.current);
       setToast(null);
       setPending(response.data.result);
@@ -245,4 +247,18 @@ function describeGuess(dict: Dictionary, result: GuessResponse["result"], next: 
   }
   if (next.status === "lost") return format(dict.game.announceLost, { letters });
   return plural(dict.game.announceLeft, next.guessesRemaining, { letters });
+}
+
+/** Analytics for one counted guess: the game's start, a solved or failed word, and the game's end. */
+function trackGuess(before: GameView | null, { result, game: next }: GuessResponse) {
+  const language = next.language;
+  const wordNumber = before?.wordNumber ?? next.wordNumber;
+  const guesses = (before?.guesses.length ?? 0) + 1;
+  if (wordNumber === 1 && guesses === 1) trackEvent("game_start", { language });
+  if (result.solved) {
+    trackEvent("word_solved", { mode: "endless", language, guesses, word_number: wordNumber, word: result.word });
+  } else if (next.status === "lost") {
+    trackEvent("word_failed", { mode: "endless", language, guesses, word_number: wordNumber, word: next.answer ?? "" });
+    trackEvent("game_over", { language, words_solved: next.wordsSolved });
+  }
 }

@@ -346,7 +346,7 @@ export const nl: Dictionary = {
       analytics: {
         title: "Analytisch",
         description:
-          "Google Analytics laat ons zien welke pagina's worden bezocht en hoe, zodat we het spel kunnen verbeteren. Alleen met je toestemming.",
+          "Google Analytics laat ons zien welke pagina's worden bezocht en hoe het spel wordt gespeeld, zodat we het kunnen verbeteren. Alleen met je toestemming.",
       },
       advertising: {
         title: "Advertenties",

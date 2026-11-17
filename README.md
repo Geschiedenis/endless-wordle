@@ -59,7 +59,7 @@ Do these in order, **before deploying V2**.
 ### 1. Create a project and run the migration
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently five files, and each file only needs to run once.
+2. Open **SQL Editor**, paste the contents of every file in [`supabase/migrations`](supabase/migrations), oldest first, and click **Run**. There are currently six files, and each file only needs to run once.
 
 To check it worked, **Table Editor** should list `profiles`, `games` and `active_games`, each marked as protected by RLS.
 
@@ -94,6 +94,44 @@ Then deploy. If a variable is missing, the build fails with its name and your li
 - **Sharing results.** After a game, Share copies a coloured grid with one line per word, with no letters, or opens the share sheet on phones.
 
 After deploying, add the site to [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters), and submit `https://endlesslingle.com/sitemap.xml` to both.
+
+## Analytics and play statistics
+
+Two kinds, for different questions:
+
+- **Google Analytics events** ([`src/lib/analytics.ts`](src/lib/analytics.ts)) show behaviour, but only for visitors who accept analytics cookies:
+
+  | Event | When | Parameters |
+  |---|---|---|
+  | `game_start` | first guess of an endless game | `language` |
+  | `word_solved` | a word is solved | `mode`, `language`, `guesses`, `word_number`, `word` |
+  | `word_failed` | a word runs out of guesses | `mode`, `language`, `guesses`, `word_number`, `word` |
+  | `game_over` | an endless game ends | `language`, `words_solved` |
+  | `daily_complete` | the daily word is over | `language`, `solved`, `guesses` |
+  | `share` | a result is shared | `mode`, `method` |
+  | `language_suggestion` | the language toast is answered | `action`, `from`, `to` |
+  | `login`, `sign_up` | account actions | `method` |
+
+  To use the parameters in reports, add them in GA under **Admin, Custom definitions**: `guesses`, `word_number` and `words_solved` as custom metrics, and the others as custom dimensions.
+
+- **Play statistics** in Supabase count every finished word (`word_plays`) and endless game (`game_plays`) exactly, from every player, with nothing that identifies them. Query them in the SQL editor, for example:
+
+  ```sql
+  -- Average guesses per solved word, and the share of words solved, per language and mode.
+  select language, mode, round(avg(guesses) filter (where solved), 2) as avg_guesses,
+         round(100.0 * avg(solved::int), 1) as solved_pct, count(*) as words
+  from public.word_plays group by language, mode order by language, mode;
+
+  -- The hardest words (played at least 20 times).
+  select language, word, count(*) as plays, round(avg(guesses), 2) as avg_guesses,
+         round(100.0 * avg((not solved)::int), 1) as failed_pct
+  from public.word_plays where mode = 'endless'
+  group by language, word having count(*) >= 20 order by failed_pct desc, avg_guesses desc limit 20;
+
+  -- Endless games per day, and how far they got.
+  select date_trunc('day', created_at) as day, count(*) as games, round(avg(words_solved), 2) as avg_words
+  from public.game_plays group by 1 order by 1 desc;
+  ```
 
 ## Logo
 

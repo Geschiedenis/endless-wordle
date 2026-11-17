@@ -16,6 +16,7 @@ import type { LoginResponse, SignupResponse } from "@/lib/account-types";
 import { apiSend } from "@/lib/game/api-client";
 import { fullPageLoad, safeNextPath } from "@/lib/navigation";
 import { PASSWORD_MIN_LENGTH } from "@/lib/validation";
+import { trackEvent } from "@/lib/analytics";
 
 type Mode = "login" | "signup" | "forgot";
 
@@ -68,11 +69,15 @@ export function LoginForm() {
 
     if (mode === "login") {
       const response = await apiSend<LoginResponse>("/api/auth/login", "POST", { email, password });
-      if (response.ok) return fullPageLoad(response.data.needsUsername ? usernamePath : next);
+      if (response.ok) {
+        trackEvent("login", { method: "email" });
+        return fullPageLoad(response.data.needsUsername ? usernamePath : next);
+      }
       setError(errorMessage(dict, response));
     } else if (mode === "signup") {
       // The language goes with the account, so its emails are written in it.
       const response = await apiSend<SignupResponse>("/api/auth/signup", "POST", { email, password, locale });
+      if (response.ok) trackEvent("sign_up", { method: "email" });
       if (response.ok && response.data.status === "signed_in") return fullPageLoad(usernamePath);
       if (response.ok) {
         setSuccess(t.checkEmail);

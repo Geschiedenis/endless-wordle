@@ -43,7 +43,16 @@ export default function PrivacyPage() {
         <li>
           <strong>If you play as a guest:</strong> your game in progress and
           your guesses on the daily word are kept in encrypted cookies in your
-          browser. We don&apos;t store your scores.
+          browser. We don&apos;t store your scores under your name.
+        </li>
+        <li>
+          <strong>Everyone, anonymously:</strong> for each finished word we
+          store the language, the word, how many guesses it took and whether it
+          was solved, and for each finished game the words solved and guesses
+          used. Nothing in these statistics identifies you: no account, IP
+          address or device. We use them to see how the game is played and to
+          balance it, for example which words are hardest. Our legal basis is
+          our legitimate interest in improving the game (GDPR Article 6(1)(f)).
         </li>
         <li>
           <strong>Everyone:</strong> your IP address and basic request details
@@ -56,8 +65,9 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>If you accept analytics cookies:</strong> Google Analytics
-          records which pages you visit, how you use them, how you reached the
-          site, your device and browser type, and your approximate location,
+          records which pages you visit, how you use them, game events (such as
+          how many guesses a word took, when a game ends and when you share a
+          result), how you reached the site, your device and browser type, and your approximate location,
           such as your country or city. It tells visits apart with a random
           identifier in a cookie. We use this to understand how the site is used
           and improve it. Our legal basis is your consent (GDPR Article
@@ -93,7 +103,7 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>Supabase, Inc.</strong> stores account and score data and
-          sends account emails.
+          the anonymous game statistics, and sends account emails.
         </li>
         <li>
           <strong>Vercel, Inc.</strong> hosts the site and may keep IP addresses

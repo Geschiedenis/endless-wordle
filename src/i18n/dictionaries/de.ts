@@ -348,7 +348,7 @@ export const de: Dictionary = {
       analytics: {
         title: "Analyse",
         description:
-          "Google Analytics zeigt uns, welche Seiten wie besucht werden, damit wir das Spiel verbessern können. Nur mit deiner Einwilligung.",
+          "Google Analytics zeigt uns, welche Seiten besucht werden und wie das Spiel gespielt wird, damit wir es verbessern können. Nur mit deiner Einwilligung.",
       },
       advertising: {
         title: "Werbung",

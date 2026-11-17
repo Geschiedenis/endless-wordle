@@ -6,6 +6,7 @@ import { parseGuess } from "@/lib/game/languages";
 import { getCurrentUser } from "@/lib/server/auth";
 import { dailyAnswer, dailyStatus, getDailyStore, toDailyView } from "@/lib/server/daily";
 import { errorResponse, guardedRoute, jsonResponse, parseJsonBody, rateLimiters } from "@/lib/server/http";
+import { recordWordPlay } from "@/lib/server/play-stats";
 import { isValidGuess } from "@/lib/server/words";
 
 const bodySchema = z.strictObject({
@@ -35,6 +36,11 @@ export const POST = guardedRoute(rateLimiters.dailyGuess, async (request) => {
   const solved = guess === answer;
   // Save first: this request's feedback is only revealed if its guess counted.
   if (!(await store.save(guesses, solved ? guesses.length : null))) return errorResponse("game_conflict");
+
+  // Anonymous statistics, for every player, once the day's word is over.
+  if (dailyStatus(guesses, answer) !== "playing") {
+    recordWordPlay({ mode: "daily", language, word: answer, guesses: guesses.length, solved });
+  }
 
   return jsonResponse<DailyGuessResponse>({
     result: { word: guess, feedback: computeFeedback(guess, answer), solved },

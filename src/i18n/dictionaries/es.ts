@@ -351,7 +351,7 @@ export const es: Dictionary = {
       analytics: {
         title: "Analíticas",
         description:
-          "Google Analytics nos muestra qué páginas se visitan y cómo, para mejorar el juego. Solo con tu consentimiento.",
+          "Google Analytics nos muestra qué páginas se visitan y cómo se juega, para mejorar el juego. Solo con tu consentimiento.",
       },
       advertising: {
         title: "Publicidad",

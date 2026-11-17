@@ -15,6 +15,7 @@ import { usePhysicalKeyboard } from "@/hooks/use-physical-keyboard";
 import { DAILY_GUESSES, msUntilNextDay, type DailyView } from "@/lib/game/daily";
 import { buildDailyShareText } from "@/lib/game/share";
 import { isHighContrast } from "@/lib/preferences";
+import { trackEvent } from "@/lib/analytics";
 
 /** The daily word: six guesses at one word, the same for everyone, once a day. */
 export function DailyGame() {
@@ -102,9 +103,11 @@ function DailyResult({ daily, title, onNewDay }: { daily: DailyView; title: stri
     try {
       if (useShareSheet) {
         await navigator.share({ text });
+        trackEvent("share", { mode: "daily", method: "share_sheet" });
         return;
       }
       await navigator.clipboard.writeText(text);
+      trackEvent("share", { mode: "daily", method: "clipboard" });
       setShareStatus(dict.share.copied);
     } catch (error) {
       // Closing the share sheet isn't a failure.
