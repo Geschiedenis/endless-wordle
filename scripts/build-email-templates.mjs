@@ -137,7 +137,7 @@ function page(lang, [title, preheader, heading, body, button, note]) {
           <tr>
             <td align="center" style="padding:32px 32px 0;">
               <a href="${home}" style="text-decoration:none;">
-                <img src="{{ .SiteURL }}/logo.png" width="205" height="32" alt="Endless Lingle" style="display:block;width:205px;height:32px;border:0;${text(18, C.text, "font-weight:700;")}">
+                <img src="{{ .SiteURL }}/logo.png" width="158" height="39" alt="Endless Lingle" style="display:block;width:158px;height:39px;border:0;${text(18, C.text, "font-weight:700;")}">
               </a>
             </td>
           </tr>

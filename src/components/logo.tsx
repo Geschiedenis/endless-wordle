@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-/** Width / height of public/logo.svg: six 100-unit tiles with 8-unit gaps, like a row on the board. */
-export const LOGO_RATIO = 640 / 100;
+/** Width / height of public/logo.svg: six raised game tiles, each a little turned and nudged. */
+export const LOGO_RATIO = 655 / 162;
 
 interface LogoProps {
   /** Height in pixels. The width follows from the logo's ratio. */
@@ -14,7 +14,7 @@ interface LogoProps {
   className?: string;
 }
 
-/** The LINGLE logo, coloured like a guess on the board. public/logo.png is the same image, for emails, which can't show SVGs. */
+/** The LINGLE logo: game tiles as raised keys, coloured like a guess on the board. public/logo.png is the same image, for emails, which can't show SVGs. */
 export function Logo({ height = 32, eager = false, alt = "", className }: LogoProps) {
   return (
     <Image

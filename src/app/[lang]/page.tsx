@@ -54,14 +54,14 @@ export default async function LandingPage() {
         // Escaping < keeps the JSON from ever closing the script tag early.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
-      <TopBar logo="none" className="z-20" />
+      <TopBar logo={false} className="z-20" />
       <main className="flex flex-col">
         {/* The first screen, less the top bar. svh, not dvh, so it doesn't resize while a phone's address bar hides. */}
         <section className="relative -mx-4 flex min-h-[calc(100svh-3rem)] flex-col items-center justify-center px-4 pb-40 text-center">
           {/* Behind the rest of the first screen. */}
           <HeroFan />
           <div className="relative z-10 flex w-full flex-col items-center">
-            <Logo height={40} eager className="hero-rise mb-6 h-8 w-auto sm:h-10" />
+            <Logo height={56} eager className="hero-rise mb-5 h-11 w-auto sm:h-14" />
             <h1 className="hero-rise text-4xl font-bold tracking-tight sm:text-5xl">Endless Lingle</h1>
             <p className="hero-fade mt-3 max-w-sm text-balance text-muted-foreground">{dict.home.tagline}</p>
             <div className="hero-fade mt-8 flex w-full max-w-xs flex-col gap-3 [--delay:240ms]">

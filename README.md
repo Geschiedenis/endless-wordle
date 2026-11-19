@@ -135,7 +135,7 @@ Two kinds, for different questions:
 
 ## Logo
 
-The originals are in `logos/`. To change the logo, replace these copies and redeploy: `public/logo.svg` (headers), `public/logo.png` (emails, 832 x 130), `src/app/icon.svg` (browser tab, the L tile), `src/app/apple-icon.png` (iPhone home screen, 180 x 180 with no transparency) and `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-512.png` (app icons).
+The originals are in `logos/`. To change the logo, replace these copies and redeploy: `public/logo.svg` (headers), `public/logo.png` (emails, 526 x 130), `src/app/icon.svg` (browser tab, the L tile), `src/app/apple-icon.png` (iPhone home screen, 180 x 180 with no transparency) and `public/icon-192.png`, `public/icon-512.png` and `public/icon-maskable-512.png` (app icons).
 
 ## Game rules
 
