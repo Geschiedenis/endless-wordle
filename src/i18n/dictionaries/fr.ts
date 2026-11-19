@@ -305,6 +305,10 @@ export const fr: Dictionary = {
     highContrastLabel: "Contraste élevé",
     highContrastDescription:
       "Cases orange et bleues avec une coche et un point, pour mieux distinguer les couleurs.",
+    gameTitle: "Jeu",
+    bonusLabel: "Essais bonus",
+    bonusDescription:
+      "Les essais dont vous n'avez pas besoin passent au mot suivant, jusqu'à {max}. Désactivez-les pour un jeu plus difficile. S'applique à partir de votre prochaine partie.",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Choisissez si nous pouvons utiliser des cookies de mesure d'audience. Les cookies nécessaires sont toujours actifs.",
@@ -379,7 +383,7 @@ export const fr: Dictionary = {
       },
       language: { purpose: "Mémorise votre langue.", duration: "12 mois" },
       preferences: {
-        purpose: "Mémorisent vos choix de mode sombre et de contraste.",
+        purpose: "Mémorisent vos choix de mode sombre, de contraste et d'essais bonus.",
         duration: "Jusqu'à leur effacement",
       },
       analytics: {

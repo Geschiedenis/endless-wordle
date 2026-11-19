@@ -2,6 +2,7 @@
 
 const THEME_KEY = "ew-theme";
 const CONTRAST_KEY = "ew-contrast";
+const BONUS_KEY = "ew-bonus";
 
 /** Runs in <head> before paint. <html> starts out dark, so only a saved light theme changes it. */
 export const PREFERENCES_SCRIPT = `(function(){var d=document.documentElement,t=null,c=null;try{t=localStorage.getItem("${THEME_KEY}");c=localStorage.getItem("${CONTRAST_KEY}")}catch(e){}if(t==="light")d.classList.remove("dark");if(c==="high")d.dataset.contrast="high"})()`;
@@ -39,4 +40,20 @@ export function setHighContrast(high: boolean) {
   if (high) document.documentElement.dataset.contrast = "high";
   else delete document.documentElement.dataset.contrast;
   persist(CONTRAST_KEY, high ? "high" : "normal");
+}
+
+/**
+ * Whether new endless games roll spare guesses over as bonus guesses. On unless the
+ * player switched it off. It's sent when a game starts, so a game in progress keeps its rule.
+ */
+export function isBonusOn(): boolean {
+  try {
+    return localStorage.getItem(BONUS_KEY) !== "off";
+  } catch {
+    return true;
+  }
+}
+
+export function setBonusOn(on: boolean) {
+  persist(BONUS_KEY, on ? "on" : "off");
 }

@@ -20,7 +20,7 @@ export const STORAGE_ITEMS: readonly StorageItem[] = [
   { key: "session", name: "sb-…-auth-token", kind: "cookie", category: "necessary" },
   { key: "verifier", name: "sb-…-auth-token-code-verifier", kind: "cookie", category: "necessary" },
   { key: "language", name: "ew-lang", kind: "cookie", category: "necessary" },
-  { key: "preferences", name: "ew-theme, ew-contrast", kind: "localStorage", category: "necessary" },
+  { key: "preferences", name: "ew-theme, ew-contrast, ew-bonus", kind: "localStorage", category: "necessary" },
   { key: "consent", name: "ew-cookie-consent", kind: "localStorage", category: "necessary" },
   { key: "analytics", name: "_ga, _ga_<id>", kind: "cookie", category: "analytics" },
 ];

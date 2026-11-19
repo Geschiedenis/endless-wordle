@@ -73,6 +73,22 @@ describe("applyGuess", () => {
   });
 });
 
+describe("bonus guesses switched off", () => {
+  it("gives no bonus for spare guesses, so every word has the base guesses", () => {
+    const { state, result } = applyGuess(createGame("s", "crane", "en", false), "crane", next);
+    expect(result.bonusEarned).toBe(0);
+    expect(state.bonusGuesses).toBe(0);
+    expect(toGameView(state).guessesAllowed).toBe(6);
+  });
+
+  it("still rolls spare guesses over by default, and for games from before the setting", () => {
+    expect(applyGuess(createGame("s", "crane"), "crane", next).result.bonusEarned).toBe(3);
+    const older = createGame("s", "crane");
+    delete older.bonus;
+    expect(applyGuess(older, "crane", next).result.bonusEarned).toBe(3);
+  });
+});
+
 describe("toGameView", () => {
   it("never exposes the answer or seed during play", () => {
     const { state } = applyGuess(createGame("secret-seed", "crane"), "pride", next);

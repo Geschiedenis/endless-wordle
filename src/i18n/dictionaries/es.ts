@@ -304,6 +304,10 @@ export const es: Dictionary = {
     highContrastLabel: "Alto contraste",
     highContrastDescription:
       "Casillas naranjas y azules con una marca y un punto, para distinguir mejor los colores.",
+    gameTitle: "Juego",
+    bonusLabel: "Intentos extra",
+    bonusDescription:
+      "Los intentos que no necesites pasan a la siguiente palabra, hasta {max}. Desactívalo para un juego más difícil. Se aplica desde tu próxima partida.",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Elige si podemos usar cookies analíticas. Las cookies necesarias siempre están activas.",
@@ -379,7 +383,7 @@ export const es: Dictionary = {
       },
       language: { purpose: "Recuerda tu idioma.", duration: "12 meses" },
       preferences: {
-        purpose: "Recuerdan tus preferencias de modo oscuro y contraste.",
+        purpose: "Recuerdan tus preferencias de modo oscuro, contraste e intentos extra.",
         duration: "Hasta que las borres",
       },
       analytics: {

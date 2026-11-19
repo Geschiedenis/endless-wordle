@@ -5,12 +5,14 @@ import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useDarkTheme, useHighContrast } from "@/hooks/use-preferences";
+import { useBonusGuesses, useDarkTheme, useHighContrast } from "@/hooks/use-preferences";
 import { useSession } from "@/hooks/use-session";
 import { Link } from "@/i18n/link";
 import { useI18n } from "@/i18n/provider";
 import { openCookieSettings } from "@/lib/consent";
-import { setDarkTheme, setHighContrast } from "@/lib/preferences";
+import { format } from "@/i18n/format";
+import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
+import { setBonusOn, setDarkTheme, setHighContrast } from "@/lib/preferences";
 
 /** Display and cookie preferences, for everyone. Guests also get an invitation to sign up. */
 export function SettingsView() {
@@ -19,6 +21,7 @@ export function SettingsView() {
   const session = useSession();
   const dark = useDarkTheme();
   const highContrast = useHighContrast();
+  const bonus = useBonusGuesses();
 
   return (
     <div className="flex flex-col gap-6">
@@ -50,6 +53,16 @@ export function SettingsView() {
             onChange={setHighContrast}
           />
         </div>
+      </SectionCard>
+
+      <SectionCard title={t.gameTitle}>
+        <SettingRow
+          id="setting-bonus-guesses"
+          label={t.bonusLabel}
+          description={format(t.bonusDescription, { max: MAX_BONUS_GUESSES })}
+          checked={bonus}
+          onChange={setBonusOn}
+        />
       </SectionCard>
 
       <SectionCard title={t.cookiesTitle} description={t.cookiesDescription}>

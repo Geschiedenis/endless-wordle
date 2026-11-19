@@ -37,7 +37,7 @@ export function apiSend<T>(path: string, method: "POST" | "PUT" | "DELETE", body
 
 export const gameApi = {
   state: () => apiRequest<GameResponse>("/api/game/state"),
-  newGame: (language: Locale) => apiSend<GameResponse>("/api/game/new", "POST", { language }),
+  newGame: (language: Locale, bonus: boolean) => apiSend<GameResponse>("/api/game/new", "POST", { language, bonus }),
   guess: (guess: string) => apiSend<GuessResponse>("/api/game/guess", "POST", { guess }),
 };
 

@@ -298,6 +298,10 @@ export const en = {
     highContrastLabel: "High contrast",
     highContrastDescription:
       "Orange and blue tiles with a check mark and dot, so the colours are easier to tell apart.",
+    gameTitle: "Game",
+    bonusLabel: "Bonus guesses",
+    bonusDescription:
+      "Guesses you don't need carry over to the next word, up to {max}. Switch off for a harder game. Applies from your next game.",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Choose whether we may use analytics cookies. Necessary cookies are always on.",
@@ -369,7 +373,7 @@ export const en = {
       },
       language: { purpose: "Remembers your language.", duration: "12 months" },
       preferences: {
-        purpose: "Remember your dark mode and contrast choices.",
+        purpose: "Remember your dark mode, contrast and bonus guesses choices.",
         duration: "Until you clear them",
       },
       analytics: {

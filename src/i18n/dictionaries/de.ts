@@ -303,6 +303,10 @@ export const de: Dictionary = {
     highContrastLabel: "Hoher Kontrast",
     highContrastDescription:
       "Orange und blaue Felder mit Häkchen und Punkt, damit sich die Farben besser unterscheiden lassen.",
+    gameTitle: "Spiel",
+    bonusLabel: "Bonusversuche",
+    bonusDescription:
+      "Versuche, die du nicht brauchst, gehen auf das nächste Wort über, bis zu {max}. Schalte sie aus für ein schwierigeres Spiel. Gilt ab deinem nächsten Spiel.",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Wähle, ob wir Analyse-Cookies verwenden dürfen. Notwendige Cookies sind immer aktiv.",
@@ -377,7 +381,7 @@ export const de: Dictionary = {
       language: { purpose: "Merkt sich deine Sprache.", duration: "12 Monate" },
       preferences: {
         purpose:
-          "Merken sich deine Einstellungen für Dunkelmodus und Kontrast.",
+          "Merken sich deine Einstellungen für Dunkelmodus, Kontrast und Bonusversuche.",
         duration: "Bis du sie löschst",
       },
       analytics: {

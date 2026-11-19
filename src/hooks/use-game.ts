@@ -9,6 +9,7 @@ import { gameApi } from "@/lib/game/api-client";
 import { WORD_LENGTH } from "@/lib/game/constants";
 import { keyStatuses } from "@/lib/game/keyboard";
 import { normalizeLetter } from "@/lib/game/languages";
+import { isBonusOn } from "@/lib/preferences";
 import type { GameView, GuessResponse, ScoredGuess, SolvedWord } from "@/lib/game/types";
 
 /** Tile timing. The values reach the CSS animations through custom properties. */
@@ -67,7 +68,7 @@ export function useGame() {
     setSolvedWords([]);
     setCurrent("");
     setScoreSaved(undefined);
-    const response = await gameApi.newGame(locale);
+    const response = await gameApi.newGame(locale, isBonusOn());
     if (response.ok) {
       setGame(response.data.game);
       setPhase("ready");

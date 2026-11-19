@@ -21,6 +21,11 @@ export interface GameState {
   wordsSolved: number;
   /** Bonus guesses added to the current word. */
   bonusGuesses: number;
+  /**
+   * Whether spare guesses roll over as bonus guesses. Chosen in Settings and fixed
+   * for the whole game. Missing in games from before the setting: those have bonuses.
+   */
+  bonus?: boolean;
   /** Guesses made on the current word, lowercase. */
   guesses: string[];
   /** Guesses made across every word in this game. */

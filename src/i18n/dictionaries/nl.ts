@@ -301,6 +301,10 @@ export const nl: Dictionary = {
     highContrastLabel: "Hoog contrast",
     highContrastDescription:
       "Oranje en blauwe tegels met een vinkje en een stip, zodat de kleuren beter te onderscheiden zijn.",
+    gameTitle: "Spel",
+    bonusLabel: "Bonuspogingen",
+    bonusDescription:
+      "Pogingen die je niet nodig hebt, gaan mee naar het volgende woord, tot maximaal {max}. Zet uit voor een moeilijker spel. Geldt vanaf je volgende spel.",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Kies of we analytische cookies mogen gebruiken. Noodzakelijke cookies staan altijd aan.",
@@ -374,7 +378,7 @@ export const nl: Dictionary = {
       },
       language: { purpose: "Onthoudt je taal.", duration: "12 maanden" },
       preferences: {
-        purpose: "Onthouden je keuzes voor donkere modus en contrast.",
+        purpose: "Onthouden je keuzes voor donkere modus, contrast en bonuspogingen.",
         duration: "Tot je ze wist",
       },
       analytics: {

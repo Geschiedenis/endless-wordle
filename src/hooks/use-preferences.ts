@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { isDarkTheme, isHighContrast, subscribeToPreferences } from "@/lib/preferences";
+import { isBonusOn, isDarkTheme, isHighContrast, subscribeToPreferences } from "@/lib/preferences";
 
 /** Pages are prerendered in the default theme, which is dark, without high contrast. */
 const darkOnServer = () => true;
@@ -13,4 +13,9 @@ export function useDarkTheme(): boolean {
 
 export function useHighContrast(): boolean {
   return useSyncExternalStore(subscribeToPreferences, isHighContrast, offOnServer);
+}
+
+/** Bonus guesses are on by default. */
+export function useBonusGuesses(): boolean {
+  return useSyncExternalStore(subscribeToPreferences, isBonusOn, () => true);
 }

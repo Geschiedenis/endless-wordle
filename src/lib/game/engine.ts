@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n/config";
 import type { GameState, GameView, GuessResponse } from "./types";
 
 /** Starts a session. The caller supplies randomness, keeping this pure. */
-export function createGame(seed: string, answer: string, language: Locale = "en"): GameState {
+export function createGame(seed: string, answer: string, language: Locale = "en", bonus = true): GameState {
   return {
     seed,
     language,
@@ -12,6 +12,7 @@ export function createGame(seed: string, answer: string, language: Locale = "en"
     status: "playing",
     wordsSolved: 0,
     bonusGuesses: 0,
+    bonus,
     guesses: [],
     totalGuesses: 0,
     solvedIn: [],
@@ -43,7 +44,8 @@ export function applyGuess(
 
   if (isSolved(feedback)) {
     const wordsSolved = state.wordsSolved + 1;
-    const bonusEarned = rolloverBonus(state.bonusGuesses, guesses.length);
+    // With bonus guesses switched off, every word gets the base guesses and nothing more.
+    const bonusEarned = state.bonus === false ? 0 : rolloverBonus(state.bonusGuesses, guesses.length);
     return {
       state: {
         ...state,
