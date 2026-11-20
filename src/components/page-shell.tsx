@@ -1,13 +1,10 @@
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { WIDE_CONTENT } from "@/lib/layout";
 import { cn } from "@/lib/utils";
 
-/**
- * The width of the home page's sections. The help pages (FAQ, how to play, tips) use it
- * too, so they line up with the home page.
- */
-export const WIDE_CONTENT = "max-w-3xl";
+export { WIDE_CONTENT };
 
 export function PageShell({ children, wide = false }: { children: ReactNode; wide?: boolean }) {
   return (

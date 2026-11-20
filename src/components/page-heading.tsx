@@ -9,9 +9,12 @@ import { cn } from "@/lib/utils";
 export function PageHeading({
   children,
   align = "start",
+  backHref,
   className,
 }: {
   children: ReactNode;
+  /** Where the back button goes. The home page if left out. */
+  backHref?: string;
   align?: "start" | "center";
   className?: string;
 }) {
@@ -19,7 +22,7 @@ export function PageHeading({
     return (
       <div className={cn("relative flex items-center justify-center px-10", className)}>
         <div className="absolute top-1/2 left-0 -translate-y-1/2">
-          <BackButton />
+          <BackButton href={backHref} />
         </div>
         <h1 className="text-center text-3xl font-bold tracking-tight">{children}</h1>
       </div>
@@ -27,7 +30,7 @@ export function PageHeading({
   }
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <BackButton />
+      <BackButton href={backHref} />
       <h1 className="text-3xl font-bold tracking-tight">{children}</h1>
     </div>
   );

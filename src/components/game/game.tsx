@@ -91,6 +91,7 @@ export function Game() {
         {lost && game?.answer ? (
           <GameOver
             answer={game.answer}
+            language={game.language}
             wordsSolved={game.wordsSolved}
             scoreSaved={scoreSaved}
             onPlayAgain={() => void startNewGame()}

@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { RotateCcw } from "lucide-react";
+
 import { PageHeading } from "@/components/page-heading";
 import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +12,9 @@ import { Switch } from "@/components/ui/switch";
 import { useBonusGuesses, useDarkTheme, useHighContrast } from "@/hooks/use-preferences";
 import { useSession } from "@/hooks/use-session";
 import { Link } from "@/i18n/link";
+import { localePath } from "@/i18n/config";
 import { useI18n } from "@/i18n/provider";
+import { gameApi } from "@/lib/game/api-client";
 import { openCookieSettings } from "@/lib/consent";
 import { format } from "@/i18n/format";
 import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
@@ -16,8 +22,20 @@ import { setBonusOn, setDarkTheme, setHighContrast } from "@/lib/preferences";
 
 /** Display and cookie preferences, for everyone. Guests also get an invitation to sign up. */
 export function SettingsView() {
-  const { dict } = useI18n();
+  const { dict, locale } = useI18n();
   const t = dict.settings;
+  const router = useRouter();
+  /** Shown once the bonus setting changes, since it only applies from the next game. */
+  const [bonusChanged, setBonusChanged] = useState(false);
+  const [starting, setStarting] = useState(false);
+
+  async function startNewGame() {
+    setStarting(true);
+    const response = await gameApi.newGame(locale, bonus);
+    // On a failure /play still loads, and offers to start a game there.
+    if (!response.ok) setStarting(false);
+    router.push(localePath(locale, "/play"));
+  }
   const session = useSession();
   const dark = useDarkTheme();
   const highContrast = useHighContrast();
@@ -61,8 +79,20 @@ export function SettingsView() {
           label={t.bonusLabel}
           description={format(t.bonusDescription, { max: MAX_BONUS_GUESSES })}
           checked={bonus}
-          onChange={setBonusOn}
+          onChange={(on) => {
+            setBonusOn(on);
+            setBonusChanged(true);
+          }}
         />
+        {bonusChanged && (
+          <div className="mt-4 flex flex-col items-start gap-3 rounded-lg bg-muted/50 p-4">
+            <p className="text-sm text-muted-foreground">{t.newGameNote}</p>
+            <Button variant="outline" onClick={() => void startNewGame()} disabled={starting} className="h-10 px-4">
+              <RotateCcw aria-hidden="true" />
+              {t.newGameButton}
+            </Button>
+          </div>
+        )}
       </SectionCard>
 
       <SectionCard title={t.cookiesTitle} description={t.cookiesDescription}>

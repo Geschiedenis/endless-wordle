@@ -5,6 +5,7 @@ import { Trash2 } from "lucide-react";
 import { FormMessage } from "@/components/account/form-message";
 import { UsernameField } from "@/components/account/username-field";
 import { BackButton } from "@/components/back-button";
+import { DistributionBars } from "@/components/distribution-bars";
 import { Flag } from "@/components/flag";
 import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,6 @@ import { useI18n } from "@/i18n/provider";
 import { NO_USERNAME_CONFIRMATION, type ProfileResponse } from "@/lib/account-types";
 import { apiRequest, apiSend } from "@/lib/game/api-client";
 import { fullPageLoad } from "@/lib/navigation";
-import { cn } from "@/lib/utils";
 import { findUsernameProblem, usernameProblemMessage } from "@/lib/username";
 
 type State = { status: "loading" } | { status: "failed" } | { status: "user"; profile: ProfileResponse };
@@ -136,28 +136,11 @@ function Statistics({ profile }: { profile: ProfileResponse }) {
  */
 function GuessDistribution({ counts }: { counts: number[] }) {
   const { locale, dict } = useI18n();
-  const most = Math.max(...counts);
-  if (most === 0) return <p className="mt-2 text-sm text-muted-foreground">{dict.profile.distributionEmpty}</p>;
+  if (Math.max(...counts) === 0) return <p className="mt-2 text-sm text-muted-foreground">{dict.profile.distributionEmpty}</p>;
   return (
-    <ol className="mt-3 flex flex-col gap-1.5">
-      {counts.map((count, index) => (
-        <li key={index} className="flex items-center gap-2 text-sm">
-          <span className="w-3 shrink-0 text-right font-semibold tabular-nums">{index + 1}</span>
-          <span className="flex-1">
-            <span
-              // At least wide enough to hold its number, so empty rows still show a bar.
-              style={{ width: `max(1.75rem, ${(count / most) * 100}%)` }}
-              className={cn(
-                "flex h-6 items-center justify-end rounded-sm px-2 text-xs font-bold tabular-nums",
-                count === most ? "bg-primary text-primary-foreground" : "bg-muted text-foreground",
-              )}
-            >
-              {count.toLocaleString(locale)}
-            </span>
-          </span>
-        </li>
-      ))}
-    </ol>
+    <div className="mt-3">
+      <DistributionBars counts={counts} locale={locale} />
+    </div>
   );
 }
 

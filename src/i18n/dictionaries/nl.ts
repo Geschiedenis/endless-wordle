@@ -14,6 +14,15 @@ export const nl: Dictionary = {
     howToPlayDescription:
       "Lees hoe Endless Lingle werkt: wat de kleuren betekenen, hoe ongebruikte pogingen meegaan en hoe lang je reeks kan worden.",
     imageAlt: "Een donker Endless Lingle-bord, met het logo en de slogan.",
+    about: "Over",
+    contact: "Contact",
+    aboutDescription:
+      "Over Endless Lingle: een gratis, eindeloos woordspel in vijf talen, met bonuspogingen en een woord van de dag. Wie het maakt en hoe je contact opneemt.",
+    contactDescription:
+      "Contact met Endless Lingle: mail ons met vragen, woordsuggesties, foutmeldingen of zakelijke vragen.",
+    archive: "Archief woord van de dag",
+    archiveDescription:
+      "Alle eerdere woorden van de dag van Endless Lingle, met hoeveel spelers ze raadden en in hoeveel pogingen.",
     pageTitle: "{page} | Endless Lingle",
     play: "Spelen",
     howToPlay: "Hoe werkt het",
@@ -57,6 +66,12 @@ export const nl: Dictionary = {
   },
 
   footer: {
+    tagline: "Raad woord na woord, zo lang als je kunt.",
+    about: "Over ons",
+    contact: "Contact",
+    playTitle: "Spel",
+    helpTitle: "Hulp",
+    moreTitle: "Endless Lingle",
     legal: "Juridisch",
     privacy: "Privacy",
     terms: "Voorwaarden",
@@ -128,6 +143,8 @@ export const nl: Dictionary = {
   },
 
   gameOver: {
+    newRecord: "Nieuw record!",
+    best: "Je record: {words}",
     wordWas: "Het woord was",
     youSolved: "Je hebt {words} geraden",
     words: { one: "{count} woord", other: "{count} woorden" },
@@ -305,10 +322,20 @@ export const nl: Dictionary = {
     bonusLabel: "Bonuspogingen",
     bonusDescription:
       "Pogingen die je niet nodig hebt, gaan mee naar het volgende woord, tot maximaal {max}. Zet uit voor een moeilijker spel. Geldt vanaf je volgende spel.",
+    newGameNote:
+      "Wil je het meteen? Een nieuw spel beginnen stopt het spel dat je nu speelt.",
+    newGameButton: "Nieuw spel beginnen",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Kies of we analytische cookies mogen gebruiken. Noodzakelijke cookies staan altijd aan.",
     cookiesButton: "Cookie-instellingen wijzigen",
+  },
+
+  notFound: {
+    title: "Pagina niet gevonden",
+    body: "Deze pagina bestaat niet, of is verhuisd. Het spel staat gelukkig nog gewoon klaar.",
+    play: "Nu spelen",
+    home: "Naar de homepagina",
   },
 
   errors: {
@@ -378,7 +405,7 @@ export const nl: Dictionary = {
       },
       language: { purpose: "Onthoudt je taal.", duration: "12 maanden" },
       preferences: {
-        purpose: "Onthouden je keuzes voor donkere modus, contrast en bonuspogingen.",
+        purpose: "Onthouden je keuzes voor donkere modus, contrast en bonuspogingen, en je record per taal.",
         duration: "Tot je ze wist",
       },
       analytics: {

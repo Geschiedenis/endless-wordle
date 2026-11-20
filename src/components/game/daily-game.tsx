@@ -16,6 +16,7 @@ import { DAILY_GUESSES, msUntilNextDay, type DailyView } from "@/lib/game/daily"
 import { buildDailyShareText } from "@/lib/game/share";
 import { isHighContrast } from "@/lib/preferences";
 import { trackEvent } from "@/lib/analytics";
+import { ARCHIVE } from "@/content/archive";
 
 /** The daily word: six guesses at one word, the same for everyone, once a day. */
 export function DailyGame() {
@@ -138,6 +139,9 @@ function DailyResult({ daily, title, onNewDay }: { daily: DailyView; title: stri
         </Button>
       </div>
       {shareStatus && <p className="text-sm text-muted-foreground">{shareStatus}</p>}
+      <Link href="/daily/archive" className="mt-1 text-sm text-muted-foreground underline underline-offset-2 hover:text-foreground">
+        {ARCHIVE[locale].link}
+      </Link>
     </div>
   );
 }

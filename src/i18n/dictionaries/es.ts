@@ -14,6 +14,15 @@ export const es: Dictionary = {
     howToPlayDescription:
       "Aprende a jugar a Endless Lingle: qué significan los colores, cómo pasan los intentos que sobran y cuánto puede durar tu racha.",
     imageAlt: "Un tablero oscuro de Endless Lingle, con el logo y el eslogan.",
+    about: "Sobre nosotros",
+    contact: "Contacto",
+    aboutDescription:
+      "Sobre Endless Lingle: un juego de palabras gratuito y sin fin en cinco idiomas, con intentos extra y una palabra del día. Quién lo hace y cómo contactar.",
+    contactDescription:
+      "Contacta con Endless Lingle: escríbenos con preguntas, sugerencias de palabras, errores o consultas comerciales.",
+    archive: "Archivo de la palabra del día",
+    archiveDescription:
+      "Todas las palabras del día anteriores de Endless Lingle, con cuántos jugadores las adivinaron y en cuántos intentos.",
     pageTitle: "{page} | Endless Lingle",
     play: "Jugar",
     howToPlay: "Cómo se juega",
@@ -57,6 +66,12 @@ export const es: Dictionary = {
   },
 
   footer: {
+    tagline: "Adivina palabra tras palabra, todo lo que puedas.",
+    about: "Sobre nosotros",
+    contact: "Contacto",
+    playTitle: "Juego",
+    helpTitle: "Ayuda",
+    moreTitle: "Endless Lingle",
     legal: "Legal",
     privacy: "Privacidad",
     terms: "Condiciones",
@@ -128,6 +143,8 @@ export const es: Dictionary = {
   },
 
   gameOver: {
+    newRecord: "¡Nuevo récord!",
+    best: "Tu récord: {words}",
     wordWas: "La palabra era",
     youSolved: "Acertaste {words}",
     words: { one: "{count} palabra", other: "{count} palabras" },
@@ -308,10 +325,20 @@ export const es: Dictionary = {
     bonusLabel: "Intentos extra",
     bonusDescription:
       "Los intentos que no necesites pasan a la siguiente palabra, hasta {max}. Desactívalo para un juego más difícil. Se aplica desde tu próxima partida.",
+    newGameNote:
+      "¿Lo quieres ya? Empezar una partida nueva termina la que estás jugando.",
+    newGameButton: "Empezar una partida nueva",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Elige si podemos usar cookies analíticas. Las cookies necesarias siempre están activas.",
     cookiesButton: "Cambiar la configuración de cookies",
+  },
+
+  notFound: {
+    title: "Página no encontrada",
+    body: "Esta página no existe o se ha movido. Pero el juego sigue aquí.",
+    play: "Jugar ahora",
+    home: "Ir a la página de inicio",
   },
 
   errors: {
@@ -383,7 +410,7 @@ export const es: Dictionary = {
       },
       language: { purpose: "Recuerda tu idioma.", duration: "12 meses" },
       preferences: {
-        purpose: "Recuerdan tus preferencias de modo oscuro, contraste e intentos extra.",
+        purpose: "Recuerdan tus preferencias de modo oscuro, contraste e intentos extra, y tu récord por idioma.",
         duration: "Hasta que las borres",
       },
       analytics: {

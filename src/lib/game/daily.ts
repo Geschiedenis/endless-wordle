@@ -67,6 +67,21 @@ export function isPlayableDay(day: string, now: number = Date.now()): boolean {
   return Math.abs(start - todayUtc) <= DAY_MS;
 }
 
+/** The day of a daily word number, as YYYY-MM-DD. */
+export function dailyDay(number: number): string {
+  return new Date(dayStart(DAILY_EPOCH) + (number - 1) * DAY_MS).toISOString().slice(0, 10);
+}
+
+/**
+ * The newest daily word that's safe to show in the archive: one whose day is over
+ * everywhere. Time zones run up to 12 hours behind UTC, so someone can still be playing
+ * yesterday's (UTC) word; the archive stops at the day before that. 0 if there's none yet.
+ */
+export function lastArchivedNumber(now: number = Date.now()): number {
+  const todayUtc = new Date(Math.floor(now / DAY_MS) * DAY_MS).toISOString().slice(0, 10);
+  return Math.max(0, dailyNumber(todayUtc) - 2);
+}
+
 /** Milliseconds from a time until the next local midnight, when the next word arrives. */
 export function msUntilNextDay(now: Date): number {
   const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);

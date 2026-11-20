@@ -7,7 +7,7 @@ import { Link } from "@/i18n/link";
  * the language question on the game screen. At the end of the page it settles in place
  * above the footer.
  */
-export function PlayCta({ label, note }: { label: string; note: string }) {
+export function PlayCta({ label, note, href = "/play" }: { label: string; note: string; href?: string }) {
   return (
     <div className="sticky bottom-0 z-10 -mx-4 mt-10 bg-gradient-to-t from-background via-background/95 to-transparent px-4 pt-12 pb-[max(1rem,env(safe-area-inset-bottom))]">
       <div
@@ -17,7 +17,7 @@ export function PlayCta({ label, note }: { label: string; note: string }) {
       />
       <div className="relative mx-auto flex max-w-xs flex-col items-center gap-1.5 text-center">
         <Button asChild className="h-12 w-full text-base font-semibold">
-          <Link href="/play">{label}</Link>
+          <Link href={href}>{label}</Link>
         </Button>
         <p className="text-xs text-muted-foreground">{note}</p>
       </div>

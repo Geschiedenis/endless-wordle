@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/link";
 import { useI18n } from "@/i18n/provider";
 
-/** Goes to the home page. A plain link, so it can also be opened in a new tab. */
-export function BackButton() {
+/** Goes to the home page, or to href. A plain link, so it can also be opened in a new tab. */
+export function BackButton({ href = "/" }: { href?: string }) {
   const { dict } = useI18n();
   return (
     <Button
@@ -15,7 +15,7 @@ export function BackButton() {
       size="icon"
       className="-ml-2 size-10 shrink-0"
     >
-      <Link href="/" aria-label={dict.header.back} title={dict.header.back}>
+      <Link href={href} aria-label={dict.header.back} title={dict.header.back}>
         <ArrowLeft aria-hidden="true" className="size-5" />
       </Link>
     </Button>

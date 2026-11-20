@@ -16,6 +16,15 @@ export const en = {
     howToPlayDescription:
       "Learn how to play Endless Lingle: what the colours mean, how spare guesses roll over, and how long your streak can last.",
     imageAlt: "A dark Endless Lingle board, with the logo and the tagline.",
+    about: "About",
+    contact: "Contact",
+    aboutDescription:
+      "About Endless Lingle: a free, endless word game in five languages, with bonus guesses and a daily word. Who makes it and how to get in touch.",
+    contactDescription:
+      "Contact Endless Lingle: email us with questions, word suggestions, bug reports or business enquiries.",
+    archive: "Daily word archive",
+    archiveDescription:
+      "Every past Endless Lingle daily word, with how many players guessed it and in how many tries.",
     pageTitle: "{page} | Endless Lingle",
     play: "Play",
     howToPlay: "How to play",
@@ -60,6 +69,12 @@ export const en = {
   },
 
   footer: {
+    tagline: "Guess word after word, for as long as you can.",
+    about: "About",
+    contact: "Contact",
+    playTitle: "Game",
+    helpTitle: "Help",
+    moreTitle: "Endless Lingle",
     legal: "Legal",
     privacy: "Privacy",
     terms: "Terms",
@@ -127,6 +142,8 @@ export const en = {
   },
 
   gameOver: {
+    newRecord: "New record!",
+    best: "Your best: {words}",
     wordWas: "The word was",
     youSolved: "You solved {words}",
     words: { one: "{count} word", other: "{count} words" },
@@ -302,10 +319,20 @@ export const en = {
     bonusLabel: "Bonus guesses",
     bonusDescription:
       "Guesses you don't need carry over to the next word, up to {max}. Switch off for a harder game. Applies from your next game.",
+    newGameNote:
+      "Want it now? Starting a new game ends the one you're playing.",
+    newGameButton: "Start a new game",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Choose whether we may use analytics cookies. Necessary cookies are always on.",
     cookiesButton: "Change cookie settings",
+  },
+
+  notFound: {
+    title: "Page not found",
+    body: "This page doesn't exist, or it has moved. The game is still here, though.",
+    play: "Play now",
+    home: "Go to the home page",
   },
 
   errors: {
@@ -373,7 +400,7 @@ export const en = {
       },
       language: { purpose: "Remembers your language.", duration: "12 months" },
       preferences: {
-        purpose: "Remember your dark mode, contrast and bonus guesses choices.",
+        purpose: "Remember your dark mode, contrast and bonus guesses choices, and your best score per language.",
         duration: "Until you clear them",
       },
       analytics: {

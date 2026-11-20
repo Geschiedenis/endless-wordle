@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Share2 } from "lucide-react";
+import { Share2, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { plural, rich } from "@/i18n/format";
+import { format, plural, rich } from "@/i18n/format";
 import { Link } from "@/i18n/link";
 import { useI18n } from "@/i18n/provider";
 import { useSession } from "@/hooks/use-session";
-import { localePath, SITE_URL } from "@/i18n/config";
+import { localePath, SITE_URL, type Locale } from "@/i18n/config";
 import { buildShareText, type SharedWord } from "@/lib/game/share";
 import { encodeResult } from "@/lib/game/share-code";
 import { isHighContrast } from "@/lib/preferences";
 import { trackEvent } from "@/lib/analytics";
+import { bestScore, saveScore } from "@/lib/records";
 
 interface GameOverProps {
   answer: string;
+  /** The game's language: each language keeps its own record. */
+  language: Locale;
   wordsSolved: number;
   /** Undefined for guests, and after reloading a finished game. */
   scoreSaved?: boolean;
@@ -24,11 +27,19 @@ interface GameOverProps {
 }
 
 /** Takes the keyboard's place, so the final grid stays visible on small screens. */
-export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain, sharedWords }: GameOverProps) {
+export function GameOver({ answer, language, wordsSolved, scoreSaved, onPlayAgain, sharedWords }: GameOverProps) {
   const playAgain = useRef<HTMLButtonElement>(null);
   const session = useSession();
   const { locale, dict } = useI18n();
   const [shareStatus, setShareStatus] = useState<string | null>(null);
+  // The record before this game counted. Read once: saving it below doesn't change what
+  // this screen shows, and reloading a finished game doesn't make it a new record again.
+  const [previousBest] = useState(() => bestScore(language));
+  const newRecord = wordsSolved > previousBest;
+
+  useEffect(() => {
+    saveScore(language, wordsSolved);
+  }, [language, wordsSolved]);
 
   /**
    * Phones get the system share sheet, so the result can go straight into a chat.
@@ -76,6 +87,19 @@ export function GameOver({ answer, wordsSolved, scoreSaved, onPlayAgain, sharedW
           words: <strong className="font-bold">{plural(dict.gameOver.words, wordsSolved)}</strong>,
         })}
       </p>
+
+      {newRecord ? (
+        <p className="flex items-center gap-1.5 rounded-full bg-[color-mix(in_oklab,var(--present)_18%,transparent)] px-3 py-1 text-sm font-semibold">
+          <Trophy aria-hidden="true" className="size-4 text-(--present)" />
+          {dict.gameOver.newRecord}
+        </p>
+      ) : (
+        previousBest > 0 && (
+          <p className="text-sm text-muted-foreground">
+            {format(dict.gameOver.best, { words: plural(dict.gameOver.words, previousBest) })}
+          </p>
+        )
+      )}
 
       <p className="text-sm empty:hidden">
         {session.status === "guest" && session.accountsEnabled && (

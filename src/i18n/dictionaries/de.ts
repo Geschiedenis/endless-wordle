@@ -14,6 +14,15 @@ export const de: Dictionary = {
     howToPlayDescription:
       "So wird Endless Lingle gespielt: was die Farben bedeuten, wie übrige Versuche mitwandern und wie lang deine Serie werden kann.",
     imageAlt: "Ein dunkles Endless-Lingle-Spielfeld mit Logo und Slogan.",
+    about: "Über uns",
+    contact: "Kontakt",
+    aboutDescription:
+      "Über Endless Lingle: ein kostenloses, endloses Wortspiel in fünf Sprachen, mit Bonusversuchen und einem Wort des Tages. Wer es macht und wie du uns erreichst.",
+    contactDescription:
+      "Kontakt zu Endless Lingle: schreib uns bei Fragen, Wortvorschlägen, Fehlern oder geschäftlichen Anfragen.",
+    archive: "Archiv Wort des Tages",
+    archiveDescription:
+      "Alle bisherigen Wörter des Tages von Endless Lingle, mit wie vielen Spielern sie erraten haben und in wie vielen Versuchen.",
     pageTitle: "{page} | Endless Lingle",
     play: "Spielen",
     howToPlay: "So wird gespielt",
@@ -57,6 +66,12 @@ export const de: Dictionary = {
   },
 
   footer: {
+    tagline: "Rate Wort für Wort, so lange du kannst.",
+    about: "Über uns",
+    contact: "Kontakt",
+    playTitle: "Spiel",
+    helpTitle: "Hilfe",
+    moreTitle: "Endless Lingle",
     legal: "Rechtliches",
     privacy: "Datenschutz",
     terms: "Nutzungsbedingungen",
@@ -128,6 +143,8 @@ export const de: Dictionary = {
   },
 
   gameOver: {
+    newRecord: "Neuer Rekord!",
+    best: "Dein Rekord: {words}",
     wordWas: "Das Wort war",
     youSolved: "Du hast {words} gelöst",
     words: { one: "{count} Wort", other: "{count} Wörter" },
@@ -307,10 +324,20 @@ export const de: Dictionary = {
     bonusLabel: "Bonusversuche",
     bonusDescription:
       "Versuche, die du nicht brauchst, gehen auf das nächste Wort über, bis zu {max}. Schalte sie aus für ein schwierigeres Spiel. Gilt ab deinem nächsten Spiel.",
+    newGameNote:
+      "Sofort ausprobieren? Ein neues Spiel beendet das, das du gerade spielst.",
+    newGameButton: "Neues Spiel starten",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Wähle, ob wir Analyse-Cookies verwenden dürfen. Notwendige Cookies sind immer aktiv.",
     cookiesButton: "Cookie-Einstellungen ändern",
+  },
+
+  notFound: {
+    title: "Seite nicht gefunden",
+    body: "Diese Seite gibt es nicht, oder sie ist umgezogen. Das Spiel wartet aber auf dich.",
+    play: "Jetzt spielen",
+    home: "Zur Startseite",
   },
 
   errors: {
@@ -381,7 +408,7 @@ export const de: Dictionary = {
       language: { purpose: "Merkt sich deine Sprache.", duration: "12 Monate" },
       preferences: {
         purpose:
-          "Merken sich deine Einstellungen für Dunkelmodus, Kontrast und Bonusversuche.",
+          "Merken sich deine Einstellungen für Dunkelmodus, Kontrast und Bonusversuche sowie deinen Rekord pro Sprache.",
         duration: "Bis du sie löschst",
       },
       analytics: {

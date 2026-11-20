@@ -14,6 +14,15 @@ export const fr: Dictionary = {
     howToPlayDescription:
       "Découvrez comment jouer à Endless Lingle : la signification des couleurs, le report des essais restants et la durée possible de votre série.",
     imageAlt: "Une grille Endless Lingle sombre, avec le logo et le slogan.",
+    about: "À propos",
+    contact: "Contact",
+    aboutDescription:
+      "À propos d'Endless Lingle : un jeu de mots gratuit et sans fin en cinq langues, avec des essais bonus et un mot du jour. Qui le fait et comment nous contacter.",
+    contactDescription:
+      "Contacter Endless Lingle : écrivez-nous pour vos questions, suggestions de mots, bugs ou demandes professionnelles.",
+    archive: "Archives du mot du jour",
+    archiveDescription:
+      "Tous les mots du jour passés d'Endless Lingle, avec le nombre de joueurs qui les ont trouvés et en combien d'essais.",
     pageTitle: "{page} | Endless Lingle",
     play: "Jouer",
     howToPlay: "Comment jouer",
@@ -57,6 +66,12 @@ export const fr: Dictionary = {
   },
 
   footer: {
+    tagline: "Devinez mot après mot, aussi longtemps que vous le pouvez.",
+    about: "À propos",
+    contact: "Contact",
+    playTitle: "Jeu",
+    helpTitle: "Aide",
+    moreTitle: "Endless Lingle",
     legal: "Mentions légales",
     privacy: "Confidentialité",
     terms: "Conditions",
@@ -128,6 +143,8 @@ export const fr: Dictionary = {
   },
 
   gameOver: {
+    newRecord: "Nouveau record !",
+    best: "Votre record : {words}",
     wordWas: "Le mot était",
     youSolved: "Vous avez trouvé {words}",
     words: { one: "{count} mot", other: "{count} mots" },
@@ -309,10 +326,20 @@ export const fr: Dictionary = {
     bonusLabel: "Essais bonus",
     bonusDescription:
       "Les essais dont vous n'avez pas besoin passent au mot suivant, jusqu'à {max}. Désactivez-les pour un jeu plus difficile. S'applique à partir de votre prochaine partie.",
+    newGameNote:
+      "Vous le voulez tout de suite ? Commencer une nouvelle partie met fin à celle en cours.",
+    newGameButton: "Nouvelle partie",
     cookiesTitle: "Cookies",
     cookiesDescription:
       "Choisissez si nous pouvons utiliser des cookies de mesure d'audience. Les cookies nécessaires sont toujours actifs.",
     cookiesButton: "Modifier les paramètres des cookies",
+  },
+
+  notFound: {
+    title: "Page introuvable",
+    body: "Cette page n'existe pas ou a été déplacée. Le jeu, lui, vous attend toujours.",
+    play: "Jouer maintenant",
+    home: "Retour à l'accueil",
   },
 
   errors: {
@@ -383,7 +410,7 @@ export const fr: Dictionary = {
       },
       language: { purpose: "Mémorise votre langue.", duration: "12 mois" },
       preferences: {
-        purpose: "Mémorisent vos choix de mode sombre, de contraste et d'essais bonus.",
+        purpose: "Mémorisent vos choix de mode sombre, de contraste et d'essais bonus, ainsi que votre record par langue.",
         duration: "Jusqu'à leur effacement",
       },
       analytics: {
