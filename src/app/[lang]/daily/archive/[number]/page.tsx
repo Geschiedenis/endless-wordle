@@ -107,8 +107,9 @@ async function Day({ params }: { params: Params }) {
         </h2>
         {stats && stats.plays >= MIN_PLAYS_FOR_STATS ? (
           <div className="mt-4 flex flex-col gap-6 rounded-2xl border bg-muted/30 p-5 sm:p-6">
-            <dl className="grid grid-cols-3 gap-2 text-center">
-              <Stat label={t.plays} value={stats.plays.toLocaleString(locale)} />
+            {/* No player count (and no counts in the bars) while traffic is still low:
+                the rate, average and the bars' shape say enough. */}
+            <dl className="grid grid-cols-2 gap-2 text-center">
               <Stat
                 label={t.solvedRate}
                 value={`${Math.round((stats.solved / stats.plays) * 100).toLocaleString(locale)}%`}
@@ -124,7 +125,7 @@ async function Day({ params }: { params: Params }) {
             </dl>
             <div>
               <h3 className="mb-3 text-sm font-medium">{t.distributionTitle}</h3>
-              <DistributionBars counts={stats.distribution} locale={locale} />
+              <DistributionBars counts={stats.distribution} locale={locale} hideCounts />
             </div>
           </div>
         ) : (
