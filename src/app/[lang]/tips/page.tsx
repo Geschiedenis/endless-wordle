@@ -39,7 +39,7 @@ export default async function TipsPage() {
 
       <ol className="mt-8 flex flex-col gap-4">
         {tips.items.map(({ title, body }, index) => (
-          <li key={title} className="rounded-xl border bg-muted/30 p-5">
+          <li key={title} className="rounded-xl border surface p-5">
             <div className="flex flex-col gap-1.5">
               <span
                 aria-hidden="true"

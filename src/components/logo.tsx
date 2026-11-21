@@ -14,17 +14,23 @@ interface LogoProps {
   className?: string;
 }
 
-/** The LINGLE logo: game tiles as raised keys, coloured like a guess on the board. public/logo.png is the same image, for emails, which can't show SVGs. */
+/**
+ * The LINGLE logo: game tiles as raised keys, coloured like a guess on the board.
+ * public/logo-light.svg has a lighter grey and a paler shadow for light mode; CSS shows
+ * the one that fits the theme. public/logo.png is the dark one, for emails, which can't
+ * show SVGs.
+ */
 export function Logo({ height = 32, eager = false, alt = "", className }: LogoProps) {
+  const props = {
+    width: Math.round(height * LOGO_RATIO),
+    height,
+    unoptimized: true,
+    loading: eager ? ("eager" as const) : undefined,
+  };
   return (
-    <Image
-      src="/logo.svg"
-      alt={alt}
-      width={Math.round(height * LOGO_RATIO)}
-      height={height}
-      className={cn("shrink-0", className)}
-      unoptimized
-      loading={eager ? "eager" : undefined}
-    />
+    <>
+      <Image src="/logo-light.svg" alt={alt} {...props} className={cn("shrink-0 dark:hidden", className)} />
+      <Image src="/logo.svg" alt={alt} {...props} className={cn("hidden shrink-0 dark:block", className)} />
+    </>
   );
 }

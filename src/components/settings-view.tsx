@@ -9,7 +9,7 @@ import { SectionCard } from "@/components/section-card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { useBonusGuesses, useDarkTheme, useHighContrast } from "@/hooks/use-preferences";
+import { useBonusGuesses, useHighContrast, useThemeChoice } from "@/hooks/use-preferences";
 import { useSession } from "@/hooks/use-session";
 import { Link } from "@/i18n/link";
 import { localePath } from "@/i18n/config";
@@ -18,7 +18,7 @@ import { gameApi } from "@/lib/game/api-client";
 import { openCookieSettings } from "@/lib/consent";
 import { format } from "@/i18n/format";
 import { MAX_BONUS_GUESSES } from "@/lib/game/constants";
-import { setBonusOn, setDarkTheme, setHighContrast } from "@/lib/preferences";
+import { setBonusOn, setHighContrast, setThemeChoice, type ThemeChoice } from "@/lib/preferences";
 
 /** Display and cookie preferences, for everyone. Guests also get an invitation to sign up. */
 export function SettingsView() {
@@ -37,7 +37,7 @@ export function SettingsView() {
     router.push(localePath(locale, "/play"));
   }
   const session = useSession();
-  const dark = useDarkTheme();
+  const theme = useThemeChoice();
   const highContrast = useHighContrast();
   const bonus = useBonusGuesses();
 
@@ -56,12 +56,12 @@ export function SettingsView() {
 
       <SectionCard title={t.displayTitle}>
         <div className="flex flex-col divide-y">
-          <SettingRow
-            id="setting-dark-mode"
-            label={t.darkModeLabel}
-            description={t.darkModeDescription}
-            checked={dark}
-            onChange={setDarkTheme}
+          <ThemeRow
+            value={theme}
+            onChange={setThemeChoice}
+            label={t.themeLabel}
+            description={t.themeDescription}
+            options={{ system: t.themeSystem, light: t.themeLight, dark: t.themeDark }}
           />
           <SettingRow
             id="setting-high-contrast"
@@ -100,6 +100,60 @@ export function SettingsView() {
           {t.cookiesButton}
         </Button>
       </SectionCard>
+    </div>
+  );
+}
+
+/**
+ * The theme: System, Light or Dark as one segmented control. Native radio buttons, so
+ * arrow keys move between the options and screen readers announce a group of three.
+ */
+function ThemeRow({
+  value,
+  onChange,
+  label,
+  description,
+  options,
+}: {
+  value: ThemeChoice;
+  onChange: (choice: ThemeChoice) => void;
+  label: string;
+  description: string;
+  options: Record<ThemeChoice, string>;
+}) {
+  return (
+    <div
+      role="radiogroup"
+      aria-labelledby="setting-theme-label"
+      aria-describedby="setting-theme-description"
+      className="flex flex-col gap-3 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+    >
+      <div className="flex flex-col gap-0.5">
+        <p id="setting-theme-label" className="text-base font-medium">
+          {label}
+        </p>
+        <p id="setting-theme-description" className="text-sm text-muted-foreground">
+          {description}
+        </p>
+      </div>
+      <div className="grid shrink-0 grid-cols-3 gap-0.5 rounded-lg bg-muted p-0.5">
+        {(Object.keys(options) as ThemeChoice[]).map((choice) => (
+          <label
+            key={choice}
+            className="cursor-pointer rounded-md px-3 py-1.5 text-center text-sm font-medium text-muted-foreground transition-colors has-checked:bg-card has-checked:text-foreground dark:has-checked:bg-input has-checked:shadow-sm has-focus-visible:ring-2 has-focus-visible:ring-ring hover:text-foreground"
+          >
+            <input
+              type="radio"
+              name="theme"
+              value={choice}
+              checked={value === choice}
+              onChange={() => onChange(choice)}
+              className="sr-only"
+            />
+            {options[choice]}
+          </label>
+        ))}
+      </div>
     </div>
   );
 }

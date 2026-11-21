@@ -317,8 +317,11 @@ export const fr: Dictionary = {
       "Vous jouez en tant qu'invité. Connectez-vous pour enregistrer vos scores et voir vos statistiques.",
     guestCta: "Se connecter ou s'inscrire",
     displayTitle: "Affichage",
-    darkModeLabel: "Mode sombre",
-    darkModeDescription: "Plus doux pour les yeux en faible lumière.",
+    themeLabel: "Thème",
+    themeDescription: "Système suit le réglage clair ou sombre de votre appareil.",
+    themeSystem: "Système",
+    themeLight: "Clair",
+    themeDark: "Sombre",
     highContrastLabel: "Contraste élevé",
     highContrastDescription:
       "Cases orange et bleues avec une coche et un point, pour mieux distinguer les couleurs.",
@@ -410,7 +413,7 @@ export const fr: Dictionary = {
       },
       language: { purpose: "Mémorise votre langue.", duration: "12 mois" },
       preferences: {
-        purpose: "Mémorisent vos choix de mode sombre, de contraste et d'essais bonus, ainsi que votre record par langue.",
+        purpose: "Mémorisent vos choix de thème, de contraste et d'essais bonus, ainsi que votre record par langue.",
         duration: "Jusqu'à leur effacement",
       },
       analytics: {

@@ -65,7 +65,7 @@ export default async function FaqPage() {
           <AccordionItem
             key={question}
             value={`q${index}`}
-            className="overflow-hidden rounded-xl border bg-muted/30 transition-colors last:border-b data-[state=open]:bg-muted/50"
+            className="overflow-hidden rounded-xl border surface transition-colors last:border-b data-[state=open]:bg-muted/50"
           >
             <AccordionTrigger className="items-center px-5 py-4 text-base font-semibold hover:bg-muted/50 hover:no-underline focus-visible:ring-inset">
               {question}

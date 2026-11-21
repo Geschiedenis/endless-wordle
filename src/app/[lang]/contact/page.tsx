@@ -27,7 +27,7 @@ export default async function ContactPage() {
       <PageHeading>{t.title}</PageHeading>
       <p className="mt-2 text-muted-foreground">{t.intro}</p>
 
-      <section aria-labelledby="email" className="mt-8 rounded-xl border bg-muted/30 p-5">
+      <section aria-labelledby="email" className="mt-8 rounded-xl border surface p-5">
         <h2 id="email" className="text-lg font-semibold">
           {t.emailTitle}
         </h2>

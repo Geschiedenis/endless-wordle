@@ -23,7 +23,7 @@ export function LanguageCards({ current, names }: { current: Locale; names: Reco
             aria-current={locale === current ? "page" : undefined}
             onClick={() => rememberLocale(locale)}
             className={cn(
-              "flex h-full flex-col items-center gap-2 rounded-xl border bg-muted/30 px-3 py-4 text-center focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none aria-[current=page]:border-primary",
+              "flex h-full flex-col items-center gap-2 rounded-xl border surface px-3 py-4 text-center focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none aria-[current=page]:border-primary",
               HOVER_ZOOM,
             )}
           >

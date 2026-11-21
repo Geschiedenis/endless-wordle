@@ -23,7 +23,7 @@ export function StatsBar({ wordNumber, streak, guessesLeft, guessesAllowed }: St
   const { regular, bonus } = known ? splitGuessesLeft(guessesAllowed, guessesLeft) : { regular: 0, bonus: 0 };
 
   return (
-    <dl className="mx-auto grid w-full max-w-lg grid-cols-3 gap-1 text-center">
+    <dl className="mx-auto grid w-full max-w-lg grid-cols-3 gap-0.5 text-center">
       <Stat label={dict.stats.word} value={wordNumber ?? "–"} />
       <Stat label={dict.stats.streak} value={streak ?? "–"} />
       <Stat
@@ -58,7 +58,7 @@ function Stat({
   urgent?: boolean;
 }) {
   return (
-    <div className="flex flex-col-reverse rounded-md bg-muted px-1 py-1">
+    <div className="flex flex-col-reverse bg-muted px-1 py-1 first:rounded-l-md last:rounded-r-md">
       <dt className="text-[0.6875rem] leading-tight text-muted-foreground">
         <span aria-hidden={srLabel ? true : undefined}>{label}</span>
         {srLabel && <span className="sr-only">{srLabel}</span>}

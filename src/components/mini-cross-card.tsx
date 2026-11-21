@@ -27,7 +27,7 @@ export function MiniCrossCard({ locale }: { locale: Locale }) {
   const { title, body, cta, url, imageLabel } = HOME[locale].miniCross;
   return (
     <section aria-labelledby="minicross" className="w-full">
-      <div className={cn("flex flex-col overflow-hidden rounded-2xl border bg-muted/30 shadow-sm md:flex-row", HOVER_ZOOM)}>
+      <div className={cn("flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm md:flex-row", HOVER_ZOOM)}>
         <div className="flex items-center justify-center bg-muted/50 p-8 md:w-2/5">
           <div role="img" aria-label={imageLabel} className="grid grid-cols-5 gap-1 rounded-xl bg-[#2b2b2f] p-1.5">
             {MINI_CROSS_GRID.map((cells, row) =>

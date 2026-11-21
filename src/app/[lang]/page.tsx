@@ -172,7 +172,7 @@ function HowItWorks({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       </SectionHeading>
       <ol className="mt-8 grid gap-4 sm:grid-cols-3">
         {home.steps.map(({ title, body }, index) => (
-          <li key={title} className={cn("flex flex-col rounded-xl border bg-muted/30 p-5", HOVER_ZOOM)}>
+          <li key={title} className={cn("flex flex-col rounded-xl border surface p-5", HOVER_ZOOM)}>
             <span
               aria-hidden="true"
               className="mb-3 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
@@ -220,7 +220,7 @@ function Features({ locale }: { locale: Locale }) {
         {home.features.map(({ title, body }, index) => {
           const Icon = FEATURE_ICONS[index];
           return (
-            <li key={title} className={cn("flex gap-4 rounded-xl border bg-muted/30 p-5", HOVER_ZOOM)}>
+            <li key={title} className={cn("flex gap-4 rounded-xl border surface p-5", HOVER_ZOOM)}>
               <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
                 <Icon aria-hidden="true" className="size-5" />
               </span>
@@ -256,7 +256,7 @@ function HomeFaq({ locale }: { locale: Locale }) {
             <AccordionItem
               key={question}
               value={`q${index}`}
-              className="overflow-hidden rounded-xl border bg-muted/30 transition-colors last:border-b data-[state=open]:bg-muted/50"
+              className="overflow-hidden rounded-xl border surface transition-colors last:border-b data-[state=open]:bg-muted/50"
             >
               <AccordionTrigger className="items-center px-5 py-4 text-base font-semibold hover:bg-muted/50 hover:no-underline focus-visible:ring-inset">
                 {question}

@@ -85,7 +85,7 @@ async function Day({ params }: { params: Params }) {
       <PageHeading backHref="/daily/archive">{format(t.dayTitle, { number })}</PageHeading>
       <p className="mt-2 text-muted-foreground">{format(t.dayIntro, { date: formatDay(day, locale) })}</p>
 
-      <div className="demo-board mt-8 flex justify-center rounded-2xl border bg-muted/30 px-4 py-8">
+      <div className="demo-board mt-8 flex justify-center rounded-2xl border surface px-4 py-8">
         <DemoBoard rows={[{ word, states: ["correct", "correct", "correct", "correct", "correct"] }]} />
       </div>
 
@@ -106,10 +106,10 @@ async function Day({ params }: { params: Params }) {
           {t.statsTitle}
         </h2>
         {stats && stats.plays >= MIN_PLAYS_FOR_STATS ? (
-          <div className="mt-4 flex flex-col gap-6 rounded-2xl border bg-muted/30 p-5 sm:p-6">
+          <div className="mt-4 flex flex-col gap-6 rounded-2xl border surface p-5 sm:p-6">
             {/* No player count (and no counts in the bars) while traffic is still low:
                 the rate, average and the bars' shape say enough. */}
-            <dl className="grid grid-cols-2 gap-2 text-center">
+            <dl className="grid grid-cols-2 gap-0.5 text-center">
               <Stat
                 label={t.solvedRate}
                 value={`${Math.round((stats.solved / stats.plays) * 100).toLocaleString(locale)}%`}
@@ -161,7 +161,7 @@ async function Day({ params }: { params: Params }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col-reverse rounded-lg bg-muted px-1 py-3">
+    <div className="flex flex-col-reverse bg-muted px-1 py-3 first:rounded-l-lg last:rounded-r-lg">
       <dt className="text-xs text-muted-foreground">{label}</dt>
       <dd className="text-2xl font-bold tabular-nums">{value}</dd>
     </div>

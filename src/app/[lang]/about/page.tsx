@@ -43,7 +43,7 @@ export default async function AboutPage() {
           {t.different.map(({ title, body }, index) => {
             const Icon = DIFFERENT_ICONS[index];
             return (
-              <li key={title} className={cn("flex gap-4 rounded-xl border bg-muted/30 p-5", HOVER_ZOOM)}>
+              <li key={title} className={cn("flex gap-4 rounded-xl border surface p-5", HOVER_ZOOM)}>
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
                   <Icon aria-hidden="true" className="size-5" />
                 </span>
@@ -62,7 +62,7 @@ export default async function AboutPage() {
           {t.makerTitle}
         </h2>
         {/* A profile card: photo, name and role, a few words, and a way to get in touch. */}
-        <div className="mt-6 flex flex-col gap-6 rounded-2xl border bg-muted/30 p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-8">
+        <div className="mt-6 flex flex-col gap-6 rounded-2xl border surface p-6 sm:flex-row sm:items-center sm:gap-8 sm:p-8">
           <Image
             src="/about/bastiaan.jpg"
             alt={LEGAL.operator}

@@ -4,8 +4,25 @@ const THEME_KEY = "ew-theme";
 const CONTRAST_KEY = "ew-contrast";
 const BONUS_KEY = "ew-bonus";
 
-/** Runs in <head> before paint. <html> starts out dark, so only a saved light theme changes it. */
-export const PREFERENCES_SCRIPT = `(function(){var d=document.documentElement,t=null,c=null;try{t=localStorage.getItem("${THEME_KEY}");c=localStorage.getItem("${CONTRAST_KEY}")}catch(e){}if(t==="light")d.classList.remove("dark");if(c==="high")d.dataset.contrast="high"})()`;
+/** Light, dark, or whatever the device is set to (the default). */
+export type ThemeChoice = "system" | "light" | "dark";
+
+/** The page background per theme, for the browser bar on phones (globals.css). */
+const BAR_COLOURS = { light: "#f6f6f3", dark: "#121212" };
+
+/**
+ * Applies the saved theme, or the device's when there's none, to <html> and the browser
+ * bar colour. Shared by the <head> script and setThemeChoice, so both decide the same way.
+ * Without matchMedia (very old browsers) it stays dark, the server's default.
+ */
+const APPLY_THEME = `function(){var d=document.documentElement,s=null;try{s=localStorage.getItem("${THEME_KEY}")}catch(e){}var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)");var dark=s==="dark"||(s!=="light"&&(!m||m.matches));d.classList.toggle("dark",dark);var t=document.querySelector('meta[name="theme-color"]');if(!t){t=document.createElement("meta");t.name="theme-color";document.head.appendChild(t)}t.content=dark?"${BAR_COLOURS.dark}":"${BAR_COLOURS.light}"}`;
+
+/**
+ * Runs in <head> before paint, so the page never flashes the wrong theme. It also follows
+ * the device live: a phone switching to dark in the evening switches the page too, unless
+ * the player picked a theme themselves.
+ */
+export const PREFERENCES_SCRIPT = `(function(){var d=document.documentElement,c=null,a=window.__ewApplyTheme=${APPLY_THEME};a();try{c=localStorage.getItem("${CONTRAST_KEY}")}catch(e){}if(c==="high")d.dataset.contrast="high";var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)");if(m&&m.addEventListener)m.addEventListener("change",a)})()`;
 
 const listeners = new Set<() => void>();
 
@@ -23,13 +40,28 @@ function persist(key: string, value: string) {
   listeners.forEach((listener) => listener());
 }
 
-export function isDarkTheme(): boolean {
-  return document.documentElement.classList.contains("dark");
+export function getThemeChoice(): ThemeChoice {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    return saved === "light" || saved === "dark" ? saved : "system";
+  } catch {
+    return "system";
+  }
 }
 
-export function setDarkTheme(dark: boolean) {
-  document.documentElement.classList.toggle("dark", dark);
-  persist(THEME_KEY, dark ? "dark" : "light");
+export function setThemeChoice(choice: ThemeChoice) {
+  const apply = (window as Window & { __ewApplyTheme?: () => void }).__ewApplyTheme;
+  try {
+    if (choice === "system") localStorage.removeItem(THEME_KEY);
+    else localStorage.setItem(THEME_KEY, choice);
+    apply?.();
+  } catch {
+    // Storage can be blocked. The choice then applies until the page reloads.
+    const dark =
+      choice === "dark" || (choice === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("dark", dark);
+  }
+  listeners.forEach((listener) => listener());
 }
 
 export function isHighContrast(): boolean {

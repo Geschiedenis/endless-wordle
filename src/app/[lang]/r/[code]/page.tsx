@@ -98,7 +98,7 @@ async function Result({ params }: { params: Params }) {
             </h1>
           </div>
           {result.words.length > 0 && (
-            <div className="rounded-xl border bg-muted/30 p-5">
+            <div className="rounded-xl border surface p-5">
               <ResultGrid words={result.words} />
             </div>
           )}

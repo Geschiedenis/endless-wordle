@@ -17,7 +17,7 @@ export function SectionCard({
   return (
     <section
       aria-labelledby={title ? id : undefined}
-      className={cn("rounded-xl border p-5", tone === "danger" ? "border-destructive/40 bg-destructive/5" : "bg-muted/30")}
+      className={cn("rounded-xl border p-5", tone === "danger" ? "border-destructive/40 bg-destructive/5" : "surface")}
     >
       {title && (
         <h2 id={id} className={cn("text-lg font-semibold", tone === "danger" && "text-destructive")}>

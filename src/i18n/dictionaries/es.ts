@@ -316,8 +316,11 @@ export const es: Dictionary = {
       "Estás jugando como invitado. Inicia sesión para guardar tus puntuaciones y ver tus estadísticas.",
     guestCta: "Iniciar sesión o registrarse",
     displayTitle: "Pantalla",
-    darkModeLabel: "Modo oscuro",
-    darkModeDescription: "Más cómodo para la vista con poca luz.",
+    themeLabel: "Tema",
+    themeDescription: "Sistema sigue el ajuste claro u oscuro de tu dispositivo.",
+    themeSystem: "Sistema",
+    themeLight: "Claro",
+    themeDark: "Oscuro",
     highContrastLabel: "Alto contraste",
     highContrastDescription:
       "Casillas naranjas y azules con una marca y un punto, para distinguir mejor los colores.",
@@ -410,7 +413,7 @@ export const es: Dictionary = {
       },
       language: { purpose: "Recuerda tu idioma.", duration: "12 meses" },
       preferences: {
-        purpose: "Recuerdan tus preferencias de modo oscuro, contraste e intentos extra, y tu récord por idioma.",
+        purpose: "Recuerdan tus preferencias de tema, contraste e intentos extra, y tu récord por idioma.",
         duration: "Hasta que las borres",
       },
       analytics: {

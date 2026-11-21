@@ -87,7 +87,7 @@ function Statistics({ profile }: { profile: ProfileResponse }) {
   const { stats, recentGames } = profile;
   return (
     <SectionCard title={t.statsTitle}>
-      <dl className="grid grid-cols-3 gap-2 text-center">
+      <dl className="grid grid-cols-3 gap-0.5 text-center">
         <Stat label={t.bestScore} value={stats.bestScore} />
         <Stat label={t.gamesPlayed} value={stats.gamesPlayed} />
         <Stat label={t.averageWords} value={stats.averageWords.toLocaleString(locale)} />
@@ -146,7 +146,7 @@ function GuessDistribution({ counts }: { counts: number[] }) {
 
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="flex flex-col-reverse rounded-lg bg-muted px-1 py-3">
+    <div className="flex flex-col-reverse bg-muted px-1 py-3 first:rounded-l-lg last:rounded-r-lg">
       <dt className="text-xs text-muted-foreground">{label}</dt>
       <dd className="text-2xl font-bold tabular-nums">{value}</dd>
     </div>

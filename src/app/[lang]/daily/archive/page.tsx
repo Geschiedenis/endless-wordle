@@ -46,7 +46,7 @@ async function ArchiveList() {
         <li key={number}>
           <Link
             href={`/daily/archive/${number}`}
-            className="flex items-center justify-between gap-4 rounded-xl border bg-muted/30 p-4 transition-colors hover:bg-muted/60"
+            className="flex items-center justify-between gap-4 rounded-xl border surface p-4 transition-colors hover:bg-muted/60"
           >
             <span className="flex flex-col gap-0.5">
               <span className="text-sm text-muted-foreground">

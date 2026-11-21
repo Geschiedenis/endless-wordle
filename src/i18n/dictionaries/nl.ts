@@ -313,8 +313,11 @@ export const nl: Dictionary = {
       "Je speelt als gast. Log in om je scores te bewaren en je statistieken te zien.",
     guestCta: "Inloggen of registreren",
     displayTitle: "Weergave",
-    darkModeLabel: "Donkere modus",
-    darkModeDescription: "Prettiger voor je ogen bij weinig licht.",
+    themeLabel: "Thema",
+    themeDescription: "Systeem volgt de lichte of donkere instelling van je apparaat.",
+    themeSystem: "Systeem",
+    themeLight: "Licht",
+    themeDark: "Donker",
     highContrastLabel: "Hoog contrast",
     highContrastDescription:
       "Oranje en blauwe tegels met een vinkje en een stip, zodat de kleuren beter te onderscheiden zijn.",
@@ -405,7 +408,7 @@ export const nl: Dictionary = {
       },
       language: { purpose: "Onthoudt je taal.", duration: "12 maanden" },
       preferences: {
-        purpose: "Onthouden je keuzes voor donkere modus, contrast en bonuspogingen, en je record per taal.",
+        purpose: "Onthouden je keuzes voor thema, contrast en bonuspogingen, en je record per taal.",
         duration: "Tot je ze wist",
       },
       analytics: {

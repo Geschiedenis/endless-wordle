@@ -315,8 +315,11 @@ export const de: Dictionary = {
       "Du spielst als Gast. Melde dich an, um deine Punktestände zu speichern und deine Statistik zu sehen.",
     guestCta: "Anmelden oder registrieren",
     displayTitle: "Darstellung",
-    darkModeLabel: "Dunkelmodus",
-    darkModeDescription: "Angenehmer für die Augen bei wenig Licht.",
+    themeLabel: "Design",
+    themeDescription: "System folgt der hellen oder dunklen Einstellung deines Geräts.",
+    themeSystem: "System",
+    themeLight: "Hell",
+    themeDark: "Dunkel",
     highContrastLabel: "Hoher Kontrast",
     highContrastDescription:
       "Orange und blaue Felder mit Häkchen und Punkt, damit sich die Farben besser unterscheiden lassen.",
@@ -408,7 +411,7 @@ export const de: Dictionary = {
       language: { purpose: "Merkt sich deine Sprache.", duration: "12 Monate" },
       preferences: {
         purpose:
-          "Merken sich deine Einstellungen für Dunkelmodus, Kontrast und Bonusversuche sowie deinen Rekord pro Sprache.",
+          "Merken sich deine Einstellungen für Design, Kontrast und Bonusversuche sowie deinen Rekord pro Sprache.",
         duration: "Bis du sie löschst",
       },
       analytics: {

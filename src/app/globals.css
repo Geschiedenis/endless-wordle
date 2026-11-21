@@ -12,6 +12,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --color-popover: var(--popover);
+  --color-card: var(--card);
   --color-popover-foreground: var(--popover-foreground);
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -32,33 +33,39 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1b;
+  /* Light mode: a soft off-white page with white cards on it, charcoal text and light
+     lines, so nothing is pure black on pure white. */
+  --background: #f6f6f3;
+  --foreground: #27272a;
   --popover: #ffffff;
-  --popover-foreground: #1a1a1b;
-  --muted: #f1f2f4;
-  --muted-foreground: #5f6368;
-  --secondary: #f1f2f4;
-  --secondary-foreground: #1a1a1b;
-  --accent: #f1f2f4;
-  --accent-foreground: #1a1a1b;
+  --popover-foreground: #27272a;
+  --card: #ffffff;
+  /* Light mode lifts cards with a faint shadow; dark mode doesn't need one. */
+  --card-shadow: 0 1px 2px rgb(40 40 30 / 0.05), 0 2px 8px rgb(40 40 30 / 0.04);
+  --muted: #ebebe7;
+  --muted-foreground: #63636b;
+  --secondary: #ebebe7;
+  --secondary-foreground: #27272a;
+  --accent: #ebebe7;
+  --accent-foreground: #27272a;
   --destructive: #b91c1c;
-  --border: #d3d6da;
-  --input: #d3d6da;
-  --ring: #1a1a1b;
+  --border: #e2e2dd;
+  --input: #d6d6d0;
+  --ring: #27272a;
   --radius: 0.625rem;
 
   /* Game colours. Each pair is checked for contrast; see the README. */
   --correct: #2e7d32;
   --on-correct: #ffffff;
-  --present: #e3b341;
-  --on-present: #1a1a1b;
-  --absent: #737679;
+  --present: #d6a73a;
+  --on-present: #1f1f22;
+  /* As light as a grey can be with white letters at 4.5:1. */
+  --absent: #747779;
   --on-absent: #ffffff;
-  --key: #dfe1e6;
-  --on-key: #1a1a1b;
-  --tile-border: #d3d6da;
-  --tile-border-filled: #7c7f85;
+  --key: #e4e4e0;
+  --on-key: #27272a;
+  --tile-border: #dcdcd6;
+  --tile-border-filled: #8a8a85;
   /* The soft shade behind the Play bar and the language question. Dark in dark mode, faint in light mode. */
   --shade: rgb(0 0 0 / 0.06);
 
@@ -67,28 +74,31 @@
 }
 
 .dark {
-  --background: #121213;
-  --foreground: #f4f4f5;
-  --popover: #1f1f22;
-  --popover-foreground: #f4f4f5;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  --secondary: #27272a;
-  --secondary-foreground: #f4f4f5;
-  --accent: #27272a;
-  --accent-foreground: #f4f4f5;
+  /* Dark mode: the same idea as light, in warm neutral greys. Cards are a step lighter
+     than the page instead of outlined, the lines are faint and the text is off-white. */
+  --background: #121212;
+  --foreground: #ebebe8;
+  --popover: #1f1f1d;
+  --popover-foreground: #ebebe8;
+  --card: #1c1c1b;
+  --card-shadow: none;
+  --muted: #282826;
+  --muted-foreground: #a3a39d;
+  --secondary: #282826;
+  --secondary-foreground: #ebebe8;
+  --accent: #282826;
+  --accent-foreground: #ebebe8;
   --destructive: #f87171;
-  --border: #3f3f46;
-  --input: #3f3f46;
-  --ring: #f4f4f5;
+  --border: #2e2e2c;
+  --input: #3d3d3a;
+  --ring: #ebebe8;
 
   --correct: #2f7d3b;
-  --present: #d9aa2f;
-  --absent: #3a3a3c;
-  --key: #6b6e76;
+  --absent: #3a3a38;
+  --key: #6e6e6a;
   --on-key: #ffffff;
-  --tile-border: #3a3a3c;
-  --tile-border-filled: #6b6e76;
+  --tile-border: #353533;
+  --tile-border-filled: #6e6e6a;
   --shade: rgb(0 0 0 / 0.45);
 }
 
@@ -114,6 +124,12 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
+}
+
+/* A card on the page: white with a faint shadow in light mode, a slightly lighter shade in dark mode. */
+@utility surface {
+  background-color: var(--card);
+  box-shadow: var(--card-shadow);
 }
 
 /*

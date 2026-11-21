@@ -201,7 +201,7 @@ function Step({
   children: ReactNode;
 }) {
   return (
-    <li className="rounded-xl border bg-muted/30 p-5 [&_a]:underline [&_a]:underline-offset-2">
+    <li className="rounded-xl border surface p-5 [&_a]:underline [&_a]:underline-offset-2">
       <div className="flex flex-col gap-1.5">
         <span
           aria-hidden="true"

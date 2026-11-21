@@ -42,7 +42,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
     // The script below sets theme attributes on <html> before React hydrates.
     <html lang={locale} className={`${geistSans.variable} dark h-full antialiased`} suppressHydrationWarning>
       <head>
-        {/* Applied before first paint, so a saved dark theme never flashes light. */}
+        {/* Picks the saved or device theme before first paint, so it never flashes the wrong one. */}
         <script dangerouslySetInnerHTML={{ __html: PREFERENCES_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col">

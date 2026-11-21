@@ -1,14 +1,14 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { isBonusOn, isDarkTheme, isHighContrast, subscribeToPreferences } from "@/lib/preferences";
+import { getThemeChoice, isBonusOn, isHighContrast, subscribeToPreferences, type ThemeChoice } from "@/lib/preferences";
 
-/** Pages are prerendered in the default theme, which is dark, without high contrast. */
-const darkOnServer = () => true;
+/** Pages are prerendered for the default choices: the device's theme, no high contrast. */
+const systemOnServer = (): ThemeChoice => "system";
 const offOnServer = () => false;
 
-export function useDarkTheme(): boolean {
-  return useSyncExternalStore(subscribeToPreferences, isDarkTheme, darkOnServer);
+export function useThemeChoice(): ThemeChoice {
+  return useSyncExternalStore(subscribeToPreferences, getThemeChoice, systemOnServer);
 }
 
 export function useHighContrast(): boolean {

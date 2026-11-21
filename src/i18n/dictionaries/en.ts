@@ -310,8 +310,11 @@ export const en = {
       "You're playing as a guest. Log in to save your scores and see your statistics.",
     guestCta: "Log in or sign up",
     displayTitle: "Display",
-    darkModeLabel: "Dark mode",
-    darkModeDescription: "Easier on the eyes in low light.",
+    themeLabel: "Theme",
+    themeDescription: "System follows the light or dark setting of your device.",
+    themeSystem: "System",
+    themeLight: "Light",
+    themeDark: "Dark",
     highContrastLabel: "High contrast",
     highContrastDescription:
       "Orange and blue tiles with a check mark and dot, so the colours are easier to tell apart.",
@@ -400,7 +403,7 @@ export const en = {
       },
       language: { purpose: "Remembers your language.", duration: "12 months" },
       preferences: {
-        purpose: "Remember your dark mode, contrast and bonus guesses choices, and your best score per language.",
+        purpose: "Remember your theme, contrast and bonus guesses choices, and your best score per language.",
         duration: "Until you clear them",
       },
       analytics: {
